@@ -9,6 +9,7 @@ import { WorkSection } from "@/components/sections/work-section"
 import { ServicesSection } from "@/components/sections/services-section"
 import { ContactSection } from "@/components/sections/contact-section"
 import { NavigationHeader } from "@/components/navigation-header"
+import { Footer } from "@/components/Footer"
 import { useRef, useEffect, useState } from "react"
 
 export default function Home() {
@@ -158,7 +159,12 @@ export default function Home() {
         <AboutSection scrollToSection={scrollToSection} />
 
         {/* Contact Section */}
-        <ContactSection />
+        <section className="flex min-h-screen w-screen shrink-0 flex-col overflow-y-auto overflow-x-hidden">
+          <div className="flex-1">
+            <ContactSection />
+          </div>
+          <Footer />
+        </section>
       </div>
 
       <style jsx global>{`

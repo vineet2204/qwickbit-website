@@ -11,7 +11,7 @@ interface NavigationHeaderProps {
 
 const sections = [
   { name: "Home", index: 0 },
-  { name: "Products & Solutions", index: 1, hasDropdown: true },
+  { name: "Solutions", index: 1, hasDropdown: true },
   { name: "Services", index: 2, hasDropdown: true },
   { name: "About Us", index: 3 },
   { name: "Contact", index: 4 },
@@ -68,7 +68,7 @@ export function NavigationHeader({ currentSection, scrollToSection, isLoaded }: 
         isLoaded ? "opacity-100" : "opacity-0"
       }`}
     >
-      <nav className="flex items-center justify-between border-b border-white/10 bg-white/30 px-6 py-6 backdrop-blur-md md:px-12">
+      <nav className="flex items-center justify-between border-b border-white/10 bg-white/30 px-6 py-6 backdrop-blur-xl md:px-12">
         {/* Logo */}
         <button
           onClick={() => scrollToSection(0)}
@@ -114,7 +114,7 @@ export function NavigationHeader({ currentSection, scrollToSection, isLoaded }: 
                   </button>
 
                   <div
-                    className={`absolute top-full left-1/2 -translate-x-1/2 mt-2 bg-white/95 border border-gray-200 rounded-lg backdrop-blur-md shadow-2xl transition-all duration-300 transform origin-top ${
+                    className={`absolute top-full mt-6 left-1/2 -translate-x-1/2  bg-white/40 border border-white/30 rounded-lg backdrop-blur-7xl backdrop-saturate-150 shadow-2xl transition-all duration-300 transform origin-top ${
                       isDropdownOpen ? "opacity-100 scale-y-100 visible" : "opacity-0 scale-y-95 invisible"
                     }`}
                     onMouseEnter={() => setDropdownOpen(true)}
@@ -125,8 +125,8 @@ export function NavigationHeader({ currentSection, scrollToSection, isLoaded }: 
                   >
                     <div className="grid grid-cols-2 gap-8 p-6 min-w-max">
                       {/* Left Column - Categories */}
-                      <div className="border-r border-gray-200 pr-8">
-                        <h3 className="font-mono text-xs text-gray-600 mb-4 uppercase tracking-widest">
+                      <div className="border-r border-white/20 pr-8">
+                        <h3 className="font-mono text-sm text-white/80 mb-4 uppercase tracking-widest font-semibold">
                           {section.name === "Services" ? "Our Services" : "Solutions"}
                         </h3>
                         <div className="space-y-2">
@@ -134,10 +134,10 @@ export function NavigationHeader({ currentSection, scrollToSection, isLoaded }: 
                             <button
                               key={idx}
                               onMouseEnter={() => setActiveCategory(idx)}
-                              className={`block w-full text-left px-3 py-2 rounded-md text-sm font-sans transition-all duration-200 ${
+                              className={`block w-full text-left px-3 py-2 rounded-md text-base font-sans transition-all duration-200 ${
                                 activeCategory === idx
-                                  ? "text-gray-900 bg-gray-100 font-semibold"
-                                  : "text-gray-800 hover:text-gray-900 hover:bg-gray-50"
+                                  ? "text-white bg-white/20 font-semibold"
+                                  : "text-white/80 hover:text-white hover:bg-white/10"
                               }`}
                             >
                               {item.category}
@@ -148,14 +148,14 @@ export function NavigationHeader({ currentSection, scrollToSection, isLoaded }: 
 
                       {/* Right Column - Items for Active Category */}
                       <div>
-                        <h3 className="font-mono text-xs text-gray-600 mb-4 uppercase tracking-widest">
+                        <h3 className="font-mono text-sm text-white/80 mb-4 uppercase tracking-widest font-semibold">
                           {dropdownMenu[activeCategory].category}
                         </h3>
                         <div className="space-y-2">
                           {dropdownMenu[activeCategory].items.map((item, itemIdx) => (
                             <button
                               key={itemIdx}
-                              className="block w-full text-left px-3 py-2 text-sm font-sans text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-md transition-all duration-200"
+                              className="block w-full text-left px-3 py-2 text-base font-sans text-white/90 hover:text-white hover:bg-white/10 rounded-md transition-all duration-200"
                             >
                               {item}
                             </button>
@@ -165,14 +165,14 @@ export function NavigationHeader({ currentSection, scrollToSection, isLoaded }: 
                     </div>
 
                     {/* Bottom CTA */}
-                    <div className="border-t border-gray-200 px-6 py-4">
+                    <div className="border-t border-white/20 px-6 py-4">
                       <button
                         onClick={() => {
                           scrollToSection(section.index)
                           setDropdownOpen(false)
                           setActiveCategory(0)
                         }}
-                        className="text-sm font-sans text-blue-500 hover:text-blue-600 transition-colors duration-200"
+                        className="text-sm font-sans text-blue-300 hover:text-blue-200 transition-colors duration-200"
                       >
                         View All {section.name} →
                       </button>
