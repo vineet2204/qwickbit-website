@@ -8,9 +8,13 @@ const _geistMono = Geist_Mono({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
   title: "Qwickbit Technologies",
-  description: "Next.js app ",
-    generator: 'v0.app'
+  description: "Next.js app",
+  icons: {
+    icon: "/logo.svg", // or .png
+    apple: "/apple-touch-icon.png",
+  },
 }
+
 
 export default function RootLayout({
   children,
