@@ -7,8 +7,8 @@ const _geist = Geist({ subsets: ["latin"] })
 const _geistMono = Geist_Mono({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "Fluid Effect Background",
-  description: "Next.js app with WebGL fluid shader effects",
+  title: "Qwickbit Technologies",
+  description: "Next.js app ",
     generator: 'v0.app'
 }
 
