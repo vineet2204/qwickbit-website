@@ -1,7 +1,6 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { MagneticButton } from "@/components/magnetic-button"
 import { ChevronDown } from "lucide-react"
 
 interface NavigationHeaderProps {
@@ -12,35 +11,39 @@ interface NavigationHeaderProps {
 
 const sections = [
   { name: "Home", index: 0 },
-  { name: "Products", index: 1 },
+  { name: "Products & Solutions", index: 1, hasDropdown: true },
   { name: "Services", index: 2, hasDropdown: true },
-  // { name: "Solutions", index: 3 },
-  { name: "Why Us", index: 3 },
+  { name: "About Us", index: 3 },
   { name: "Contact", index: 4 },
+]
+
+const solutionsMenu = [
+  {
+    category: "By Industry",
+    items: ["Healthcare", "Finance", "Retail", "Manufacturing", "Logistics"],
+  },
+  {
+    category: "AI & ML Solutions",
+    items: ["Conversational AI", "Predictive Analytics", "Computer Vision", "NLP Solutions"],
+  },
 ]
 
 const servicesMenu = [
   {
-    category: "AI & ML Solutions",
-    items: ["Conversational AI", "Predictive Analytics", "Computer Vision", "Generative AI"],
+    category: "Development",
+    items: ["Web Development", "Software Development", "Mobile App Development", "UI/UX Design"],
   },
   {
-    category: "IoT & Tracking",
-    items: ["Fleet Tracking", "Asset Tracking", "Real-time Dashboards", "Geo-fencing"],
-  },
-  {
-    category: "Web & Mobile Apps",
-    items: ["High-Performance Apps", "Ecommerce Platforms", "Enterprise Solutions", "Modern Tech Stack"],
-  },
-  {
-    category: "Cloud & DevOps",
-    items: ["Cloud Architectures", "DevOps Automation", "Infrastructure Management", "Scaling Solutions"],
+    category: "Solutions & Support",
+    items: ["Customize Solutions", "IT Solutions", "Testing and QA"],
   },
 ]
 
 export function NavigationHeader({ currentSection, scrollToSection, isLoaded }: NavigationHeaderProps) {
   const [scrollProgress, setScrollProgress] = useState(0)
   const [isServicesOpen, setIsServicesOpen] = useState(false)
+  const [isSolutionsOpen, setIsSolutionsOpen] = useState(false)
+  const [activeCategory, setActiveCategory] = useState<number>(0)
 
   useEffect(() => {
     const handleScroll = (e: Event) => {
@@ -65,100 +68,113 @@ export function NavigationHeader({ currentSection, scrollToSection, isLoaded }: 
         isLoaded ? "opacity-100" : "opacity-0"
       }`}
     >
-      <nav className="flex items-center justify-between border-b border-foreground/10 bg-background/40 px-6 py-6 backdrop-blur-md md:px-12">
+      <nav className="flex items-center justify-between border-b border-white/10 bg-white/30 px-6 py-6 backdrop-blur-md md:px-12">
         {/* Logo */}
         <button
           onClick={() => scrollToSection(0)}
           className="flex items-center gap-2 transition-transform hover:scale-105"
         >
-          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-orange-500 backdrop-blur-md transition-all duration-300 hover:scale-110">
-            <span className="font-sans text-lg font-bold text-white">Q</span>
+          <div className="flex h-10 w-10 items-center justify-center rounded-lg transition-all duration-300 hover:scale-110">
+            <img src="/logo.svg" alt="Logo" />
           </div>
-          <span className="font-sans text-xl font-semibold tracking-tight text-foreground">Qwickbit</span>
+          <span className="text-2xl uppercase leading-tight text-start font-montserrat">
+            <span className="block font-extrabold tracking-wide text-[#4f47e5]">
+              QWICKBIT
+            </span>
+          </span>
         </button>
 
         {/* Desktop Navigation */}
         <div className="hidden items-center gap-1 md:flex">
           {sections.map((section) => {
             if (section.hasDropdown) {
+              const isDropdownOpen = section.name === "Services" ? isServicesOpen : isSolutionsOpen
+              const setDropdownOpen = section.name === "Services" ? setIsServicesOpen : setIsSolutionsOpen
+              const dropdownMenu = section.name === "Services" ? servicesMenu : solutionsMenu
+
               return (
                 <div key={section.index} className="relative group">
                   <button
-                    onClick={() => setIsServicesOpen(!isServicesOpen)}
-                    onMouseEnter={() => setIsServicesOpen(true)}
-                    onMouseLeave={() => setIsServicesOpen(false)}
-                    className={`relative px-3 py-2 font-mono text-sm transition-all duration-300 flex items-center gap-1 ${
-                      currentSection === section.index || isServicesOpen
-                        ? "text-foreground"
-                        : "text-foreground/60 hover:text-foreground/90"
+                    onClick={() => setDropdownOpen(!isDropdownOpen)}
+                    onMouseEnter={() => setDropdownOpen(true)}
+                    onMouseLeave={() => setDropdownOpen(false)}
+                    className={`relative px-3 py-2 font-mono text-base transition-all duration-300 flex items-center gap-1 ${
+                      currentSection === section.index || isDropdownOpen
+                        ? "text-white font-semibold"
+                        : "text-white/80 hover:text-white"
                     }`}
                   >
                     {section.name}
                     <ChevronDown
-                      className={`w-4 h-4 transition-transform duration-300 ${isServicesOpen ? "rotate-180" : ""}`}
+                      className={`w-4 h-4 transition-transform duration-300 ${isDropdownOpen ? "rotate-180" : ""}`}
                     />
-                    {(currentSection === section.index || isServicesOpen) && (
+                    {(currentSection === section.index || isDropdownOpen) && (
                       <div className="absolute bottom-0 left-3 right-3 h-0.5 bg-gradient-to-r from-blue-500 to-orange-500" />
                     )}
                   </button>
 
                   <div
-                    className={`absolute top-full -ml-80 left-0 mt-2 bg-background/95 border border-foreground/10 rounded-lg backdrop-blur-md shadow-2xl transition-all duration-300 transform origin-top ${
-                      isServicesOpen ? "opacity-100 scale-y-100 visible" : "opacity-0 scale-y-95 invisible"
+                    className={`absolute top-full left-1/2 -translate-x-1/2 mt-2 bg-white/95 border border-gray-200 rounded-lg backdrop-blur-md shadow-2xl transition-all duration-300 transform origin-top ${
+                      isDropdownOpen ? "opacity-100 scale-y-100 visible" : "opacity-0 scale-y-95 invisible"
                     }`}
-                    onMouseEnter={() => setIsServicesOpen(true)}
-                    onMouseLeave={() => setIsServicesOpen(false)}
+                    onMouseEnter={() => setDropdownOpen(true)}
+                    onMouseLeave={() => {
+                      setDropdownOpen(false)
+                      setActiveCategory(0)
+                    }}
                   >
                     <div className="grid grid-cols-2 gap-8 p-6 min-w-max">
-                      {/* Left Column - Service Categories */}
-                      <div className="border-r border-foreground/10 pr-8">
-                        <h3 className="font-mono text-xs text-foreground/60 mb-4 uppercase tracking-widest">
-                          Our Services
+                      {/* Left Column - Categories */}
+                      <div className="border-r border-gray-200 pr-8">
+                        <h3 className="font-mono text-xs text-gray-600 mb-4 uppercase tracking-widest">
+                          {section.name === "Services" ? "Our Services" : "Solutions"}
                         </h3>
                         <div className="space-y-2">
-                          {servicesMenu.map((service, idx) => (
+                          {dropdownMenu.map((item, idx) => (
                             <button
                               key={idx}
-                              className="block text-left px-3 py-2 rounded-md text-sm font-sans text-foreground/80 hover:text-foreground hover:bg-foreground/10 transition-all duration-200"
+                              onMouseEnter={() => setActiveCategory(idx)}
+                              className={`block w-full text-left px-3 py-2 rounded-md text-sm font-sans transition-all duration-200 ${
+                                activeCategory === idx
+                                  ? "text-gray-900 bg-gray-100 font-semibold"
+                                  : "text-gray-800 hover:text-gray-900 hover:bg-gray-50"
+                              }`}
                             >
-                              {service.category}
+                              {item.category}
                             </button>
                           ))}
                         </div>
                       </div>
 
-                      {/* Right Column - Service Items */}
+                      {/* Right Column - Items for Active Category */}
                       <div>
-                        <h3 className="font-mono text-xs text-foreground/60 mb-4 uppercase tracking-widest">
-                          Expertise
+                        <h3 className="font-mono text-xs text-gray-600 mb-4 uppercase tracking-widest">
+                          {dropdownMenu[activeCategory].category}
                         </h3>
-                        <div className="grid grid-cols-2 gap-4">
-                          {servicesMenu.map((service, idx) => (
-                            <div key={idx}>
-                              {service.items.map((item, itemIdx) => (
-                                <button
-                                  key={itemIdx}
-                                  className="block w-full text-left px-3 py-2 text-sm font-sans text-foreground/70 hover:text-foreground/100 hover:bg-foreground/5 rounded-md transition-all duration-200"
-                                >
-                                  {item}
-                                </button>
-                              ))}
-                            </div>
+                        <div className="space-y-2">
+                          {dropdownMenu[activeCategory].items.map((item, itemIdx) => (
+                            <button
+                              key={itemIdx}
+                              className="block w-full text-left px-3 py-2 text-sm font-sans text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-md transition-all duration-200"
+                            >
+                              {item}
+                            </button>
                           ))}
                         </div>
                       </div>
                     </div>
 
                     {/* Bottom CTA */}
-                    <div className="border-t border-foreground/10 px-6 py-4">
+                    <div className="border-t border-gray-200 px-6 py-4">
                       <button
                         onClick={() => {
                           scrollToSection(section.index)
-                          setIsServicesOpen(false)
+                          setDropdownOpen(false)
+                          setActiveCategory(0)
                         }}
-                        className="text-sm font-sans text-blue-500 hover:text-blue-400 transition-colors duration-200"
+                        className="text-sm font-sans text-blue-500 hover:text-blue-600 transition-colors duration-200"
                       >
-                        View All Services →
+                        View All {section.name} →
                       </button>
                     </div>
                   </div>
@@ -170,8 +186,10 @@ export function NavigationHeader({ currentSection, scrollToSection, isLoaded }: 
               <button
                 key={section.index}
                 onClick={() => scrollToSection(section.index)}
-                className={`relative px-3 py-2 font-mono text-sm transition-all duration-300 ${
-                  currentSection === section.index ? "text-foreground" : "text-foreground/60 hover:text-foreground/90"
+                className={`relative px-3 py-2 font-mono text-base transition-all duration-300 ${
+                  currentSection === section.index 
+                    ? "text-white font-semibold" 
+                    : "text-white/80 hover:text-white"
                 }`}
               >
                 {section.name}
@@ -184,9 +202,12 @@ export function NavigationHeader({ currentSection, scrollToSection, isLoaded }: 
         </div>
 
         {/* CTA Button */}
-        <MagneticButton variant="secondary" onClick={() => scrollToSection(4)}>
+        <button
+          onClick={() => scrollToSection(4)}
+          className="px-6 py-2.5 rounded-lg bg-black/30 text-white font-mono text-sm backdrop-blur-sm hover:bg-black/40 transition-all duration-300 hover:scale-105"
+        >
           Book a Demo
-        </MagneticButton>
+        </button>
       </nav>
 
       {/* Scroll Progress Bar */}
@@ -206,7 +227,7 @@ export function NavigationHeader({ currentSection, scrollToSection, isLoaded }: 
             key={section.index}
             onClick={() => scrollToSection(section.index)}
             className={`h-2 w-2 rounded-full transition-all duration-300 ${
-              currentSection === section.index ? "h-3 w-8 bg-foreground" : "bg-foreground/30 hover:bg-foreground/60"
+              currentSection === section.index ? "h-3 w-8 bg-gray-900" : "bg-gray-400 hover:bg-gray-600"
             }`}
             title={section.name}
           />
