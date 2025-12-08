@@ -100,8 +100,12 @@ export default function Home() {
         <div className="absolute inset-0 bg-black/20" />
       </div>
 
-      <NavigationHeader currentSection={currentSection} scrollToSection={scrollToSection} isLoaded={isLoaded} />
-
+<NavigationHeader 
+  currentSection={currentSection} 
+  scrollToSection={scrollToSection} 
+  isLoaded={isLoaded}
+  setCurrentSection={setCurrentSection}
+/>
       <div
         ref={scrollContainerRef}
         data-scroll-container

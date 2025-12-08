@@ -1,34 +1,205 @@
 "use client"
 
-import { useEffect, useState } from "react"
-import { ChevronDown, Menu, X } from "lucide-react"
+import { useRef, useEffect, useState } from "react"
+import { 
+  ChevronDown, 
+  Menu, 
+  X,
+  Users,
+  ShoppingCart,
+  Utensils,
+  Briefcase,
+  GraduationCap,
+  Building,
+  Plane,
+  Search,
+  Mail,
+  Store,
+  Link,
+  Stethoscope,
+  Car,
+  FileText,
+  Brain,
+  BarChart,
+  Eye,
+  MessageSquare,
+  Cpu,
+  Cloud,
+  Shield,
+  Zap,
+  Globe,
+  Code,
+  LucideIcon,
+  ChevronLeft,
+  ChevronRight
+} from "lucide-react"
 
 interface NavigationHeaderProps {
   currentSection: number
   scrollToSection: (index: number) => void
   isLoaded: boolean
+  setCurrentSection: (index: number) => void
 }
 
 const sections = [
   { name: "Home", index: 0 },
-  { name: "Solutions", index: 1, hasDropdown: true },
+  { name: "Products & Solutions", index: 1, hasDropdown: true },
   { name: "Services", index: 2, hasDropdown: true },
   { name: "About Us", index: 3 },
   { name: "Contact", index: 4 },
 ]
 
-const solutionsMenu = [
+// Define types for menu items
+interface ProductSolutionItem {
+  name: string
+  description: string
+  icon: LucideIcon
+}
+
+interface ServicesMenuItem {
+  category: string
+  items: string[]
+}
+
+interface ProductsSolutionsMenuItem {
+  category: string
+  items: ProductSolutionItem[]
+}
+
+const productsSolutionsMenu: ProductsSolutionsMenuItem[] = [
   {
     category: "By Industry",
-    items: ["Healthcare", "Finance", "Retail", "Manufacturing", "Logistics"],
+    items: [
+      {
+        name: "CRM",
+        description: "Integrated CRM with efficient process management.",
+        icon: Users
+      },
+      {
+        name: "B2B OMS",
+        description: "Simplified B2B order management & payments.",
+        icon: ShoppingCart
+      },
+      {
+        name: "Food Ordering",
+        description: "Manage orders from kitchen to customer.",
+        icon: Utensils
+      },
+      {
+        name: "Recruitment Agency",
+        description: "Manage end to end employee life cycle.",
+        icon: Briefcase
+      },
+      {
+        name: "Edtech Institutions",
+        description: "Manage online live and f2f classes with student assessment.",
+        icon: GraduationCap
+      },
+      {
+        name: "Hotel & Resorts",
+        description: "Efficiently manage day out packages, activities and room booking.",
+        icon: Building
+      },
+      {
+        name: "Travel Agency",
+        description: "Sell and manage your packages & ticketing system.",
+        icon: Plane
+      },
+      {
+        name: "Job Portal",
+        description: "Solution to connect talent with opportunity.",
+        icon: Search
+      },
+      {
+        name: "Email Marketing",
+        description: "Transform emails into opportunities with inbox delivery.",
+        icon: Mail
+      },
+      {
+        name: "Retail eCommerce",
+        description: "Grow your business with conversion friendly eCommerce store.",
+        icon: Store
+      },
+      {
+        name: "Travel API, CDS",
+        description: "Integrate technology of the future in your system.",
+        icon: Link
+      },
+      {
+        name: "Candidate Assessments",
+        description: "Discover the best fit with confidence.",
+        icon: FileText
+      },
+      {
+        name: "Affiliate Marketing",
+        description: "Boost profits, reward customers with smart affiliations.",
+        icon: Globe
+      },
+      {
+        name: "Diagnostic Centre",
+        description: "Collect, manage, sell health checkup packages.",
+        icon: Stethoscope
+      },
+      {
+        name: "Car Rental",
+        description: "Expand your car rental business with cab booking app.",
+        icon: Car
+      },
+      {
+        name: "Online Test Management",
+        description: "Online test series, quiz simulator application.",
+        icon: FileText
+      }
+    ]
   },
   {
     category: "AI & ML Solutions",
-    items: ["Conversational AI", "Predictive Analytics", "Computer Vision", "NLP Solutions"],
-  },
+    items: [
+      {
+        name: "Conversational AI",
+        description: "Intelligent chatbots and virtual assistants for customer engagement.",
+        icon: MessageSquare
+      },
+      {
+        name: "Predictive Analytics",
+        description: "Data-driven insights and forecasting for business decisions.",
+        icon: BarChart
+      },
+      {
+        name: "Computer Vision",
+        description: "Image and video analysis for automation and quality control.",
+        icon: Eye
+      },
+      {
+        name: "NLP Solutions",
+        description: "Text analysis, sentiment analysis, and language processing.",
+        icon: Brain
+      },
+      {
+        name: "Machine Learning Ops",
+        description: "End-to-end ML pipeline management and deployment.",
+        icon: Cpu
+      },
+      {
+        name: "AI-Powered Automation",
+        description: "Intelligent process automation and workflow optimization.",
+        icon: Zap
+      },
+      {
+        name: "Cloud AI Services",
+        description: "Scalable AI solutions on cloud platforms.",
+        icon: Cloud
+      },
+      {
+        name: "AI Security",
+        description: "Threat detection and prevention using AI algorithms.",
+        icon: Shield
+      }
+    ]
+  }
 ]
 
-const servicesMenu = [
+const servicesMenu: ServicesMenuItem[] = [
   {
     category: "Development",
     items: ["Web Development", "Software Development", "Mobile App Development", "UI/UX Design"],
@@ -39,7 +210,9 @@ const servicesMenu = [
   },
 ]
 
-export function NavigationHeader({ currentSection, scrollToSection, isLoaded }: NavigationHeaderProps) {
+type DropdownMenuType = ServicesMenuItem[] | ProductsSolutionsMenuItem[]
+
+export function NavigationHeader({ currentSection, scrollToSection, isLoaded, setCurrentSection }: NavigationHeaderProps) {
   const [scrollProgress, setScrollProgress] = useState(0)
   const [isServicesOpen, setIsServicesOpen] = useState(false)
   const [isSolutionsOpen, setIsSolutionsOpen] = useState(false)
@@ -47,6 +220,14 @@ export function NavigationHeader({ currentSection, scrollToSection, isLoaded }: 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [mobileSolutionsOpen, setMobileSolutionsOpen] = useState(false)
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false)
+  const [viewAllStates, setViewAllStates] = useState<{[key: string]: boolean}>({
+    "By Industry": false,
+    "AI & ML Solutions": false
+  })
+  const [carouselIndex, setCarouselIndex] = useState<{[key: string]: number}>({
+    "By Industry": 0
+  })
+  const carouselRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const handleScroll = (e: Event) => {
@@ -55,6 +236,14 @@ export function NavigationHeader({ currentSection, scrollToSection, isLoaded }: 
         const maxScroll = target.scrollWidth - target.clientWidth
         const progress = maxScroll > 0 ? (target.scrollLeft / maxScroll) * 100 : 0
         setScrollProgress(progress)
+        
+        const sectionWidth = target.offsetWidth
+        const scrollLeft = target.scrollLeft
+        const newSection = Math.round(scrollLeft / sectionWidth)
+        
+        if (newSection !== currentSection) {
+          setCurrentSection(newSection)
+        }
       }
     }
 
@@ -63,9 +252,8 @@ export function NavigationHeader({ currentSection, scrollToSection, isLoaded }: 
       scrollContainer.addEventListener("scroll", handleScroll)
       return () => scrollContainer.removeEventListener("scroll", handleScroll)
     }
-  }, [])
+  }, [currentSection, setCurrentSection])
 
-  // Close mobile menu when clicking on a section
   const handleMobileSectionClick = (index: number) => {
     scrollToSection(index)
     setIsMobileMenuOpen(false)
@@ -73,7 +261,30 @@ export function NavigationHeader({ currentSection, scrollToSection, isLoaded }: 
     setMobileServicesOpen(false)
   }
 
-  // Prevent body scroll when mobile menu is open
+  const handleViewAllClick = (categoryName: string, e?: React.MouseEvent) => {
+    if (e) {
+      e.stopPropagation()
+    }
+    setViewAllStates(prev => ({
+      ...prev,
+      [categoryName]: !prev[categoryName]
+    }))
+  }
+
+  const handleCarouselNext = (categoryName: string, totalItems: number) => {
+    setCarouselIndex(prev => ({
+      ...prev,
+      [categoryName]: Math.min((prev[categoryName] || 0) + 1, Math.ceil(totalItems / 9) - 1)
+    }))
+  }
+
+  const handleCarouselPrev = (categoryName: string) => {
+    setCarouselIndex(prev => ({
+      ...prev,
+      [categoryName]: Math.max((prev[categoryName] || 0) - 1, 0)
+    }))
+  }
+
   useEffect(() => {
     if (isMobileMenuOpen) {
       document.body.style.overflow = 'hidden'
@@ -85,14 +296,288 @@ export function NavigationHeader({ currentSection, scrollToSection, isLoaded }: 
     }
   }, [isMobileMenuOpen])
 
+  const isProductsSolutionsMenuItem = (item: any): item is ProductsSolutionsMenuItem => {
+    return item && Array.isArray(item.items) && item.items[0] && typeof item.items[0] === 'object' && 'icon' in item.items[0]
+  }
+
+  const renderDropdownContent = (dropdownMenu: DropdownMenuType, isProductsSolutions: boolean) => {
+    if (isProductsSolutions && isProductsSolutionsMenuItem(dropdownMenu[activeCategory])) {
+      const currentCategory = dropdownMenu[activeCategory] as ProductsSolutionsMenuItem
+      const totalItems = currentCategory.items.length
+      const isIndustryCategory = currentCategory.category === "By Industry"
+      
+      // For Industry category: show 9 items per page in carousel
+      // For AI & ML: show all with view all toggle
+      if (isIndustryCategory) {
+        const itemsPerPage = 9
+        const totalPages = Math.ceil(totalItems / itemsPerPage)
+        const currentPage = carouselIndex[currentCategory.category] || 0
+        const startIdx = currentPage * itemsPerPage
+        const endIdx = Math.min(startIdx + itemsPerPage, totalItems)
+        const displayItems = currentCategory.items.slice(startIdx, endIdx)
+
+        return (
+          <div className="grid grid-cols-2 gap-5 p-8 min-w-[1200px]">
+            {/* Left Column - Categories */}
+            <div className="border-r border-white/20 w-[300px] pr-10">
+              <h3 className="font-mono text-sm text-white/80 mb-5 uppercase tracking-widest font-semibold">
+                Solutions Categories
+              </h3>
+              <div className="space-y-3">
+                {dropdownMenu.map((item, idx) => (
+                  <button
+                    key={idx}
+                    onMouseEnter={() => {
+                      setActiveCategory(idx)
+                      setCarouselIndex(prev => ({ ...prev, [item.category]: 0 }))
+                    }}
+                    className={`block w-full text-left px-4 py-3 rounded-md text-base font-sans transition-all duration-200 ${
+                      activeCategory === idx
+                        ? "text-white bg-white/20 font-semibold"
+                        : "text-white/80 hover:text-white hover:bg-white/10"
+                    }`}
+                  >
+                    {item.category}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Right Column - Carousel */}
+            <div className="-ml-48 relative">
+              <div className="flex items-center justify-between mb-5">
+                <h3 className="font-mono text-sm text-white/80 uppercase tracking-widest font-semibold">
+                  {currentCategory.category}
+                </h3>
+                <div className="flex items-center gap-2">
+                  <span className="text-white/60 text-sm font-mono">
+                    {currentPage + 1} / {totalPages}
+                  </span>
+                  <button
+                    onClick={() => handleCarouselPrev(currentCategory.category)}
+                    disabled={currentPage === 0}
+                    className={`p-2 rounded-lg border transition-all duration-200 ${
+                      currentPage === 0
+                        ? "border-white/10 text-white/30 cursor-not-allowed"
+                        : "border-white/30 text-white hover:bg-white/10 hover:border-white/50"
+                    }`}
+                  >
+                    <ChevronLeft className="w-4 h-4" />
+                  </button>
+                  <button
+                    onClick={() => handleCarouselNext(currentCategory.category, totalItems)}
+                    disabled={currentPage === totalPages - 1}
+                    className={`p-2 rounded-lg border transition-all duration-200 ${
+                      currentPage === totalPages - 1
+                        ? "border-white/10 text-white/30 cursor-not-allowed"
+                        : "border-white/30 text-white hover:bg-white/10 hover:border-white/50"
+                    }`}
+                  >
+                    <ChevronRight className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+
+              <div className="overflow-hidden">
+                <div 
+                  ref={carouselRef}
+                  className="transition-transform duration-500 ease-in-out"
+                >
+                  <div className="grid grid-cols-3 gap-4 w-[700px]">
+                    {displayItems.map((item, itemIdx) => {
+                      const Icon = item.icon
+                      return (
+                        <div
+                          key={startIdx + itemIdx}
+                          className="group relative p-4 rounded-lg border border-white/10 bg-white/5 hover:bg-white/10 transition-all duration-200 hover:border-white/20 animate-fadeIn"
+                        >
+                          <div className="flex items-start gap-3">
+                            <div className="flex-shrink-0 p-2 rounded-lg bg-gradient-to-br from-blue-500/20 to-orange-500/20 group-hover:from-blue-500/30 group-hover:to-orange-500/30 transition-all duration-200">
+                              <Icon className="w-5 h-5 text-white" />
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <h4 className="font-semibold text-white text-sm mb-1">{item.name}</h4>
+                              <p className="text-white/70 text-xs leading-relaxed">{item.description}</p>
+                            </div>
+                          </div>
+                        </div>
+                      )
+                    })}
+                  </div>
+                </div>
+              </div>
+
+              {/* Pagination Dots */}
+              <div className="flex justify-center gap-2 mt-6">
+                {Array.from({ length: totalPages }).map((_, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setCarouselIndex(prev => ({ ...prev, [currentCategory.category]: idx }))}
+                    className={`h-2 rounded-full transition-all duration-300 ${
+                      idx === currentPage
+                        ? "w-8 bg-white"
+                        : "w-2 bg-white/30 hover:bg-white/50"
+                    }`}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+        )
+      } else {
+        // AI & ML Solutions - keep the view all toggle functionality
+        const showAllItems = viewAllStates[currentCategory.category]
+        const displayItems = showAllItems 
+          ? currentCategory.items 
+          : currentCategory.items.slice(0, 9)
+        const hasMoreItems = totalItems > 9
+
+        return (
+          <div className="grid grid-cols-2 gap-5 p-8 min-w-[1200px]">
+            {/* Left Column - Categories */}
+            <div className="border-r border-white/20 w-[300px] pr-10">
+              <h3 className="font-mono text-sm text-white/80 mb-5 uppercase tracking-widest font-semibold">
+                Solutions Categories
+              </h3>
+              <div className="space-y-3">
+                {dropdownMenu.map((item, idx) => (
+                  <button
+                    key={idx}
+                    onMouseEnter={() => setActiveCategory(idx)}
+                    className={`block w-full text-left px-4 py-3 rounded-md text-base font-sans transition-all duration-200 ${
+                      activeCategory === idx
+                        ? "text-white bg-white/20 font-semibold"
+                        : "text-white/80 hover:text-white hover:bg-white/10"
+                    }`}
+                  >
+                    {item.category}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Right Column - Items Grid */}
+            <div className="-ml-48">
+              <h3 className="font-mono w-[700px] text-sm text-white/80 mb-5 uppercase tracking-widest font-semibold">
+                {currentCategory.category}
+              </h3>
+              <div className="grid grid-cols-3 gap-4 w-[700px]">
+                {displayItems.map((item, itemIdx) => {
+                  const Icon = item.icon
+                  return (
+                    <div
+                      key={itemIdx}
+                      className="group relative p-4 rounded-lg border border-white/10 bg-white/5 hover:bg-white/10 transition-all duration-200 hover:border-white/20"
+                    >
+                      <div className="flex items-start gap-3">
+                        <div className="flex-shrink-0 p-2 rounded-lg bg-gradient-to-br from-blue-500/20 to-orange-500/20 group-hover:from-blue-500/30 group-hover:to-orange-500/30 transition-all duration-200">
+                          <Icon className="w-5 h-5 text-white" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <h4 className="font-semibold text-white text-sm mb-1">{item.name}</h4>
+                          <p className="text-white/70 text-xs leading-relaxed">{item.description}</p>
+                        </div>
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
+
+              {/* View All Button */}
+              {hasMoreItems && (
+                <div className="mt-6 pt-5 border-t border-white/20">
+                  <button
+                    onClick={(e) => handleViewAllClick(currentCategory.category, e)}
+                    className="px-5 py-2.5 rounded-lg border border-white/30 text-white font-mono text-sm backdrop-blur-sm hover:bg-white/10 transition-all duration-300 hover:scale-105 flex items-center gap-2"
+                  >
+                    {showAllItems ? (
+                      <>
+                        <span>Show Less</span>
+                        <ChevronDown className="w-4 h-4 rotate-180" />
+                      </>
+                    ) : (
+                      <>
+                        <span>View All ({totalItems})</span>
+                        <ChevronDown className="w-4 h-4" />
+                      </>
+                    )}
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
+        )
+      }
+    } else {
+      // Render regular dropdown for Services
+      const currentCategory = dropdownMenu[activeCategory] as ServicesMenuItem
+      
+      return (
+        <div className="grid grid-cols-2 gap-12 p-8 min-w-[800px]">
+          <div className="border-r border-white/20 pr-10">
+            <h3 className="font-mono text-sm text-white/80 mb-5 uppercase tracking-widest font-semibold">
+              Our Services
+            </h3>
+            <div className="space-y-3">
+              {dropdownMenu.map((item, idx) => (
+                <button
+                  key={idx}
+                  onMouseEnter={() => setActiveCategory(idx)}
+                  className={`block w-full text-left px-4 py-3 rounded-md text-base font-sans transition-all duration-200 ${
+                    activeCategory === idx
+                      ? "text-white bg-white/20 font-semibold"
+                      : "text-white/80 hover:text-white hover:bg-white/10"
+                  }`}
+                >
+                  {item.category}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <h3 className="font-mono text-sm text-white/80 mb-5 uppercase tracking-widest font-semibold">
+              {currentCategory.category}
+            </h3>
+            <div className="space-y-3">
+              {currentCategory.items.map((item, itemIdx) => (
+                <button
+                  key={itemIdx}
+                  className="block w-full text-left px-4 py-3 text-base font-sans text-white/90 hover:text-white hover:bg-white/10 rounded-md transition-all duration-200"
+                >
+                  {item}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      )
+    }
+  }
+
   return (
     <>
+      <style>{`
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+            transform: translateY(10px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        .animate-fadeIn {
+          animation: fadeIn 0.5s ease-out;
+        }
+      `}</style>
       <header
         className={`fixed left-0 right-0 top-0 z-50 transition-all duration-700 ${
           isLoaded ? "opacity-100" : "opacity-0"
         }`}
       >
-        <nav className="flex items-center justify-between border-b border-white/10 bg-white/30 px-6 py-6 backdrop-blur-md md:px-12">
+        <nav className="flex items-center justify-between px-6 py-6 backdrop-blur-md md:px-12">
           {/* Logo */}
           <button
             onClick={() => scrollToSection(0)}
@@ -102,7 +587,7 @@ export function NavigationHeader({ currentSection, scrollToSection, isLoaded }: 
               <img src="/logo.svg" alt="Logo" />
             </div>
             <span className="text-2xl uppercase leading-tight text-start font-montserrat">
-              <span className="block font-extrabold tracking-wide text-[#4f47e5]">
+              <span className="block font-extrabold tracking-wide text-white">
                 QWICKBIT
               </span>
             </span>
@@ -114,7 +599,8 @@ export function NavigationHeader({ currentSection, scrollToSection, isLoaded }: 
               if (section.hasDropdown) {
                 const isDropdownOpen = section.name === "Services" ? isServicesOpen : isSolutionsOpen
                 const setDropdownOpen = section.name === "Services" ? setIsServicesOpen : setIsSolutionsOpen
-                const dropdownMenu = section.name === "Services" ? servicesMenu : solutionsMenu
+                const dropdownMenu: DropdownMenuType = section.name === "Services" ? servicesMenu : productsSolutionsMenu
+                const isProductsSolutions = section.name === "Products & Solutions"
 
                 return (
                   <div key={section.index} className="relative group">
@@ -138,7 +624,7 @@ export function NavigationHeader({ currentSection, scrollToSection, isLoaded }: 
                     </button>
 
                     <div
-                      className={`absolute top-full mt-6 left-1/2 -translate-x-1/2  bg-black/80 border border-white/30 rounded-lg backdrop-blur-7xl backdrop-saturate-150 shadow-2xl transition-all duration-300 transform origin-top ${
+                      className={`absolute top-full mt-6 left-1/2 ml-28 -translate-x-1/2 bg-black/90 border border-white/30 rounded-lg backdrop-blur-7xl backdrop-saturate-150 shadow-2xl transition-all duration-300 transform origin-top ${
                         isDropdownOpen ? "opacity-100 scale-y-100 visible" : "opacity-0 scale-y-95 invisible"
                       }`}
                       onMouseEnter={() => setDropdownOpen(true)}
@@ -147,49 +633,10 @@ export function NavigationHeader({ currentSection, scrollToSection, isLoaded }: 
                         setActiveCategory(0)
                       }}
                     >
-                      <div className="grid grid-cols-2 gap-8 p-6 min-w-max">
-                        {/* Left Column - Categories */}
-                        <div className="border-r border-white/20 pr-8">
-                          <h3 className="font-mono text-sm text-white/80 mb-4 uppercase tracking-widest font-semibold">
-                            {section.name === "Services" ? "Our Services" : "Solutions"}
-                          </h3>
-                          <div className="space-y-2">
-                            {dropdownMenu.map((item, idx) => (
-                              <button
-                                key={idx}
-                                onMouseEnter={() => setActiveCategory(idx)}
-                                className={`block w-full text-left px-3 py-2 rounded-md text-base font-sans transition-all duration-200 ${
-                                  activeCategory === idx
-                                    ? "text-white bg-white/20 font-semibold"
-                                    : "text-white/80 hover:text-white hover:bg-white/10"
-                                }`}
-                              >
-                                {item.category}
-                              </button>
-                            ))}
-                          </div>
-                        </div>
-
-                        {/* Right Column - Items for Active Category */}
-                        <div>
-                          <h3 className="font-mono text-sm text-white/80 mb-4 uppercase tracking-widest font-semibold">
-                            {dropdownMenu[activeCategory].category}
-                          </h3>
-                          <div className="space-y-2">
-                            {dropdownMenu[activeCategory].items.map((item, itemIdx) => (
-                              <button
-                                key={itemIdx}
-                                className="block w-full text-left px-3 py-2 text-base font-sans text-white/90 hover:text-white hover:bg-white/10 rounded-md transition-all duration-200"
-                              >
-                                {item}
-                              </button>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
+                      {renderDropdownContent(dropdownMenu, isProductsSolutions)}
 
                       {/* Bottom CTA */}
-                      <div className="border-t border-white/20 px-6 py-4">
+                      <div className="border-t border-white/20 px-8 py-5">
                         <button
                           onClick={() => {
                             scrollToSection(section.index)
@@ -255,22 +702,38 @@ export function NavigationHeader({ currentSection, scrollToSection, isLoaded }: 
           style={{ width: `${scrollProgress}%` }}
         />
 
-        {/* Section Indicators - Desktop Only */}
+        {/* Glass Effect Section Indicators - Desktop Only */}
         <div
-          className={`hidden md:flex fixed right-6 top-1/2 -translate-y-1/2 flex-col gap-4 md:right-12 ${
+          className={`hidden md:flex fixed right-6 top-1/2 -translate-y-1/2 flex-col gap-3 md:right-8 ${
             isLoaded ? "opacity-100" : "opacity-0"
           } transition-opacity duration-700`}
         >
-          {sections.map((section) => (
-            <button
-              key={section.index}
-              onClick={() => scrollToSection(section.index)}
-              className={`h-2 w-2 rounded-full transition-all duration-300 ${
-                currentSection === section.index ? "h-3 w-8 bg-gray-900" : "bg-gray-400 hover:bg-gray-600"
-              }`}
-              title={section.name}
-            />
-          ))}
+          <div className="flex flex-col gap-3 rounded-full border border-white/20 bg-white/10 p-4 shadow-2xl backdrop-blur-2xl">
+            {sections.map((section) => (
+              <button
+                key={section.index}
+                onClick={() => scrollToSection(section.index)}
+                className="group relative flex items-center justify-center"
+                aria-label={`Go to ${section.name}`}
+              >
+                <div
+                  className={`h-2.5 w-2.5 rounded-full transition-all duration-300 ${
+                    currentSection === section.index
+                      ? 'scale-125 bg-white shadow-lg shadow-white/50'
+                      : 'bg-white/40 hover:bg-white/60 hover:scale-110'
+                  }`}
+                />
+                
+                <div className="pointer-events-none absolute right-full mr-4 whitespace-nowrap rounded-lg border border-white/20 bg-white/10 px-3 py-1.5 text-sm font-medium text-white opacity-0 shadow-xl backdrop-blur-2xl transition-opacity duration-200 group-hover:opacity-100">
+                  {section.name}
+                </div>
+
+                {currentSection === section.index && (
+                  <div className="absolute inset-0 -z-10 animate-pulse rounded-full bg-white/20 blur-md" />
+                )}
+              </button>
+            ))}
+          </div>
         </div>
       </header>
 
@@ -282,19 +745,16 @@ export function NavigationHeader({ currentSection, scrollToSection, isLoaded }: 
             : "opacity-0 pointer-events-none"
         }`}
       >
-        {/* Backdrop */}
         <div
           className="absolute inset-0 bg-black/60 backdrop-blur-sm"
           onClick={() => setIsMobileMenuOpen(false)}
         />
 
-        {/* Menu Panel */}
         <div
           className={`absolute right-0 top-0 h-full w-80 bg-gradient-to-b from-gray-900/95 to-gray-800/95 backdrop-blur-xl border-l border-white/10 shadow-2xl transform transition-transform duration-500 ease-in-out ${
             isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
           }`}
         >
-          {/* Mobile Menu Header */}
           <div className="flex items-center justify-between p-6 border-b border-white/10">
             <div className="flex items-center gap-3">
               <div className="h-8 w-8">
@@ -310,7 +770,6 @@ export function NavigationHeader({ currentSection, scrollToSection, isLoaded }: 
             </button>
           </div>
 
-          {/* Mobile Menu Content */}
           <div className="h-[calc(100%-80px)] overflow-y-auto">
             <div className="p-4">
               <nav className="flex flex-col space-y-1">
@@ -318,7 +777,8 @@ export function NavigationHeader({ currentSection, scrollToSection, isLoaded }: 
                   if (section.hasDropdown) {
                     const isDropdownOpen = section.name === "Services" ? mobileServicesOpen : mobileSolutionsOpen
                     const setDropdownOpen = section.name === "Services" ? setMobileServicesOpen : setMobileSolutionsOpen
-                    const dropdownMenu = section.name === "Services" ? servicesMenu : solutionsMenu
+                    const dropdownMenu: DropdownMenuType = section.name === "Services" ? servicesMenu : productsSolutionsMenu
+                    const isProductsSolutions = section.name === "Products & Solutions"
 
                     return (
                       <div key={section.index} className="border-b border-white/10 last:border-0">
@@ -338,35 +798,102 @@ export function NavigationHeader({ currentSection, scrollToSection, isLoaded }: 
                           />
                         </button>
 
-                        {/* Mobile Dropdown Content */}
                         <div
                           className={`overflow-hidden transition-all duration-300 ${
-                            isDropdownOpen ? "max-h-[500px]" : "max-h-0"
+                            isDropdownOpen ? "max-h-[800px]" : "max-h-0"
                           }`}
                         >
                           <div className="px-4 pb-4 space-y-4">
                             <div className="grid gap-4">
-                              {dropdownMenu.map((category, idx) => (
-                                <div key={idx} className="space-y-2">
-                                  <h3 className="font-medium text-white/80 text-sm uppercase tracking-wider px-2">
-                                    {category.category}
-                                  </h3>
-                                  <div className="space-y-1">
-                                    {category.items.map((item, itemIdx) => (
-                                      <button
-                                        key={itemIdx}
-                                        onClick={() => handleMobileSectionClick(section.index)}
-                                        className="w-full text-left px-4 py-2.5 text-white/90 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
-                                      >
-                                        {item}
-                                      </button>
-                                    ))}
-                                  </div>
-                                </div>
-                              ))}
+                              {dropdownMenu.map((category, idx) => {
+                                if (isProductsSolutionsMenuItem(category)) {
+                                  const currentCategory = category as ProductsSolutionsMenuItem
+                                  const showAllItems = viewAllStates[currentCategory.category]
+                                  const displayItems = showAllItems 
+                                    ? currentCategory.items 
+                                    : currentCategory.items.slice(0, 9)
+                                  const totalItems = currentCategory.items.length
+                                  const hasMoreItems = totalItems > 9
+
+                                  return (
+                                    <div key={idx} className="space-y-2">
+                                      <h3 className="font-medium text-white/80 text-sm uppercase tracking-wider px-2">
+                                        {currentCategory.category}
+                                      </h3>
+                                      <div className="grid grid-cols-3 gap-2">
+                                        {displayItems.map((item, itemIdx) => {
+                                          const Icon = item.icon
+                                          return (
+                                            <button
+                                              key={itemIdx}
+                                              onClick={() => {
+                                                handleMobileSectionClick(section.index)
+                                                setMobileSolutionsOpen(false)
+                                              }}
+                                              className="w-full text-left p-3 text-white/90 hover:text-white hover:bg-white/10 rounded-lg transition-colors flex flex-col items-center gap-2"
+                                            >
+                                              <div className="flex-shrink-0 p-2 rounded-lg bg-gradient-to-br from-blue-500/20 to-orange-500/20">
+                                                <Icon className="w-4 h-4 text-white" />
+                                              </div>
+                                              <div className="text-center">
+                                                <div className="font-medium text-xs">{item.name}</div>
+                                                <div className="text-white/70 text-[10px] mt-1 line-clamp-2">
+                                                  {item.description}
+                                                </div>
+                                              </div>
+                                            </button>
+                                          )
+                                        })}
+                                      </div>
+                                      
+                                      {/* View All Button for Mobile */}
+                                      {hasMoreItems && (
+                                        <button
+                                          onClick={() => handleViewAllClick(currentCategory.category)}
+                                          className="w-full px-4 py-3 text-center border border-white/20 rounded-lg text-white hover:bg-white/10 transition-colors flex items-center justify-center gap-2"
+                                        >
+                                          {showAllItems ? (
+                                            <>
+                                              <span>Show Less</span>
+                                              <ChevronDown className="w-4 h-4 rotate-180" />
+                                            </>
+                                          ) : (
+                                            <>
+                                              <span>View All ({totalItems})</span>
+                                              <ChevronDown className="w-4 h-4" />
+                                            </>
+                                          )}
+                                        </button>
+                                      )}
+                                    </div>
+                                  )
+                                } else {
+                                  // Regular category (for Services)
+                                  return (
+                                    <div key={idx} className="space-y-2">
+                                      <h3 className="font-medium text-white/80 text-sm uppercase tracking-wider px-2">
+                                        {category.category}
+                                      </h3>
+                                      <div className="grid grid-cols-1 gap-2">
+                                        {category.items.map((item, itemIdx) => (
+                                          <button
+                                            key={itemIdx}
+                                            onClick={() => {
+                                              handleMobileSectionClick(section.index)
+                                              setMobileServicesOpen(false)
+                                            }}
+                                            className="w-full text-left px-4 py-3 text-white/90 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
+                                          >
+                                            {item}
+                                          </button>
+                                        ))}
+                                      </div>
+                                    </div>
+                                  )
+                                }
+                              })}
                             </div>
                             
-                            {/* View All Button for Mobile */}
                             <button
                               onClick={() => {
                                 handleMobileSectionClick(section.index)
@@ -398,7 +925,6 @@ export function NavigationHeader({ currentSection, scrollToSection, isLoaded }: 
                 })}
               </nav>
 
-              {/* Mobile CTA Section */}
               <div className="mt-8 p-4 border-t border-white/10 pt-6">
                 <button
                   onClick={() => handleMobileSectionClick(4)}
@@ -407,7 +933,6 @@ export function NavigationHeader({ currentSection, scrollToSection, isLoaded }: 
                   Book a Demo
                 </button>
                 
-                {/* Contact Info */}
                 <div className="mt-6 space-y-3 text-white/80">
                   <p className="text-sm">Need help? Contact us:</p>
                   <div className="space-y-2">
