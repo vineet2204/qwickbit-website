@@ -685,40 +685,7 @@ export function DetailPage({ isOpen, onClose, item, type }: DetailPageProps) {
                   </div>
                 </section>
 
-                {/* Process Timeline */}
-                <section id="process" className="scroll-mt-24">
-                  <div className="flex items-center gap-4 mb-8">
-                    <Clock className="w-8 h-8 text-orange-400" />
-                    <h2 className="text-3xl md:text-4xl font-bold text-white">Development Process</h2>
-                  </div>
-                  <div className="relative">
-                    <div className="absolute left-4 md:left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-blue-500/30 via-purple-500/30 to-orange-500/30" />
-                    <div className="space-y-8">
-                      {content.process.map((step: string, idx: number) => (
-                        <div key={idx} className="flex items-start gap-6">
-                          <div className="relative z-10 flex-shrink-0 w-8 h-8 md:w-10 md:h-10 rounded-full bg-gradient-to-br from-blue-500/30 to-purple-500/30 flex items-center justify-center backdrop-blur-md border border-white/20">
-                            <span className="text-white font-bold text-sm">{idx + 1}</span>
-                          </div>
-                          <div className="flex-1 p-6 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md">
-                            <div className="flex items-center justify-between mb-3">
-                              <h3 className="text-white font-bold text-xl">{step}</h3>
-                              <span className="text-sm text-white/60 font-mono">
-                                {idx === 0 ? 'Week 1-2' : 
-                                 idx === 1 ? 'Week 3-4' : 
-                                 idx === 2 ? 'Week 5-8' : 
-                                 idx === 3 ? 'Week 9-10' : 
-                                 idx === 4 ? 'Week 11-12' : 'Ongoing'}
-                              </span>
-                            </div>
-                            <p className="text-white/70">
-                              Detailed planning and execution with regular progress updates and milestone reviews.
-                            </p>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </section>
+            
 
                 {/* Use Cases */}
                 <section id="usecases" className="scroll-mt-24">
