@@ -559,7 +559,7 @@ export function DetailPage({ isOpen, onClose, item, type }: DetailPageProps) {
                 {/* Navigation Tabs */}
                 <div className="flex overflow-x-auto py-4 mb-8 border-b border-white/10">
                   <div className="flex gap-2">
-                    {['overview', 'features', 'benefits', 'technologies', 'process', 'usecases'].map((section) => (
+                    {['overview', 'features', 'benefits', 'technologies', 'usecases'].map((section) => (
                       <button
                         key={section}
                         onClick={() => {
