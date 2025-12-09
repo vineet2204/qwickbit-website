@@ -12,11 +12,48 @@ import { NavigationHeader } from "@/components/navigation-header"
 import { Footer } from "@/components/Footer"
 import { useRef, useEffect, useState } from "react"
 
+// Import DetailPage component
+import { DetailPage } from "@/components/Details"
+
+// Define the item type
+interface ProductSolutionItem {
+  name: string
+  description: string
+  icon: any
+}
+
 export default function Home() {
   const scrollContainerRef = useRef<HTMLDivElement>(null)
   const [currentSection, setCurrentSection] = useState(0)
   const [isLoaded, setIsLoaded] = useState(false)
   const shaderContainerRef = useRef<HTMLDivElement>(null)
+
+  // Detail Page States
+  const [detailPageOpen, setDetailPageOpen] = useState(false)
+  const [selectedItem, setSelectedItem] = useState<ProductSolutionItem | null>(null)
+  const [selectedType, setSelectedType] = useState<'service' | 'product'>('product')
+
+  // Handler for opening detail pages
+  const handleItemClick = (item: ProductSolutionItem, type: 'service' | 'product') => {
+    console.log("Opening detail page for:", item.name, type)
+    
+    // Set the new item and type
+    setSelectedItem(item)
+    setSelectedType(type)
+    
+    // Open detail page
+    setDetailPageOpen(true)
+  }
+
+  // Handler for closing detail page
+  const handleCloseDetailPage = () => {
+    console.log("Closing detail page")
+    setDetailPageOpen(false)
+    // Clear selected item after animation
+    setTimeout(() => {
+      setSelectedItem(null)
+    }, 300)
+  }
 
   useEffect(() => {
     const checkShaderReady = () => {
@@ -100,17 +137,20 @@ export default function Home() {
         <div className="absolute inset-0 bg-black/20" />
       </div>
 
-<NavigationHeader 
-  currentSection={currentSection} 
-  scrollToSection={scrollToSection} 
-  isLoaded={isLoaded}
-  setCurrentSection={setCurrentSection}
-/>
+      <NavigationHeader 
+        currentSection={currentSection} 
+        scrollToSection={scrollToSection} 
+        isLoaded={isLoaded}
+        setCurrentSection={setCurrentSection}
+        onItemClick={handleItemClick}
+        isDetailPageOpen={detailPageOpen}
+      />
+
       <div
         ref={scrollContainerRef}
         data-scroll-container
         className={`relative z-10 flex h-screen overflow-x-auto overflow-y-hidden transition-opacity duration-700 ${
-          isLoaded ? "opacity-100" : "opacity-0"
+          isLoaded && !detailPageOpen ? "opacity-100" : "opacity-0 pointer-events-none"
         }`}
         style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
       >
@@ -170,6 +210,17 @@ export default function Home() {
           <Footer />
         </section>
       </div>
+
+      {/* Detail Page Component */}
+      {selectedItem && (
+        <DetailPage
+          key={`${selectedItem.name}-${selectedType}`}
+          isOpen={detailPageOpen}
+          onClose={handleCloseDetailPage}
+          item={selectedItem}
+          type={selectedType}
+        />
+      )}
 
       <style jsx global>{`
         div::-webkit-scrollbar {

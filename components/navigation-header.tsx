@@ -29,7 +29,6 @@ import {
   Zap,
   Globe,
   Code,
-  LucideIcon,
   ChevronLeft,
   ChevronRight
 } from "lucide-react"
@@ -39,6 +38,8 @@ interface NavigationHeaderProps {
   scrollToSection: (index: number) => void
   isLoaded: boolean
   setCurrentSection: (index: number) => void
+  onItemClick: (item: ProductSolutionItem, type: 'service' | 'product') => void
+  isDetailPageOpen?: boolean
 }
 
 const sections = [
@@ -49,16 +50,15 @@ const sections = [
   { name: "Contact", index: 4 },
 ]
 
-// Define types for menu items
 interface ProductSolutionItem {
   name: string
   description: string
-  icon: LucideIcon
+  icon: any
 }
 
 interface ServicesMenuItem {
   category: string
-  items: string[]
+  items: ProductSolutionItem[]
 }
 
 interface ProductsSolutionsMenuItem {
@@ -70,131 +70,35 @@ const productsSolutionsMenu: ProductsSolutionsMenuItem[] = [
   {
     category: "By Industry",
     items: [
-      {
-        name: "CRM",
-        description: "Integrated CRM with efficient process management.",
-        icon: Users
-      },
-      {
-        name: "B2B OMS",
-        description: "Simplified B2B order management & payments.",
-        icon: ShoppingCart
-      },
-      {
-        name: "Food Ordering",
-        description: "Manage orders from kitchen to customer.",
-        icon: Utensils
-      },
-      {
-        name: "Recruitment Agency",
-        description: "Manage end to end employee life cycle.",
-        icon: Briefcase
-      },
-      {
-        name: "Edtech Institutions",
-        description: "Manage online live and f2f classes with student assessment.",
-        icon: GraduationCap
-      },
-      {
-        name: "Hotel & Resorts",
-        description: "Efficiently manage day out packages, activities and room booking.",
-        icon: Building
-      },
-      {
-        name: "Travel Agency",
-        description: "Sell and manage your packages & ticketing system.",
-        icon: Plane
-      },
-      {
-        name: "Job Portal",
-        description: "Solution to connect talent with opportunity.",
-        icon: Search
-      },
-      {
-        name: "Email Marketing",
-        description: "Transform emails into opportunities with inbox delivery.",
-        icon: Mail
-      },
-      {
-        name: "Retail eCommerce",
-        description: "Grow your business with conversion friendly eCommerce store.",
-        icon: Store
-      },
-      {
-        name: "Travel API, CDS",
-        description: "Integrate technology of the future in your system.",
-        icon: Link
-      },
-      {
-        name: "Candidate Assessments",
-        description: "Discover the best fit with confidence.",
-        icon: FileText
-      },
-      {
-        name: "Affiliate Marketing",
-        description: "Boost profits, reward customers with smart affiliations.",
-        icon: Globe
-      },
-      {
-        name: "Diagnostic Centre",
-        description: "Collect, manage, sell health checkup packages.",
-        icon: Stethoscope
-      },
-      {
-        name: "Car Rental",
-        description: "Expand your car rental business with cab booking app.",
-        icon: Car
-      },
-      {
-        name: "Online Test Management",
-        description: "Online test series, quiz simulator application.",
-        icon: FileText
-      }
+      { name: "CRM", description: "Integrated CRM with efficient process management.", icon: Users },
+      { name: "B2B OMS", description: "Simplified B2B order management & payments.", icon: ShoppingCart },
+      { name: "Food Ordering", description: "Manage orders from kitchen to customer.", icon: Utensils },
+      { name: "Recruitment Agency", description: "Manage end to end employee life cycle.", icon: Briefcase },
+      { name: "Edtech Institutions", description: "Manage online live and f2f classes with student assessment.", icon: GraduationCap },
+      { name: "Hotel & Resorts", description: "Efficiently manage day out packages, activities and room booking.", icon: Building },
+      { name: "Travel Agency", description: "Sell and manage your packages & ticketing system.", icon: Plane },
+      { name: "Job Portal", description: "Solution to connect talent with opportunity.", icon: Search },
+      { name: "Email Marketing", description: "Transform emails into opportunities with inbox delivery.", icon: Mail },
+      { name: "Retail eCommerce", description: "Grow your business with conversion friendly eCommerce store.", icon: Store },
+      { name: "Travel API, CDS", description: "Integrate technology of the future in your system.", icon: Link },
+      { name: "Candidate Assessments", description: "Discover the best fit with confidence.", icon: FileText },
+      { name: "Affiliate Marketing", description: "Boost profits, reward customers with smart affiliations.", icon: Globe },
+      { name: "Diagnostic Centre", description: "Collect, manage, sell health checkup packages.", icon: Stethoscope },
+      { name: "Car Rental", description: "Expand your car rental business with cab booking app.", icon: Car },
+      { name: "Online Test Management", description: "Online test series, quiz simulator application.", icon: FileText }
     ]
   },
   {
     category: "AI & ML Solutions",
     items: [
-      {
-        name: "Conversational AI",
-        description: "Intelligent chatbots and virtual assistants for customer engagement.",
-        icon: MessageSquare
-      },
-      {
-        name: "Predictive Analytics",
-        description: "Data-driven insights and forecasting for business decisions.",
-        icon: BarChart
-      },
-      {
-        name: "Computer Vision",
-        description: "Image and video analysis for automation and quality control.",
-        icon: Eye
-      },
-      {
-        name: "NLP Solutions",
-        description: "Text analysis, sentiment analysis, and language processing.",
-        icon: Brain
-      },
-      {
-        name: "Machine Learning Ops",
-        description: "End-to-end ML pipeline management and deployment.",
-        icon: Cpu
-      },
-      {
-        name: "AI-Powered Automation",
-        description: "Intelligent process automation and workflow optimization.",
-        icon: Zap
-      },
-      {
-        name: "Cloud AI Services",
-        description: "Scalable AI solutions on cloud platforms.",
-        icon: Cloud
-      },
-      {
-        name: "AI Security",
-        description: "Threat detection and prevention using AI algorithms.",
-        icon: Shield
-      }
+      { name: "Conversational AI", description: "Intelligent chatbots and virtual assistants for customer engagement.", icon: MessageSquare },
+      { name: "Predictive Analytics", description: "Data-driven insights and forecasting for business decisions.", icon: BarChart },
+      { name: "Computer Vision", description: "Image and video analysis for automation and quality control.", icon: Eye },
+      { name: "NLP Solutions", description: "Text analysis, sentiment analysis, and language processing.", icon: Brain },
+      { name: "Machine Learning Ops", description: "End-to-end ML pipeline management and deployment.", icon: Cpu },
+      { name: "AI-Powered Automation", description: "Intelligent process automation and workflow optimization.", icon: Zap },
+      { name: "Cloud AI Services", description: "Scalable AI solutions on cloud platforms.", icon: Cloud },
+      { name: "AI Security", description: "Threat detection and prevention using AI algorithms.", icon: Shield }
     ]
   }
 ]
@@ -202,17 +106,33 @@ const productsSolutionsMenu: ProductsSolutionsMenuItem[] = [
 const servicesMenu: ServicesMenuItem[] = [
   {
     category: "Development",
-    items: ["Web Development", "Software Development", "Mobile App Development", "UI/UX Design"],
+    items: [
+      { name: "Web Development", description: "Custom web applications built with modern frameworks and technologies.", icon: Code },
+      { name: "Software Development", description: "End-to-end software solutions tailored to your business needs.", icon: Cpu },
+      { name: "Mobile App Development", description: "Native and cross-platform mobile apps for iOS and Android.", icon: Globe },
+      { name: "UI/UX Design", description: "User-centered design that creates engaging digital experiences.", icon: Eye }
+    ]
   },
   {
     category: "Solutions & Support",
-    items: ["Customize Solutions", "IT Solutions", "Testing and QA"],
-  },
+    items: [
+      { name: "Customize Solutions", description: "Tailored software solutions designed for your unique requirements.", icon: Zap },
+      { name: "IT Solutions", description: "Comprehensive IT infrastructure and consulting services.", icon: Cloud },
+      { name: "Testing and QA", description: "Rigorous quality assurance and testing for flawless software.", icon: Shield }
+    ]
+  }
 ]
 
 type DropdownMenuType = ServicesMenuItem[] | ProductsSolutionsMenuItem[]
 
-export function NavigationHeader({ currentSection, scrollToSection, isLoaded, setCurrentSection }: NavigationHeaderProps) {
+export function NavigationHeader({ 
+  currentSection, 
+  scrollToSection, 
+  isLoaded, 
+  setCurrentSection, 
+  onItemClick,
+  isDetailPageOpen = false 
+}: NavigationHeaderProps) {
   const [scrollProgress, setScrollProgress] = useState(0)
   const [isServicesOpen, setIsServicesOpen] = useState(false)
   const [isSolutionsOpen, setIsSolutionsOpen] = useState(false)
@@ -227,9 +147,10 @@ export function NavigationHeader({ currentSection, scrollToSection, isLoaded, se
   const [carouselIndex, setCarouselIndex] = useState<{[key: string]: number}>({
     "By Industry": 0
   })
-  const carouselRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
+    if (isDetailPageOpen) return
+
     const handleScroll = (e: Event) => {
       const target = e.target as HTMLDivElement
       if (target) {
@@ -252,7 +173,7 @@ export function NavigationHeader({ currentSection, scrollToSection, isLoaded, se
       scrollContainer.addEventListener("scroll", handleScroll)
       return () => scrollContainer.removeEventListener("scroll", handleScroll)
     }
-  }, [currentSection, setCurrentSection])
+  }, [currentSection, setCurrentSection, isDetailPageOpen])
 
   const handleMobileSectionClick = (index: number) => {
     scrollToSection(index)
@@ -285,6 +206,15 @@ export function NavigationHeader({ currentSection, scrollToSection, isLoaded, se
     }))
   }
 
+  const handleItemClickInternal = (item: ProductSolutionItem, type: 'service' | 'product') => {
+    onItemClick(item, type)
+    setIsServicesOpen(false)
+    setIsSolutionsOpen(false)
+    setIsMobileMenuOpen(false)
+    setMobileSolutionsOpen(false)
+    setMobileServicesOpen(false)
+  }
+
   useEffect(() => {
     if (isMobileMenuOpen) {
       document.body.style.overflow = 'hidden'
@@ -301,13 +231,11 @@ export function NavigationHeader({ currentSection, scrollToSection, isLoaded, se
   }
 
   const renderDropdownContent = (dropdownMenu: DropdownMenuType, isProductsSolutions: boolean) => {
-    if (isProductsSolutions && isProductsSolutionsMenuItem(dropdownMenu[activeCategory])) {
+    if (isProductsSolutionsMenuItem(dropdownMenu[activeCategory])) {
       const currentCategory = dropdownMenu[activeCategory] as ProductsSolutionsMenuItem
       const totalItems = currentCategory.items.length
       const isIndustryCategory = currentCategory.category === "By Industry"
       
-      // For Industry category: show 9 items per page in carousel
-      // For AI & ML: show all with view all toggle
       if (isIndustryCategory) {
         const itemsPerPage = 9
         const totalPages = Math.ceil(totalItems / itemsPerPage)
@@ -318,7 +246,6 @@ export function NavigationHeader({ currentSection, scrollToSection, isLoaded, se
 
         return (
           <div className="grid grid-cols-2 gap-5 p-8 min-w-[1200px]">
-            {/* Left Column - Categories */}
             <div className="border-r border-white/20 w-[300px] pr-10">
               <h3 className="font-mono text-sm text-white/80 mb-5 uppercase tracking-widest font-semibold">
                 Solutions Categories
@@ -343,7 +270,6 @@ export function NavigationHeader({ currentSection, scrollToSection, isLoaded, se
               </div>
             </div>
 
-            {/* Right Column - Carousel */}
             <div className="-ml-48 relative">
               <div className="flex items-center justify-between mb-5">
                 <h3 className="font-mono text-sm text-white/80 uppercase tracking-widest font-semibold">
@@ -379,17 +305,15 @@ export function NavigationHeader({ currentSection, scrollToSection, isLoaded, se
               </div>
 
               <div className="overflow-hidden">
-                <div 
-                  ref={carouselRef}
-                  className="transition-transform duration-500 ease-in-out"
-                >
+                <div className="transition-transform duration-500 ease-in-out">
                   <div className="grid grid-cols-3 gap-4 w-[700px]">
                     {displayItems.map((item, itemIdx) => {
                       const Icon = item.icon
                       return (
-                        <div
+                        <button
                           key={startIdx + itemIdx}
-                          className="group relative p-4 rounded-lg border border-white/10 bg-white/5 hover:bg-white/10 transition-all duration-200 hover:border-white/20 animate-fadeIn"
+                          onClick={() => handleItemClickInternal(item, 'product')}
+                          className="group relative p-4 rounded-lg border border-white/10 bg-white/5 hover:bg-white/10 transition-all duration-200 hover:border-white/20 animate-fadeIn cursor-pointer text-left"
                         >
                           <div className="flex items-start gap-3">
                             <div className="flex-shrink-0 p-2 rounded-lg bg-gradient-to-br from-blue-500/20 to-orange-500/20 group-hover:from-blue-500/30 group-hover:to-orange-500/30 transition-all duration-200">
@@ -400,14 +324,13 @@ export function NavigationHeader({ currentSection, scrollToSection, isLoaded, se
                               <p className="text-white/70 text-xs leading-relaxed">{item.description}</p>
                             </div>
                           </div>
-                        </div>
+                        </button>
                       )
                     })}
                   </div>
                 </div>
               </div>
 
-              {/* Pagination Dots */}
               <div className="flex justify-center gap-2 mt-6">
                 {Array.from({ length: totalPages }).map((_, idx) => (
                   <button
@@ -425,7 +348,6 @@ export function NavigationHeader({ currentSection, scrollToSection, isLoaded, se
           </div>
         )
       } else {
-        // AI & ML Solutions - keep the view all toggle functionality
         const showAllItems = viewAllStates[currentCategory.category]
         const displayItems = showAllItems 
           ? currentCategory.items 
@@ -434,10 +356,9 @@ export function NavigationHeader({ currentSection, scrollToSection, isLoaded, se
 
         return (
           <div className="grid grid-cols-2 gap-5 p-8 min-w-[1200px]">
-            {/* Left Column - Categories */}
             <div className="border-r border-white/20 w-[300px] pr-10">
               <h3 className="font-mono text-sm text-white/80 mb-5 uppercase tracking-widest font-semibold">
-                Solutions Categories
+                {isProductsSolutions ? "Solutions Categories" : "Our Services"}
               </h3>
               <div className="space-y-3">
                 {dropdownMenu.map((item, idx) => (
@@ -456,7 +377,6 @@ export function NavigationHeader({ currentSection, scrollToSection, isLoaded, se
               </div>
             </div>
 
-            {/* Right Column - Items Grid */}
             <div className="-ml-48">
               <h3 className="font-mono w-[700px] text-sm text-white/80 mb-5 uppercase tracking-widest font-semibold">
                 {currentCategory.category}
@@ -465,9 +385,10 @@ export function NavigationHeader({ currentSection, scrollToSection, isLoaded, se
                 {displayItems.map((item, itemIdx) => {
                   const Icon = item.icon
                   return (
-                    <div
+                    <button
                       key={itemIdx}
-                      className="group relative p-4 rounded-lg border border-white/10 bg-white/5 hover:bg-white/10 transition-all duration-200 hover:border-white/20"
+                      onClick={() => handleItemClickInternal(item, isProductsSolutions ? 'product' : 'service')}
+                      className="group relative p-4 rounded-lg border border-white/10 bg-white/5 hover:bg-white/10 transition-all duration-200 hover:border-white/20 cursor-pointer text-left"
                     >
                       <div className="flex items-start gap-3">
                         <div className="flex-shrink-0 p-2 rounded-lg bg-gradient-to-br from-blue-500/20 to-orange-500/20 group-hover:from-blue-500/30 group-hover:to-orange-500/30 transition-all duration-200">
@@ -478,12 +399,11 @@ export function NavigationHeader({ currentSection, scrollToSection, isLoaded, se
                           <p className="text-white/70 text-xs leading-relaxed">{item.description}</p>
                         </div>
                       </div>
-                    </div>
+                    </button>
                   )
                 })}
               </div>
 
-              {/* View All Button */}
               {hasMoreItems && (
                 <div className="mt-6 pt-5 border-t border-white/20">
                   <button
@@ -508,51 +428,56 @@ export function NavigationHeader({ currentSection, scrollToSection, isLoaded, se
           </div>
         )
       }
-    } else {
-      // Render regular dropdown for Services
-      const currentCategory = dropdownMenu[activeCategory] as ServicesMenuItem
-      
-      return (
-        <div className="grid grid-cols-2 gap-12 p-8 min-w-[800px]">
-          <div className="border-r border-white/20 pr-10">
-            <h3 className="font-mono text-sm text-white/80 mb-5 uppercase tracking-widest font-semibold">
-              Our Services
-            </h3>
-            <div className="space-y-3">
-              {dropdownMenu.map((item, idx) => (
-                <button
-                  key={idx}
-                  onMouseEnter={() => setActiveCategory(idx)}
-                  className={`block w-full text-left px-4 py-3 rounded-md text-base font-sans transition-all duration-200 ${
-                    activeCategory === idx
-                      ? "text-white bg-white/20 font-semibold"
-                      : "text-white/80 hover:text-white hover:bg-white/10"
-                  }`}
-                >
-                  {item.category}
-                </button>
-              ))}
-            </div>
-          </div>
+    }
+  }
 
-          <div>
-            <h3 className="font-mono text-sm text-white/80 mb-5 uppercase tracking-widest font-semibold">
-              {currentCategory.category}
-            </h3>
-            <div className="space-y-3">
-              {currentCategory.items.map((item, itemIdx) => (
-                <button
-                  key={itemIdx}
-                  className="block w-full text-left px-4 py-3 text-base font-sans text-white/90 hover:text-white hover:bg-white/10 rounded-md transition-all duration-200"
-                >
-                  {item}
-                </button>
-              ))}
-            </div>
-          </div>
+  const renderNavigationDots = () => {
+    if (isDetailPageOpen) {
+      return (
+        <div className="flex flex-col gap-3 rounded-full border border-white/20 bg-white/10 p-4 shadow-2xl backdrop-blur-2xl">
+          {[0, 1, 2].map((index) => (
+            <button
+              key={index}
+              className="group relative flex items-center justify-center"
+            >
+              <div className="h-2.5 w-2.5 rounded-full bg-white/40 hover:bg-white/60 hover:scale-110 transition-all" />
+              <div className="pointer-events-none absolute right-full mr-4 whitespace-nowrap rounded-lg border border-white/20 bg-white/10 px-3 py-1.5 text-sm font-medium text-white opacity-0 shadow-xl backdrop-blur-2xl transition-opacity duration-200 group-hover:opacity-100">
+                Slide {index + 1}
+              </div>
+            </button>
+          ))}
         </div>
       )
     }
+
+    return (
+      <div className="flex flex-col gap-3 rounded-full border border-white/20 bg-white/10 p-4 shadow-2xl backdrop-blur-2xl">
+        {sections.map((section) => (
+          <button
+            key={section.index}
+            onClick={() => scrollToSection(section.index)}
+            className="group relative flex items-center justify-center"
+            aria-label={`Go to ${section.name}`}
+          >
+            <div
+              className={`h-2.5 w-2.5 rounded-full transition-all duration-300 ${
+                currentSection === section.index
+                  ? 'scale-125 bg-white shadow-lg shadow-white/50'
+                  : 'bg-white/40 hover:bg-white/60 hover:scale-110'
+              }`}
+            />
+            
+            <div className="pointer-events-none absolute right-full mr-4 whitespace-nowrap rounded-lg border border-white/20 bg-white/10 px-3 py-1.5 text-sm font-medium text-white opacity-0 shadow-xl backdrop-blur-2xl transition-opacity duration-200 group-hover:opacity-100">
+              {section.name}
+            </div>
+
+            {currentSection === section.index && (
+              <div className="absolute inset-0 -z-10 animate-pulse rounded-full bg-white/20 blur-md" />
+            )}
+          </button>
+        ))}
+      </div>
+    )
   }
 
   return (
@@ -575,10 +500,9 @@ export function NavigationHeader({ currentSection, scrollToSection, isLoaded, se
       <header
         className={`fixed left-0 right-0 top-0 z-50 transition-all duration-700 ${
           isLoaded ? "opacity-100" : "opacity-0"
-        }`}
+        } ${isDetailPageOpen ? "bg-black/50 backdrop-blur-md" : ""}`}
       >
         <nav className="flex items-center justify-between px-6 py-6 backdrop-blur-md md:px-12">
-          {/* Logo */}
           <button
             onClick={() => scrollToSection(0)}
             className="flex items-center gap-2 transition-transform hover:scale-105"
@@ -593,7 +517,6 @@ export function NavigationHeader({ currentSection, scrollToSection, isLoaded, se
             </span>
           </button>
 
-          {/* Desktop Navigation */}
           <div className="hidden items-center gap-1 md:flex">
             {sections.map((section) => {
               if (section.hasDropdown) {
@@ -624,7 +547,7 @@ export function NavigationHeader({ currentSection, scrollToSection, isLoaded, se
                     </button>
 
                     <div
-                      className={`absolute top-full mt-6 left-1/2 ml-28 -translate-x-1/2 bg-black/90 border border-white/30 rounded-lg backdrop-blur-7xl backdrop-saturate-150 shadow-2xl transition-all duration-300 transform origin-top ${
+                      className={`fixed top-24 left-1/2 -translate-x-1/2 bg-black/90 border border-white/30 rounded-lg backdrop-blur-7xl backdrop-saturate-150 shadow-2xl transition-all duration-300 transform origin-top ${
                         isDropdownOpen ? "opacity-100 scale-y-100 visible" : "opacity-0 scale-y-95 invisible"
                       }`}
                       onMouseEnter={() => setDropdownOpen(true)}
@@ -635,7 +558,6 @@ export function NavigationHeader({ currentSection, scrollToSection, isLoaded, se
                     >
                       {renderDropdownContent(dropdownMenu, isProductsSolutions)}
 
-                      {/* Bottom CTA */}
                       <div className="border-t border-white/20 px-8 py-5">
                         <button
                           onClick={() => {
@@ -672,7 +594,6 @@ export function NavigationHeader({ currentSection, scrollToSection, isLoaded, se
             })}
           </div>
 
-          {/* Desktop CTA Button */}
           <div className="hidden items-center gap-4 md:flex">
             <button
               onClick={() => scrollToSection(4)}
@@ -682,7 +603,6 @@ export function NavigationHeader({ currentSection, scrollToSection, isLoaded, se
             </button>
           </div>
 
-          {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className="md:hidden p-2 text-white/80 hover:text-white transition-colors"
@@ -696,48 +616,22 @@ export function NavigationHeader({ currentSection, scrollToSection, isLoaded, se
           </button>
         </nav>
 
-        {/* Scroll Progress Bar */}
-        <div
-          className="h-0.5 bg-gradient-to-r from-blue-500 via-purple-500 to-orange-500"
-          style={{ width: `${scrollProgress}%` }}
-        />
+        {!isDetailPageOpen && (
+          <div
+            className="h-0.5 bg-gradient-to-r from-blue-500 via-purple-500 to-orange-500"
+            style={{ width: `${scrollProgress}%` }}
+          />
+        )}
 
-        {/* Glass Effect Section Indicators - Desktop Only */}
         <div
           className={`hidden md:flex fixed right-6 top-1/2 -translate-y-1/2 flex-col gap-3 md:right-8 ${
             isLoaded ? "opacity-100" : "opacity-0"
           } transition-opacity duration-700`}
         >
-          <div className="flex flex-col gap-3 rounded-full border border-white/20 bg-white/10 p-4 shadow-2xl backdrop-blur-2xl">
-            {sections.map((section) => (
-              <button
-                key={section.index}
-                onClick={() => scrollToSection(section.index)}
-                className="group relative flex items-center justify-center"
-                aria-label={`Go to ${section.name}`}
-              >
-                <div
-                  className={`h-2.5 w-2.5 rounded-full transition-all duration-300 ${
-                    currentSection === section.index
-                      ? 'scale-125 bg-white shadow-lg shadow-white/50'
-                      : 'bg-white/40 hover:bg-white/60 hover:scale-110'
-                  }`}
-                />
-                
-                <div className="pointer-events-none absolute right-full mr-4 whitespace-nowrap rounded-lg border border-white/20 bg-white/10 px-3 py-1.5 text-sm font-medium text-white opacity-0 shadow-xl backdrop-blur-2xl transition-opacity duration-200 group-hover:opacity-100">
-                  {section.name}
-                </div>
-
-                {currentSection === section.index && (
-                  <div className="absolute inset-0 -z-10 animate-pulse rounded-full bg-white/20 blur-md" />
-                )}
-              </button>
-            ))}
-          </div>
+          {renderNavigationDots()}
         </div>
       </header>
 
-      {/* Mobile Menu Overlay */}
       <div
         className={`fixed inset-0 z-40 md:hidden transition-all duration-500 ease-in-out ${
           isMobileMenuOpen
@@ -808,12 +702,6 @@ export function NavigationHeader({ currentSection, scrollToSection, isLoaded, se
                               {dropdownMenu.map((category, idx) => {
                                 if (isProductsSolutionsMenuItem(category)) {
                                   const currentCategory = category as ProductsSolutionsMenuItem
-                                  const showAllItems = viewAllStates[currentCategory.category]
-                                  const displayItems = showAllItems 
-                                    ? currentCategory.items 
-                                    : currentCategory.items.slice(0, 9)
-                                  const totalItems = currentCategory.items.length
-                                  const hasMoreItems = totalItems > 9
 
                                   return (
                                     <div key={idx} className="space-y-2">
@@ -821,15 +709,12 @@ export function NavigationHeader({ currentSection, scrollToSection, isLoaded, se
                                         {currentCategory.category}
                                       </h3>
                                       <div className="grid grid-cols-3 gap-2">
-                                        {displayItems.map((item, itemIdx) => {
+                                        {currentCategory.items.slice(0, 9).map((item, itemIdx) => {
                                           const Icon = item.icon
                                           return (
                                             <button
                                               key={itemIdx}
-                                              onClick={() => {
-                                                handleMobileSectionClick(section.index)
-                                                setMobileSolutionsOpen(false)
-                                              }}
+                                              onClick={() => handleItemClickInternal(item, isProductsSolutions ? 'product' : 'service')}
                                               className="w-full text-left p-3 text-white/90 hover:text-white hover:bg-white/10 rounded-lg transition-colors flex flex-col items-center gap-2"
                                             >
                                               <div className="flex-shrink-0 p-2 rounded-lg bg-gradient-to-br from-blue-500/20 to-orange-500/20">
@@ -844,49 +729,6 @@ export function NavigationHeader({ currentSection, scrollToSection, isLoaded, se
                                             </button>
                                           )
                                         })}
-                                      </div>
-                                      
-                                      {/* View All Button for Mobile */}
-                                      {hasMoreItems && (
-                                        <button
-                                          onClick={() => handleViewAllClick(currentCategory.category)}
-                                          className="w-full px-4 py-3 text-center border border-white/20 rounded-lg text-white hover:bg-white/10 transition-colors flex items-center justify-center gap-2"
-                                        >
-                                          {showAllItems ? (
-                                            <>
-                                              <span>Show Less</span>
-                                              <ChevronDown className="w-4 h-4 rotate-180" />
-                                            </>
-                                          ) : (
-                                            <>
-                                              <span>View All ({totalItems})</span>
-                                              <ChevronDown className="w-4 h-4" />
-                                            </>
-                                          )}
-                                        </button>
-                                      )}
-                                    </div>
-                                  )
-                                } else {
-                                  // Regular category (for Services)
-                                  return (
-                                    <div key={idx} className="space-y-2">
-                                      <h3 className="font-medium text-white/80 text-sm uppercase tracking-wider px-2">
-                                        {category.category}
-                                      </h3>
-                                      <div className="grid grid-cols-1 gap-2">
-                                        {category.items.map((item, itemIdx) => (
-                                          <button
-                                            key={itemIdx}
-                                            onClick={() => {
-                                              handleMobileSectionClick(section.index)
-                                              setMobileServicesOpen(false)
-                                            }}
-                                            className="w-full text-left px-4 py-3 text-white/90 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
-                                          >
-                                            {item}
-                                          </button>
-                                        ))}
                                       </div>
                                     </div>
                                   )
@@ -952,3 +794,5 @@ export function NavigationHeader({ currentSection, scrollToSection, isLoaded, se
     </>
   )
 }
+
+export default NavigationHeader

@@ -103,7 +103,8 @@ export function ContactSection() {
 
           {/* Right side - Minimal form */}
           <div className="flex flex-col justify-center">
-            <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
+            <form   action="https://formspree.io/f/mkgdvyyz"
+  method="POST" className="space-y-4 md:space-y-6">
               <div
                 className={`transition-all duration-700 ${
                   isVisible ? "translate-x-0 opacity-100" : "translate-x-16 opacity-0"
