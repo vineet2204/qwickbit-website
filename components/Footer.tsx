@@ -1,57 +1,67 @@
-import React from 'react'
+"use client"
+
+import React from "react"
+import {
+  AiOutlinePhone,
+  AiOutlineMail,
+  AiFillSkype,
+  AiFillInstagram,
+  AiFillYoutube,
+  AiFillLinkedin,
+} from "react-icons/ai"
+import { FaXTwitter } from "react-icons/fa6"
+import { IoLocationOutline } from "react-icons/io5"
 
 export function Footer() {
-  const currentYear = new Date().getFullYear()
+  const year = new Date().getFullYear()
 
   return (
-    <footer className="relative z-20 w-full border-t border-white/10 bg-white/30 backdrop-blur-md">
-      <div className="mx-auto max-w-7xl px-6 py-8 md:px-12">
-        {/* Main Footer Content */}
-        <div className="flex flex-col items-center justify-between gap-6 md:flex-row">
-          {/* Brand/Logo */}
-          <button
-        //   onClick={() => scrollToSection(0)}
-          className="flex items-center gap-2 transition-transform hover:scale-105"
-        >
-          <div className="flex h-10 w-10 items-center justify-center rounded-lg transition-all duration-300 hover:scale-110">
-            <img src="/logo.svg" alt="Logo" />
+    <footer className="w-full bg-white/20 border-t border-gray-200 py-10">
+      <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-start gap-10">
+
+        {/* LEFT SECTION — LOGO + LINKS */}
+        <div className="flex flex-col items-start gap-4">
+          <div className="flex items-center gap-2">
+            <img src="/logo.svg" alt="Logo" className="h-8 w-8" />
+            <span className="text-2xl font-semibold text-[#3B41F0]">Qwickbit</span>
           </div>
-          <span className="text-2xl uppercase leading-tight text-start font-montserrat">
-            <span className="block font-extrabold tracking-wide text-[#4f47e5]">
-              QWICKBIT
-            </span>
-          </span>
-        </button>
 
-          {/* Links */}
-          <nav className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
-            <a
-              href="/terms"
-              className="font-mono text-sm text-white/70 transition-colors hover:text-white"
-            >
-              Terms & Conditions
-            </a>
-            <span className="text-white/30">•</span>
-            <a
-              href="/privacy"
-              className="font-mono text-sm text-white/70 transition-colors hover:text-white"
-            >
-              Privacy Policy
-            </a>
-            <span className="text-white/30">•</span>
-            <a
-              href="/contact"
-              className="font-mono text-sm text-white/70 transition-colors hover:text-white"
-            >
-              Contact
-            </a>
-          </nav>
-
-          {/* Copyright */}
-          <div className="font-mono text-sm text-white/60">
-            © {currentYear} All rights reserved
+          <div className="flex gap-6 text-[15px] text-white">
+            <a href="/terms" className="hover:text-gray-900">Terms</a>
+            <a href="/privacy" className="hover:text-gray-900">Privacy</a>
+            <a href="/refund" className="hover:text-gray-900">Refund and cancellation</a>
           </div>
         </div>
+
+        {/* CENTER — CONTACT + SOCIAL ICONS */}
+        <div className="flex flex-col items-center gap-4 text-white">
+          <div className="flex gap-6 text-2xl">
+            <AiOutlinePhone />
+            <AiOutlineMail />
+            <AiFillSkype />
+          </div>
+
+          <div className="flex gap-5 text-2xl">
+            <AiFillLinkedin />
+            <FaXTwitter />
+            <AiFillInstagram />
+            <AiFillYoutube />
+          </div>
+        </div>
+
+        {/* RIGHT — COPYRIGHT + ADDRESS */}
+        <div className="flex flex-col items-end text-right text-white text-[15px] leading-relaxed">
+          <div>© {year} Qwickbit Technologies Pvt Ltd.</div>
+
+          <div className="flex items-start gap-2">
+            <IoLocationOutline className="mt-1 text-[20px]" />
+            <p className="max-w-xs">
+              #721 A sector 16th A main road Yelahanka  
+              New Town, Bangalore 560064
+            </p>
+          </div>
+        </div>
+
       </div>
     </footer>
   )
