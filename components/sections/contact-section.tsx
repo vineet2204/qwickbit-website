@@ -1,182 +1,377 @@
 "use client"
 
-import { Mail, MapPin } from "lucide-react"
-import { useReveal } from "@/hooks/use-reveal"
-import { useState, type FormEvent } from "react"
-import { MagneticButton } from "@/components/magnetic-button"
+import { Mail, MapPin, Linkedin, Twitter, Github, Globe } from "lucide-react"
+import { useState, useEffect, useRef } from "react"
 
-export function ContactSection() {
-  const { ref, isVisible } = useReveal(0.3)
-  const [formData, setFormData] = useState({ name: "", email: "", message: "" })
+interface MagneticButtonProps {
+  children: React.ReactNode
+  variant?: "primary" | "secondary"
+  size?: "sm" | "lg"
+  className?: string
+  onClick?: () => void
+  disabled?: boolean
+}
+
+function MagneticButton({ children, variant, size, className, onClick, disabled }: MagneticButtonProps) {
+  return (
+    <button
+      onClick={onClick}
+      disabled={disabled}
+      className={`relative overflow-hidden rounded-full font-mono text-sm transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed ${
+        variant === "primary"
+          ? "bg-foreground text-background hover:bg-foreground/90"
+          : "border border-foreground/30 bg-transparent text-foreground hover:border-foreground"
+      } ${
+        size === "lg" ? "px-8 py-3 md:px-12 md:py-4" : "px-6 py-2"
+      } ${className}`}
+    >
+      {children}
+    </button>
+  )
+}
+
+interface FormData {
+  name: string
+  email: string
+  phone: string
+  subject: string
+  message: string
+  inquiryType: string
+  companyName: string
+}
+
+export default function ContactSection() {
+  const [formData, setFormData] = useState<FormData>({
+    name: "",
+    email: "",
+    phone: "",
+    subject: "",
+    message: "",
+    inquiryType: "",
+    companyName: ""
+  })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitSuccess, setSubmitSuccess] = useState(false)
+  const [submitError, setSubmitError] = useState(false)
+  const [isFormVisible, setIsFormVisible] = useState(false)
+  const formRef = useRef<HTMLDivElement>(null)
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsFormVisible(true)
+        }
+      },
+      { threshold: 0.2 }
+    )
 
-    if (!formData.name || !formData.email || !formData.message) {
+    if (formRef.current) {
+      observer.observe(formRef.current)
+    }
+
+    return () => {
+      if (formRef.current) {
+        observer.unobserve(formRef.current)
+      }
+    }
+  }, [])
+
+  const handleSubmit = async () => {
+    if (!formData.name || !formData.email || !formData.subject || !formData.message || !formData.inquiryType) {
       return
     }
 
     setIsSubmitting(true)
+    setSubmitError(false)
 
-    await new Promise((resolve) => setTimeout(resolve, 1500))
+    try {
+      const response = await fetch("https://formspree.io/f/manrlpop", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          subject: formData.subject,
+          message: formData.message,
+          inquiryType: formData.inquiryType,
+          companyName: formData.companyName
+        })
+      })
 
-    setIsSubmitting(false)
-    setSubmitSuccess(true)
-    setFormData({ name: "", email: "", message: "" })
-
-    setTimeout(() => setSubmitSuccess(false), 5000)
+      if (response.ok) {
+        setIsSubmitting(false)
+        setSubmitSuccess(true)
+        setFormData({
+          name: "",
+          email: "",
+          phone: "",
+          subject: "",
+          message: "",
+          inquiryType: "",
+          companyName: ""
+        })
+        setTimeout(() => setSubmitSuccess(false), 5000)
+      } else {
+        throw new Error("Submission failed")
+      }
+    } catch (error) {
+      setIsSubmitting(false)
+      setSubmitError(true)
+      setTimeout(() => setSubmitError(false), 5000)
+    }
   }
 
+  const socialLinks = [
+    { name: "LinkedIn", icon: Linkedin, href: "#" },
+    { name: "Twitter", icon: Twitter, href: "#" },
+    { name: "GitHub", icon: Github, href: "#" },
+    { name: "Website", icon: Globe, href: "#" }
+  ]
+
   return (
-    <section
-      ref={ref}
-      className="flex h-screen w-screen shrink-0 snap-start items-center px-4 pt-20 md:px-12 md:pt-0 lg:px-16"
-    >
+    <section className="relative min-h-screen w-full px-4 py-16 md:py-24 lg:py-32">
       <div className="mx-auto w-full max-w-7xl">
-        <div className="grid gap-8 md:grid-cols-[1.2fr_1fr] md:gap-16 lg:gap-24">
-          <div className="flex flex-col justify-center">
-            <div
-              className={`mb-6 transition-all duration-700 md:mb-12 ${
-                isVisible ? "translate-x-0 opacity-100" : "-translate-x-12 opacity-0"
-              }`}
-            >
-              <h2 className="mb-2 font-sans text-4xl font-light leading-[1.05] tracking-tight text-foreground md:mb-3 md:text-7xl lg:text-8xl">
+        <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 xl:gap-24">
+          {/* Left side - Contact Info */}
+          <div className="flex mt-18 flex-col justify-start space-y-8 md:space-y-12">
+            <div className="space-y-4">
+              <h2 className="font-sans text-5xl font-light leading-[1.05] tracking-tight text-foreground md:text-6xl lg:text-7xl xl:text-8xl">
                 Ready to
                 <br />
                 transform?
               </h2>
-              <p className="font-mono text-xs text-foreground/60 md:text-base">
+              <p className="font-mono text-sm text-white md:text-base lg:text-lg">
                 / Let's build something intelligent together
               </p>
             </div>
 
-            <div className="space-y-4 md:space-y-8">
+            <div className="space-y-6 md:space-y-8">
+              {/* Email */}
               <a
                 href="mailto:hello@qwickbit.com"
-                className={`group block transition-all duration-700 ${
-                  isVisible ? "translate-x-0 opacity-100" : "-translate-x-16 opacity-0"
-                }`}
-                style={{ transitionDelay: "200ms" }}
+                className="group block transition-all duration-300"
               >
-                <div className="mb-1 flex items-center gap-2">
-                  <Mail className="h-3 w-3 text-foreground/60" />
-                  <span className="font-mono text-xs text-foreground/60">Email</span>
+                <div className="mb-2 flex items-center gap-2">
+                  <Mail className="h-4 w-4 text-white" />
+                  <span className="font-mono text-xs uppercase tracking-wider text-white">Email</span>
                 </div>
-                <p className="text-base text-foreground transition-colors group-hover:text-foreground/70 md:text-2xl">
+                <p className="text-xl text-foreground transition-colors group-hover:text-white md:text-2xl lg:text-3xl">
                   hello@qwickbit.com
                 </p>
               </a>
 
-              <div
-                className={`transition-all duration-700 ${
-                  isVisible ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"
-                }`}
-                style={{ transitionDelay: "350ms" }}
-              >
-                <div className="mb-1 flex items-center gap-2">
-                  <MapPin className="h-3 w-3 text-foreground/60" />
-                  <span className="font-mono text-xs text-foreground/60">Location</span>
+              {/* Location */}
+              <div className="transition-all duration-300">
+                <div className="mb-2 flex items-center gap-2">
+                  <MapPin className="h-4 w-4 text-white" />
+                  <span className="font-mono text-xs uppercase tracking-wider text-white">Location</span>
                 </div>
-                <p className="text-base text-foreground md:text-2xl">Global Operations</p>
+                <p className="text-xl text-foreground md:text-2xl lg:text-3xl">Global Operations</p>
               </div>
 
-              <div
-                className={`flex gap-2 pt-2 transition-all duration-700 md:pt-4 ${
-                  isVisible ? "translate-x-0 opacity-100" : "-translate-x-8 opacity-0"
-                }`}
-                style={{ transitionDelay: "500ms" }}
-              >
-                {["LinkedIn", "Twitter", "GitHub", "Website"].map((social) => (
-                  <a
-                    key={social}
-                    href="#"
-                    className="border-b border-transparent font-mono text-xs text-foreground/60 transition-all hover:border-foreground/60 hover:text-foreground/90"
-                  >
-                    {social}
-                  </a>
-                ))}
+              {/* Social Media Icons */}
+              <div className="pt-4">
+                <div className="mb-3 flex items-center gap-2">
+                  <span className="font-mono text-xs uppercase tracking-wider text-white">Connect</span>
+                </div>
+                <div className="flex flex-wrap gap-3">
+                  {socialLinks.map((social) => (
+                    <a
+                      key={social.name}
+                      href={social.href}
+                      className="group flex items-center gap-2 rounded-full border border-foreground/20 bg-background px-4 py-2 transition-all duration-300 hover:border-foreground/50 hover:bg-foreground/5"
+                      aria-label={social.name}
+                    >
+                      <social.icon className="h-4 w-4 text-white transition-colors group-hover:text-foreground" />
+                      <span className="font-mono text-xs text-white transition-colors group-hover:text-foreground">
+                        {social.name}
+                      </span>
+                    </a>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
 
-          {/* Right side - Minimal form */}
-          <div className="flex flex-col justify-center">
-            <form   action="https://formspree.io/f/mkgdvyyz"
-  method="POST" className="space-y-4 md:space-y-6">
-              <div
-                className={`transition-all duration-700 ${
-                  isVisible ? "translate-x-0 opacity-100" : "translate-x-16 opacity-0"
-                }`}
-                style={{ transitionDelay: "200ms" }}
-              >
-                <label className="mb-1 block font-mono text-xs text-foreground/60 md:mb-2">Company Name</label>
-                <input
-                  type="text"
-                  value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  required
-                  className="w-full border-b border-foreground/30 bg-transparent py-1.5 text-sm text-foreground placeholder:text-foreground/40 focus:border-foreground/50 focus:outline-none md:py-2 md:text-base"
-                  placeholder="Your company"
-                />
-              </div>
+          {/* Right side - Contact Form */}
+          <div ref={formRef} className="flex flex-col justify-center">
+            <div
+              className={`rounded-2xl border border-foreground/10 bg-transparent backdrop-blur-sm transition-all duration-1000 md:p-8 lg:p-10 ${
+                isFormVisible ? "translate-y-0 opacity-100" : "translate-y-16 opacity-0"
+              }`}
+            >
+              <h3 className="mb-6 font-sans text-2xl font-light text-foreground md:text-3xl">
+                Get in Touch
+              </h3>
 
-              <div
-                className={`transition-all duration-700 ${
-                  isVisible ? "translate-x-0 opacity-100" : "translate-x-16 opacity-0"
-                }`}
-                style={{ transitionDelay: "350ms" }}
-              >
-                <label className="mb-1 block font-mono text-xs text-foreground/60 md:mb-2">Business Email</label>
-                <input
-                  type="email"
-                  value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  required
-                  className="w-full border-b border-foreground/30 bg-transparent py-1.5 text-sm text-foreground placeholder:text-foreground/40 focus:border-foreground/50 focus:outline-none md:py-2 md:text-base"
-                  placeholder="your@company.com"
-                />
-              </div>
-
-              <div
-                className={`transition-all duration-700 ${
-                  isVisible ? "translate-x-0 opacity-100" : "translate-x-16 opacity-0"
-                }`}
-                style={{ transitionDelay: "500ms" }}
-              >
-                <label className="mb-1 block font-mono text-xs text-foreground/60 md:mb-2">Project Details</label>
-                <textarea
-                  rows={3}
-                  value={formData.message}
-                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  required
-                  className="w-full border-b border-foreground/30 bg-transparent py-1.5 text-sm text-foreground placeholder:text-foreground/40 focus:border-foreground/50 focus:outline-none md:py-2 md:text-base"
-                  placeholder="Tell us about your project and goals..."
-                />
-              </div>
-
-              <div
-                className={`transition-all duration-700 ${
-                  isVisible ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"
-                }`}
-                style={{ transitionDelay: "650ms" }}
-              >
-                <MagneticButton
-                  variant="primary"
-                  size="lg"
-                  className="w-full disabled:opacity-50"
-                  onClick={isSubmitting ? undefined : undefined}
+              <div className="space-y-5">
+                {/* Name */}
+                <div
+                  className={`transition-all duration-700 ${
+                    isFormVisible ? "translate-x-0 opacity-100" : "translate-x-16 opacity-0"
+                  }`}
+                  style={{ transitionDelay: "100ms" }}
                 >
-                  {isSubmitting ? "Sending..." : "Schedule a Demo"}
-                </MagneticButton>
-                {submitSuccess && (
-                  <p className="mt-3 text-center font-mono text-sm text-foreground/80">
-                    Thank you! We'll be in touch soon.
-                  </p>
-                )}
+                  <label className="mb-2 block font-mono text-xs uppercase tracking-wider text-white">
+                    Name <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.name}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, name: e.target.value })}
+                    className="w-full rounded-lg border border-foreground/20 bg-transparent px-4 py-3 text-sm text-foreground placeholder:text-white focus:border-foreground/50 focus:outline-none focus:ring-2 focus:ring-foreground/10 md:text-base"
+                    placeholder="Your full name"
+                  />
+                </div>
+
+                {/* Email */}
+                <div
+                  className={`transition-all duration-700 ${
+                    isFormVisible ? "translate-x-0 opacity-100" : "translate-x-16 opacity-0"
+                  }`}
+                  style={{ transitionDelay: "150ms" }}
+                >
+                  <label className="mb-2 block font-mono text-xs uppercase tracking-wider text-white">
+                    Email <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="email"
+                    value={formData.email}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, email: e.target.value })}
+                    className="w-full rounded-lg border border-foreground/20  px-4 py-3 text-sm text-foreground placeholder:text-white focus:border-foreground/50 focus:outline-none focus:ring-2 focus:ring-foreground/10 md:text-base"
+                    placeholder="your@email.com"
+                  />
+                </div>
+
+                {/* Phone & Company in Grid */}
+                <div
+                  className={`grid gap-5 sm:grid-cols-2 transition-all duration-700 ${
+                    isFormVisible ? "translate-x-0 opacity-100" : "translate-x-16 opacity-0"
+                  }`}
+                  style={{ transitionDelay: "200ms" }}
+                >
+                  <div>
+                    <label className="mb-2 block font-mono text-xs uppercase tracking-wider text-white">
+                      Phone
+                    </label>
+                    <input
+                      type="tel"
+                      value={formData.phone}
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, phone: e.target.value })}
+                      className="w-full rounded-lg border border-foreground/20  px-4 py-3 text-sm text-foreground placeholder:text-white focus:border-foreground/50 focus:outline-none focus:ring-2 focus:ring-foreground/10 md:text-base"
+                      placeholder="+1 (555) 000-0000"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="mb-2 block font-mono text-xs uppercase tracking-wider text-white">
+                      Company
+                    </label>
+                    <input
+                      type="text"
+                      value={formData.companyName}
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, companyName: e.target.value })}
+                      className="w-full rounded-lg border border-foreground/20 px-4 py-3 text-sm text-foreground placeholder:text-white focus:border-foreground/50 focus:outline-none focus:ring-2 focus:ring-foreground/10 md:text-base"
+                      placeholder="Your company"
+                    />
+                  </div>
+                </div>
+
+                {/* Inquiry Type */}
+                <div
+                  className={`transition-all duration-700 ${
+                    isFormVisible ? "translate-x-0 opacity-100" : "translate-x-16 opacity-0"
+                  }`}
+                  style={{ transitionDelay: "250ms" }}
+                >
+                  <label className="mb-2 block font-mono text-xs uppercase tracking-wider text-white">
+                    Inquiry Type <span className="text-red-500">*</span>
+                  </label>
+                  <select
+                    value={formData.inquiryType}
+                    onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setFormData({ ...formData, inquiryType: e.target.value })}
+                    className="w-full rounded-lg border border-foreground/20  px-4 py-3 text-sm text-foreground focus:border-foreground/50 focus:outline-none focus:ring-2 focus:ring-foreground/10 md:text-base"
+                  >
+                    <option value="" className="bg-background">Select inquiry type</option>
+                    <option value="Support" className="bg-background">Support</option>
+                    <option value="Sales" className="bg-background">Sales</option>
+                    <option value="General" className="bg-background">General</option>
+                    <option value="Partnership" className="bg-background">Partnership</option>
+                    <option value="Career" className="bg-background">Career</option>
+                  </select>
+                </div>
+
+                {/* Subject */}
+                <div
+                  className={`transition-all duration-700 ${
+                    isFormVisible ? "translate-x-0 opacity-100" : "translate-x-16 opacity-0"
+                  }`}
+                  style={{ transitionDelay: "300ms" }}
+                >
+                  <label className="mb-2 block font-mono text-xs uppercase tracking-wider text-white">
+                    Subject <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.subject}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, subject: e.target.value })}
+                    className="w-full rounded-lg border border-foreground/20  px-4 py-3 text-sm text-foreground placeholder:text-white focus:border-foreground/50 focus:outline-none focus:ring-2 focus:ring-foreground/10 md:text-base"
+                    placeholder="What's this about?"
+                  />
+                </div>
+
+                {/* Message */}
+                <div
+                  className={`transition-all duration-700 ${
+                    isFormVisible ? "translate-x-0 opacity-100" : "translate-x-16 opacity-0"
+                  }`}
+                  style={{ transitionDelay: "350ms" }}
+                >
+                  <label className="mb-2 block font-mono text-xs uppercase tracking-wider text-white">
+                    Message <span className="text-red-500">*</span>
+                  </label>
+                  <textarea
+                    rows={4}
+                    value={formData.message}
+                    onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setFormData({ ...formData, message: e.target.value })}
+                    className="w-full rounded-lg border border-foreground/20  px-4 py-3 text-sm text-white placeholder:text-white focus:border-foreground/50 focus:outline-none focus:ring-2 focus:ring-foreground/10 md:text-base"
+                    placeholder="Tell us about your inquiry..."
+                  />
+                </div>
+
+                {/* Submit Button */}
+                <div
+                  className={`pt-2 transition-all duration-700 ${
+                    isFormVisible ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"
+                  }`}
+                  style={{ transitionDelay: "400ms" }}
+                >
+                  <MagneticButton
+                    onClick={handleSubmit}
+                    variant="primary"
+                    size="lg"
+                    className="w-full"
+                    disabled={isSubmitting}
+                  >
+                    {isSubmitting ? "Sending..." : "Send Message"}
+                  </MagneticButton>
+                  {submitSuccess && (
+                    <p className="mt-4 text-center font-mono text-sm text-green-600">
+                      ✓ Thank you! We'll be in touch soon.
+                    </p>
+                  )}
+                  {submitError && (
+                    <p className="mt-4 text-center font-mono text-sm text-red-600">
+                      ✕ Something went wrong. Please try again.
+                    </p>
+                  )}
+                </div>
               </div>
-            </form>
+            </div>
           </div>
         </div>
       </div>

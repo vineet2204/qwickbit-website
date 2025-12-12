@@ -114,6 +114,26 @@ const servicesMenu: ServicesMenuItem[] = [
     ]
   },
   {
+    category: "Technologies",
+    items: [
+      { name: "React", description: "Build interactive user interfaces with component-based architecture.", icon: Code },
+      { name: "Next.js", description: "Production-ready React framework with SSR and static generation.", icon: Globe },
+      { name: "TypeScript", description: "Type-safe JavaScript for scalable application development.", icon: FileText },
+      { name: "Node.js", description: "Server-side JavaScript runtime for building scalable applications.", icon: Cpu },
+      { name: "Python", description: "Versatile programming language for web, AI, and data science.", icon: Brain },
+      { name: "PostgreSQL", description: "Advanced open-source relational database management system.", icon: Shield },
+      { name: "MongoDB", description: "NoSQL database for flexible, scalable data storage.", icon: Cloud },
+      { name: "GraphQL", description: "Modern API query language for efficient data fetching.", icon: Link },
+      { name: "Docker", description: "Containerization platform for consistent deployment environments.", icon: Cpu },
+      { name: "AWS", description: "Cloud computing services for scalable infrastructure.", icon: Cloud },
+      { name: "Firebase", description: "Backend-as-a-Service platform for rapid app development.", icon: Zap },
+      { name: "Tailwind CSS", description: "Utility-first CSS framework for rapid UI development.", icon: Eye },
+      { name: "Vue.js", description: "Progressive JavaScript framework for building user interfaces.", icon: Code },
+      { name: "Angular", description: "Enterprise-grade framework for building web applications.", icon: Globe },
+      { name: "Redis", description: "In-memory data structure store for caching and real-time apps.", icon: Zap }
+    ]
+  },
+  {
     category: "Solutions & Support",
     items: [
       { name: "Customize Solutions", description: "Tailored software solutions designed for your unique requirements.", icon: Zap },
@@ -142,10 +162,12 @@ export function NavigationHeader({
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false)
   const [viewAllStates, setViewAllStates] = useState<{[key: string]: boolean}>({
     "By Industry": false,
-    "AI & ML Solutions": false
+    "AI & ML Solutions": false,
+    "Technologies": false
   })
   const [carouselIndex, setCarouselIndex] = useState<{[key: string]: number}>({
-    "By Industry": 0
+    "By Industry": 0,
+    "Technologies": 0
   })
 
   useEffect(() => {
@@ -235,8 +257,9 @@ export function NavigationHeader({
       const currentCategory = dropdownMenu[activeCategory] as ProductsSolutionsMenuItem
       const totalItems = currentCategory.items.length
       const isIndustryCategory = currentCategory.category === "By Industry"
+      const isTechnologiesCategory = currentCategory.category === "Technologies"
       
-      if (isIndustryCategory) {
+      if (isIndustryCategory || isTechnologiesCategory) {
         const itemsPerPage = 9
         const totalPages = Math.ceil(totalItems / itemsPerPage)
         const currentPage = carouselIndex[currentCategory.category] || 0
@@ -248,7 +271,7 @@ export function NavigationHeader({
           <div className="grid grid-cols-2 gap-5 p-8 min-w-[1200px]">
             <div className="border-r border-white/20 w-[300px] pr-10">
               <h3 className="font-mono text-sm text-white/80 mb-5 uppercase tracking-widest font-semibold">
-                Solutions Categories
+                {isProductsSolutions ? "Solutions Categories" : "Our Services"}
               </h3>
               <div className="space-y-3">
                 {dropdownMenu.map((item, idx) => (
@@ -312,7 +335,7 @@ export function NavigationHeader({
                       return (
                         <button
                           key={startIdx + itemIdx}
-                          onClick={() => handleItemClickInternal(item, 'product')}
+                          onClick={() => handleItemClickInternal(item, isProductsSolutions ? 'product' : 'service')}
                           className="group relative p-4 rounded-lg border border-white/10 bg-white/5 hover:bg-white/10 transition-all duration-200 hover:border-white/20 animate-fadeIn cursor-pointer text-left"
                         >
                           <div className="flex items-start gap-3">
@@ -505,12 +528,29 @@ export function NavigationHeader({
         <nav className="flex items-center justify-between px-6 py-6 backdrop-blur-md md:px-12">
           <button
             onClick={() => scrollToSection(0)}
-            className="flex items-center gap-2 transition-transform hover:scale-105"
+            className="
+              flex items-center gap-2.5 px-3.5 py-2
+              rounded-xl
+              bg-white/10
+              border border-white/30
+              backdrop-blur-xl
+              shadow-[inset_0_0_0_0_rgba(255,255,255,0.25),0_6px_20px_rgba(0,0,0,0.18)]
+              transition-all duration-300
+              hover:bg-white/20
+              hover:shadow-[inset_0_1px_2px_rgba(255,255,255,0.4),0_8px_28px_rgba(0,0,0,0.22)]
+              hover:scale-[1.03]
+              active:scale-[0.97]
+              relative overflow-hidden
+              before:absolute before:inset-0
+              before:bg-gradient-to-b before:from-white/40 before:to-transparent
+              before:opacity-60 before:pointer-events-none
+            "
           >
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg transition-all duration-300 hover:scale-110">
-              <img src="/logo.svg" alt="Logo" />
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg relative z-10">
+              <img src="/logo.svg" alt="Logo" className="h-7 w-7" />
             </div>
-            <span className="text-2xl uppercase leading-tight text-start font-montserrat">
+
+            <span className="relative -ml-2 z-10 text-xl uppercase leading-tight text-start font-montserrat">
               <span className="block font-extrabold tracking-wide text-white">
                 QWICKBIT
               </span>
@@ -597,7 +637,19 @@ export function NavigationHeader({
           <div className="hidden items-center gap-4 md:flex">
             <button
               onClick={() => scrollToSection(4)}
-              className="px-6 py-2.5 rounded-lg bg-black/20 border border-white/80 text-white font-mono text-sm backdrop-blur-sm hover:bg-black/30 transition-all duration-300 hover:scale-105"
+              className="
+                px-6 py-2.5 rounded-3xl
+                font-mono text-sm text-white
+                bg-white/10
+                border border-white/30
+                shadow-[inset_0_0_0_0_rgba(255,255,255,0.3)]
+                backdrop-blur-xl
+                transition-all duration-300
+                hover:bg-white/20
+                hover:shadow-[inset_0_1px_3px_rgba(255,255,255,0.4)]
+                hover:scale-[1.04]
+                active:scale-[0.98]
+              "
             >
               Book a Demo
             </button>
@@ -702,6 +754,100 @@ export function NavigationHeader({
                               {dropdownMenu.map((category, idx) => {
                                 if (isProductsSolutionsMenuItem(category)) {
                                   const currentCategory = category as ProductsSolutionsMenuItem
+                                  const isMobileTechnologiesCategory = currentCategory.category === "Technologies"
+                                  const isMobileIndustryCategory = currentCategory.category === "By Industry"
+                                  const shouldShowCarousel = isMobileTechnologiesCategory || isMobileIndustryCategory
+
+                                  if (shouldShowCarousel) {
+                                    const itemsPerPage = 9
+                                    const totalPages = Math.ceil(currentCategory.items.length / itemsPerPage)
+                                    const currentPage = carouselIndex[currentCategory.category] || 0
+                                    const startIdx = currentPage * itemsPerPage
+                                    const endIdx = Math.min(startIdx + itemsPerPage, currentCategory.items.length)
+                                    const displayItems = currentCategory.items.slice(startIdx, endIdx)
+
+                                    return (
+                                      <div key={idx} className="space-y-2">
+                                        <div className="flex items-center justify-between px-2">
+                                          <h3 className="font-medium text-white/80 text-sm uppercase tracking-wider">
+                                            {currentCategory.category}
+                                          </h3>
+                                          <div className="flex items-center gap-2">
+                                            <span className="text-white/60 text-xs font-mono">
+                                              {currentPage + 1}/{totalPages}
+                                            </span>
+                                            <button
+                                              onClick={() => {
+                                                setCarouselIndex(prev => ({
+                                                  ...prev,
+                                                  [currentCategory.category]: Math.max((prev[currentCategory.category] || 0) - 1, 0)
+                                                }))
+                                              }}
+                                              disabled={currentPage === 0}
+                                              className={`p-1 rounded border ${
+                                                currentPage === 0
+                                                  ? "border-white/10 text-white/30"
+                                                  : "border-white/30 text-white"
+                                              }`}
+                                            >
+                                              <ChevronLeft className="w-3 h-3" />
+                                            </button>
+                                            <button
+                                              onClick={() => {
+                                                setCarouselIndex(prev => ({
+                                                  ...prev,
+                                                  [currentCategory.category]: Math.min((prev[currentCategory.category] || 0) + 1, totalPages - 1)
+                                                }))
+                                              }}
+                                              disabled={currentPage === totalPages - 1}
+                                              className={`p-1 rounded border ${
+                                                currentPage === totalPages - 1
+                                                  ? "border-white/10 text-white/30"
+                                                  : "border-white/30 text-white"
+                                              }`}
+                                            >
+                                              <ChevronRight className="w-3 h-3" />
+                                            </button>
+                                          </div>
+                                        </div>
+                                        <div className="grid grid-cols-3 gap-2">
+                                          {displayItems.map((item, itemIdx) => {
+                                            const Icon = item.icon
+                                            return (
+                                              <button
+                                                key={startIdx + itemIdx}
+                                                onClick={() => handleItemClickInternal(item, isProductsSolutions ? 'product' : 'service')}
+                                                className="w-full text-left p-3 text-white/90 hover:text-white hover:bg-white/10 rounded-lg transition-colors flex flex-col items-center gap-2"
+                                              >
+                                                <div className="flex-shrink-0 p-2 rounded-lg bg-gradient-to-br from-blue-500/20 to-orange-500/20">
+                                                  <Icon className="w-4 h-4 text-white" />
+                                                </div>
+                                                <div className="text-center">
+                                                  <div className="font-medium text-xs">{item.name}</div>
+                                                  <div className="text-white/70 text-[10px] mt-1 line-clamp-2">
+                                                    {item.description}
+                                                  </div>
+                                                </div>
+                                              </button>
+                                            )
+                                          })}
+                                        </div>
+                                        <div className="flex justify-center gap-1 mt-3">
+                                          {Array.from({ length: totalPages }).map((_, pageIdx) => (
+                                            <button
+                                              key={pageIdx}
+                                              onClick={() => setCarouselIndex(prev => ({ ...prev, [currentCategory.category]: pageIdx }))}
+                                              className={`h-1.5 rounded-full transition-all duration-300 ${
+                                                pageIdx === currentPage
+                                                  ? "w-6 bg-white"
+                                                  : "w-1.5 bg-white/30"
+                                              }`}
+                                            />
+                                          ))}
+                                        </div>
+                                      </div>
+                                    )
+                                  }
 
                                   return (
                                     <div key={idx} className="space-y-2">

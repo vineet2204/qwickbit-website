@@ -4,16 +4,14 @@ import { Shader, ChromaFlow, Swirl } from "shaders/react"
 import { CustomCursor } from "@/components/custom-cursor"
 import { GrainOverlay } from "@/components/grain-overlay"
 import { MagneticButton } from "@/components/magnetic-button"
-import { AboutSection } from "@/components/sections/about-section"
 import { WorkSection } from "@/components/sections/work-section"
 import { ServicesSection } from "@/components/sections/services-section"
-import { ContactSection } from "@/components/sections/contact-section"
 import { NavigationHeader } from "@/components/navigation-header"
 import { Footer } from "@/components/Footer"
 import { useRef, useEffect, useState } from "react"
-
-// Import DetailPage component
 import { DetailPage } from "@/components/Details"
+import ContactSection from "@/components/sections/contact-section"
+import AboutSection from "@/components/sections/about-section"
 
 // Define the item type
 interface ProductSolutionItem {
@@ -22,6 +20,209 @@ interface ProductSolutionItem {
   icon: any
 }
 
+// Keypad Component
+interface KeyConfig {
+  id: string
+  text: string
+  travel: number
+  hue: number
+  saturation: number
+  brightness: number
+  key: string
+  position: 'single-left' | 'single-right' | 'double'
+}
+
+function KeypadComponent() {
+  const [pressedKeys, setPressedKeys] = useState<Set<string>>(new Set())
+  const audioRef = useRef<HTMLAudioElement | null>(null)
+
+  const keys: KeyConfig[] = [
+    {
+      id: 'one',
+      text: 'ok',
+      travel: 26,
+      hue: 0,
+      saturation: 0,
+      brightness: 1.4,
+      key: 'o',
+      position: 'single-left'
+    },
+    {
+      id: 'two',
+      text: 'go',
+      travel: 26,
+      hue: 0,
+      saturation: 0,
+      brightness: 1.4,
+      key: 'g',
+      position: 'single-right'
+    },
+    {
+      id: 'three',
+      text: 'create.',
+      travel: 18,
+      hue: 0,
+      saturation: 0,
+      brightness: 0.4,
+      key: 'Enter',
+      position: 'double'
+    }
+  ]
+
+  useEffect(() => {
+    audioRef.current = new Audio('https://cdn.freesound.org/previews/378/378085_6260145-lq.mp3')
+    audioRef.current.volume = 0.3
+  }, [])
+
+  const playSound = () => {
+    if (audioRef.current) {
+      audioRef.current.currentTime = 0
+      audioRef.current.play().catch(() => {})
+    }
+  }
+
+  const handleKeyDown = (keyId: string) => {
+    setPressedKeys(prev => new Set(prev).add(keyId))
+    playSound()
+  }
+
+  const handleKeyUp = (keyId: string) => {
+    setPressedKeys(prev => {
+      const newSet = new Set(prev)
+      newSet.delete(keyId)
+      return newSet
+    })
+  }
+
+  useEffect(() => {
+    const handleKeyboardDown = (e: KeyboardEvent) => {
+      const key = keys.find(k => k.key === e.key)
+      if (key && !pressedKeys.has(key.id)) {
+        handleKeyDown(key.id)
+      }
+    }
+
+    const handleKeyboardUp = (e: KeyboardEvent) => {
+      const key = keys.find(k => k.key === e.key)
+      if (key) {
+        handleKeyUp(key.id)
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyboardDown)
+    window.addEventListener('keyup', handleKeyboardUp)
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyboardDown)
+      window.removeEventListener('keyup', handleKeyboardUp)
+    }
+  }, [pressedKeys])
+
+  return (
+    <div className="flex items-center justify-center w-full h-full py-16">
+      <div className="relative w-full max-w-[500px] aspect-[400/310]">
+        {/* Base */}
+        <div className="absolute bottom-0 w-full opacity-30">
+          <img 
+            src="https://assets.codepen.io/605876/keypad-base.png?format=auto&quality=86" 
+            alt="" 
+            className="w-full"
+          />
+        </div>
+
+        {/* Keys */}
+        {keys.map((keyConfig) => (
+          <button
+            key={keyConfig.id}
+            className={`
+              absolute cursor-pointer border-0 bg-transparent p-0 outline-none
+              ${keyConfig.position === 'single-left' ? 'w-[40.5%] h-[46%] left-[29.3%] bottom-[54.2%]' : ''}
+              ${keyConfig.position === 'single-right' ? 'w-[40.5%] h-[46%] left-[54%] bottom-[36%]' : ''}
+              ${keyConfig.position === 'double' ? 'w-[64%] h-[65%] left-[6%] bottom-[17.85%]' : ''}
+            `}
+            style={{
+              clipPath: keyConfig.position === 'double'
+                ? 'polygon(34% 0, 93% 44%, 101% 78%, 71% 100%, 66% 100%, 0 52%, 0 44%, 7% 17%, 30% 0)'
+                : 'polygon(0 0, 54% 0, 89% 24%, 100% 70%, 54% 100%, 46% 100%, 0 69%, 12% 23%, 47% 0%)',
+            }}
+            onPointerDown={() => handleKeyDown(keyConfig.id)}
+            onPointerUp={() => handleKeyUp(keyConfig.id)}
+            onPointerLeave={() => handleKeyUp(keyConfig.id)}
+          >
+            <span className="inline-block w-full h-full">
+              <span 
+                className="inline-block w-full h-full transition-transform duration-150 ease-out relative"
+                style={{
+                  transform: pressedKeys.has(keyConfig.id) 
+                    ? `translateY(${keyConfig.travel}%)` 
+                    : 'translateY(0)'
+                }}
+              >
+                {/* White border outline */}
+                <div 
+                  className="absolute inset-0 border-2 border-white/40 pointer-events-none transition-colors duration-150"
+                  style={{
+                    clipPath: keyConfig.position === 'double'
+                      ? 'polygon(34% 0, 93% 44%, 101% 78%, 71% 100%, 66% 100%, 0 52%, 0 44%, 7% 17%, 30% 0)'
+                      : 'polygon(0 0, 54% 0, 89% 24%, 100% 70%, 54% 100%, 46% 100%, 0 69%, 12% 23%, 47% 0%)',
+                  }}
+                />
+                
+                {/* Colored Key Image */}
+                <img 
+                  src={keyConfig.position === 'double' 
+                    ? "https://assets.codepen.io/605876/keypad-double.png?format=auto&quality=86"
+                    : "https://assets.codepen.io/605876/keypad-single.png?format=auto&quality=86"
+                  }
+                  alt="" 
+                  className="w-full h-full object-contain opacity-70 transition-all duration-150"
+                  style={{
+                    filter: `hue-rotate(${keyConfig.hue}deg) saturate(${keyConfig.saturation}) brightness(${keyConfig.brightness})`,
+                    transform: pressedKeys.has(keyConfig.id) ? 'scale(0.98)' : 'scale(1)',
+                  }}
+                />
+                
+                {/* Text - positioned on top surface of the key */}
+                <span 
+                  className={`
+                    absolute flex items-center justify-center
+                    text-white font-semibold pointer-events-none
+                    ${keyConfig.position === 'double' ? 'text-2xl md:text-3xl lg:text-4xl' : 'text-xl md:text-2xl lg:text-3xl'}
+                  `}
+                  style={{
+                    top: keyConfig.position === 'double' ? '15%' : '10%',
+                    left: keyConfig.position === 'double' ? '5%' : '15%',
+                    width: keyConfig.position === 'double' ? '90%' : '70%',
+                    height: keyConfig.position === 'double' ? '30%' : '35%',
+                    transform: keyConfig.position === 'double' 
+                      ? 'perspective(600px) rotateX(50deg) rotateY(0deg) rotateZ(-8deg)'
+                      : 'perspective(600px) rotateX(45deg) rotateZ(0deg)',
+                    transformStyle: 'preserve-3d',
+                    textShadow: `
+                      1px 1px 2px rgba(0,0,0,0.6),
+                      -0.5px -0.5px 1px rgba(255,255,255,0.3)
+                    `,
+                  }}
+                >
+                  {keyConfig.text}
+                </span>
+              </span>
+            </span>
+          </button>
+        ))}
+
+        {/* Keyboard hints */}
+        <div className="absolute -bottom-16 left-0 right-0 text-center">
+          <p className="text-sm text-foreground/70 font-mono">
+            Press O, G, or Enter
+          </p>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// Main Home Component
 export default function Home() {
   const scrollContainerRef = useRef<HTMLDivElement>(null)
   const [currentSection, setCurrentSection] = useState(0)
@@ -154,32 +355,42 @@ export default function Home() {
         }`}
         style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
       >
-        {/* Home Section */}
-        <section className="flex min-h-screen w-screen shrink-0 flex-col justify-end px-6 pb-16 pt-24 md:px-12 md:pb-24">
-          <div className="max-w-3xl">
-            <div className="mb-4 inline-block animate-in fade-in slide-in-from-bottom-4 rounded-full border border-foreground/20 bg-foreground/15 px-4 py-1.5 backdrop-blur-md duration-700">
-              <p className="font-mono text-xs text-foreground/90">AI-Powered Digital Transformation</p>
+        {/* Home Section with Keypad */}
+        <section className="flex min-h-screen w-screen shrink-0 px-6 pb-16 pt-24 md:px-12 md:pb-24">
+          <div className="flex w-full items-center gap-8 lg:gap-12">
+            {/* Left Side - Hero Content */}
+            <div className="flex-1 flex flex-col justify-center">
+              <div className="max-w-3xl">
+                <div className="mb-4 inline-block animate-in fade-in slide-in-from-bottom-4 rounded-full border border-foreground/20 bg-foreground/15 px-4 py-1.5 backdrop-blur-md duration-700">
+                  <p className="font-mono text-xs text-foreground/90">AI-Powered Digital Transformation</p>
+                </div>
+                <h1 className="mb-6 animate-in fade-in slide-in-from-bottom-8 font-sans text-5xl font-light leading-[1.1] tracking-tight text-foreground duration-1000 md:text-6xl lg:text-7xl">
+                  <span className="text-balance">
+                    Intelligent products
+                    <br />
+                    for real impact
+                  </span>
+                </h1>
+                <p className="mb-8 max-w-xl animate-in fade-in slide-in-from-bottom-4 text-base leading-relaxed text-foreground/90 duration-1000 delay-200 md:text-lg">
+                  <span className="text-pretty">
+                    We build intelligent products that help enterprises automate operations, enhance decision-making, and
+                    scale faster through AI, IoT, Cloud, and advanced software engineering.
+                  </span>
+                </p>
+                <div className="flex animate-in fade-in slide-in-from-bottom-4 flex-col gap-4 duration-1000 delay-300 sm:flex-row sm:items-center">
+                  <MagneticButton size="lg" variant="primary" onClick={() => scrollToSection(4)}>
+                    Book a Demo
+                  </MagneticButton>
+                  <MagneticButton size="lg" variant="secondary" onClick={() => scrollToSection(1)}>
+                    Explore Case Studies
+                  </MagneticButton>
+                </div>
+              </div>
             </div>
-            <h1 className="mb-6 animate-in fade-in slide-in-from-bottom-8 font-sans text-6xl font-light leading-[1.1] tracking-tight text-foreground duration-1000 md:text-7xl lg:text-8xl">
-              <span className="text-balance">
-                Intelligent products
-                <br />
-                for real impact
-              </span>
-            </h1>
-            <p className="mb-8 max-w-xl animate-in fade-in slide-in-from-bottom-4 text-lg leading-relaxed text-foreground/90 duration-1000 delay-200 md:text-xl">
-              <span className="text-pretty">
-                We build intelligent products that help enterprises automate operations, enhance decision-making, and
-                scale faster through AI, IoT, Cloud, and advanced software engineering.
-              </span>
-            </p>
-            <div className="flex animate-in fade-in slide-in-from-bottom-4 flex-col gap-4 duration-1000 delay-300 sm:flex-row sm:items-center">
-              <MagneticButton size="lg" variant="primary" onClick={() => scrollToSection(4)}>
-                Book a Demo
-              </MagneticButton>
-              <MagneticButton size="lg" variant="secondary" onClick={() => scrollToSection(1)}>
-                Explore Case Studies
-              </MagneticButton>
+
+            {/* Right Side - Keypad */}
+            <div className="hidden lg:flex flex-1 items-center justify-center animate-in fade-in duration-1000 delay-400">
+              <KeypadComponent />
             </div>
           </div>
 
