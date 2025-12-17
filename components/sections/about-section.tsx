@@ -320,7 +320,7 @@ export default function AboutSection({
 
       <div className="w-full bg-transparent">
         {/* About Qwickbit Section */}
-        <section className="w-full mt-24 px-4 py-20 md:px-12 md:py-32 lg:px-16">
+        <section className="w-full mt-32 px-4  py-20 md:px-12 md:py-32 lg:px-16">
           <div className="mx-auto max-w-7xl">
             <div className="mb-16">
               <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 mb-6">
