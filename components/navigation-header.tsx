@@ -141,6 +141,51 @@ const productsSolutionsMenu: ProductsSolutionsMenuItem[] = [
       { name: "AI Security", description: "Threat detection and prevention using AI algorithms.", icon: Shield },
     ],
   },
+  {
+    category: "Case Studies",
+    items: [
+      {
+        name: "Enterprise CRM Implementation",
+        description: "Scalable CRM solution for Fortune 500 company reducing support tickets by 40%.",
+        icon: Users,
+      },
+      {
+        name: "Retail Automation System",
+        description: "AI-powered inventory management reducing stockouts by 65%.",
+        icon: ShoppingCart,
+      },
+      {
+        name: "Healthcare Analytics Platform",
+        description: "Predictive analytics for patient care optimization in hospital network.",
+        icon: Stethoscope,
+      },
+      {
+        name: "EdTech Learning Platform",
+        description: "Personalized learning platform serving 50,000+ students across 5 countries.",
+        icon: GraduationCap,
+      },
+      {
+        name: "Travel Booking System",
+        description: "High-performance booking engine handling 10,000+ daily transactions.",
+        icon: Plane,
+      },
+      {
+        name: "Financial Risk Assessment",
+        description: "ML-based risk analysis system for banking institution reducing defaults by 25%.",
+        icon: BarChart,
+      },
+      {
+        name: "Supply Chain Optimization",
+        description: "IoT and AI-driven logistics platform reducing delivery times by 30%.",
+        icon: Link,
+      },
+      {
+        name: "Customer Service AI",
+        description: "Chatbot solution handling 80% of customer queries automatically.",
+        icon: MessageSquare,
+      },
+    ],
+  },
 ]
 
 const servicesMenu: ServicesMenuItem[] = [
@@ -236,6 +281,7 @@ export default function GlassmorphismNavigationHeader({
   const [viewAllStates, setViewAllStates] = useState<{ [key: string]: boolean }>({
     "By Industry": false,
     "AI & ML Solutions": false,
+    "Case Studies": false,
     Technologies: false,
   })
   const [carouselIndex, setCarouselIndex] = useState<{ [key: string]: number }>({
@@ -243,9 +289,15 @@ export default function GlassmorphismNavigationHeader({
     Technologies: 0,
   })
 
-  const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+  const servicesTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+  const solutionsTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+  const aboutUsTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+
   const mobileMenuRef = useRef<HTMLDivElement>(null)
   const mobileMenuButtonRef = useRef<HTMLButtonElement>(null)
+  const servicesDropdownRef = useRef<HTMLDivElement>(null)
+  const solutionsDropdownRef = useRef<HTMLDivElement>(null)
+  const aboutUsDropdownRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -372,59 +424,102 @@ export default function GlassmorphismNavigationHeader({
   }
 
   const handleSectionClick = (section: (typeof sections)[0]) => {
-    setIsServicesOpen(false)
-    setIsSolutionsOpen(false)
-    setIsAboutUsOpen(false)
-
+    // Close all dropdowns when a non-dropdown section is clicked
+    if (!section.hasDropdown) {
+      setIsServicesOpen(false)
+      setIsSolutionsOpen(false)
+      setIsAboutUsOpen(false)
+    }
     scrollToSection(section.index)
   }
 
   const handleMouseEnter = (sectionName: string) => {
-    if (hoverTimeoutRef.current) {
-      clearTimeout(hoverTimeoutRef.current)
-    }
-
-    hoverTimeoutRef.current = setTimeout(() => {
-      if (sectionName === "Products & Solutions") {
-        setIsSolutionsOpen(true)
-        setIsServicesOpen(false)
-        setIsAboutUsOpen(false)
-      } else if (sectionName === "Services") {
-        setIsServicesOpen(true)
-        setIsSolutionsOpen(false)
-        setIsAboutUsOpen(false)
-      } else if (sectionName === "About Us") {
-        setIsAboutUsOpen(true)
-        setIsServicesOpen(false)
-        setIsSolutionsOpen(false)
+    if (sectionName === "Products & Solutions") {
+      // Clear any pending close timeout for Solutions
+      if (solutionsTimeoutRef.current) {
+        clearTimeout(solutionsTimeoutRef.current)
+        solutionsTimeoutRef.current = null
       }
-    }, 100)
-  }
-
-  const handleMouseLeave = () => {
-    if (hoverTimeoutRef.current) {
-      clearTimeout(hoverTimeoutRef.current)
-    }
-
-    hoverTimeoutRef.current = setTimeout(() => {
+      // Close other dropdowns
       setIsServicesOpen(false)
+      setIsAboutUsOpen(false)
+      setIsSolutionsOpen(true)
+    } else if (sectionName === "Services") {
+      // Clear any pending close timeout for Services
+      if (servicesTimeoutRef.current) {
+        clearTimeout(servicesTimeoutRef.current)
+        servicesTimeoutRef.current = null
+      }
+      // Close other dropdowns
       setIsSolutionsOpen(false)
       setIsAboutUsOpen(false)
-    }, 200)
-  }
-
-  const handleDropdownMouseEnter = () => {
-    if (hoverTimeoutRef.current) {
-      clearTimeout(hoverTimeoutRef.current)
+      setIsServicesOpen(true)
+    } else if (sectionName === "About Us") {
+      // Clear any pending close timeout for About Us
+      if (aboutUsTimeoutRef.current) {
+        clearTimeout(aboutUsTimeoutRef.current)
+        aboutUsTimeoutRef.current = null
+      }
+      // Close other dropdowns
+      setIsSolutionsOpen(false)
+      setIsServicesOpen(false)
+      setIsAboutUsOpen(true)
+    } else {
+      setIsSolutionsOpen(false)
+      setIsServicesOpen(false)
+      setIsAboutUsOpen(false)
     }
   }
 
-  const handleDropdownMouseLeave = () => {
-    hoverTimeoutRef.current = setTimeout(() => {
-      setIsServicesOpen(false)
-      setIsSolutionsOpen(false)
-      setIsAboutUsOpen(false)
-    }, 200)
+  // Removed the handleMouseLeave from nav items - only use it on the dropdown itself
+  // const handleMouseLeave = (sectionName: string) => {
+  //   if (sectionName === "Products & Solutions") {
+  //     if (solutionsTimeoutRef.current) {
+  //       clearTimeout(solutionsTimeoutRef.current)
+  //     }
+  //     solutionsTimeoutRef.current = setTimeout(() => {
+  //       setIsSolutionsOpen(false)
+  //     }, 200)
+  //   } else if (sectionName === "Services") {
+  //     if (servicesTimeoutRef.current) {
+  //       clearTimeout(servicesTimeoutRef.current)
+  //     }
+  //     servicesTimeoutRef.current = setTimeout(() => {
+  //       setIsServicesOpen(false)
+  //     }, 200)
+  //   } else if (sectionName === "About Us") {
+  //     if (aboutUsTimeoutRef.current) {
+  //       clearTimeout(aboutUsTimeoutRef.current)
+  //     }
+  //     aboutUsTimeoutRef.current = setTimeout(() => {
+  //       setIsAboutUsOpen(false)
+  //     }, 200)
+  //   }
+  // }
+
+  const handleDropdownMouseLeave = (sectionName: string) => {
+    if (sectionName === "Products & Solutions") {
+      if (solutionsTimeoutRef.current) {
+        clearTimeout(solutionsTimeoutRef.current)
+      }
+      solutionsTimeoutRef.current = setTimeout(() => {
+        setIsSolutionsOpen(false)
+      }, 300)
+    } else if (sectionName === "Services") {
+      if (servicesTimeoutRef.current) {
+        clearTimeout(servicesTimeoutRef.current)
+      }
+      servicesTimeoutRef.current = setTimeout(() => {
+        setIsServicesOpen(false)
+      }, 300)
+    } else if (sectionName === "About Us") {
+      if (aboutUsTimeoutRef.current) {
+        clearTimeout(aboutUsTimeoutRef.current)
+      }
+      aboutUsTimeoutRef.current = setTimeout(() => {
+        setIsAboutUsOpen(false)
+      }, 300)
+    }
   }
 
   const handleNavigate = (path: string) => {
@@ -454,6 +549,26 @@ export default function GlassmorphismNavigationHeader({
       const totalItems = currentCategory.items.length
       const isIndustryCategory = currentCategory.category === "By Industry"
       const isTechnologiesCategory = currentCategory.category === "Technologies"
+
+      const iconColors = [
+        "text-blue-400",
+        "text-emerald-400",
+        "text-violet-400",
+        "text-rose-400",
+        "text-amber-400",
+        "text-cyan-400",
+        "text-pink-400",
+        "text-lime-400",
+        "text-orange-400",
+        "text-teal-400",
+        "text-indigo-400",
+        "text-fuchsia-400",
+        "text-yellow-400",
+        "text-green-400",
+        "text-red-400",
+        "text-purple-400",
+        "text-sky-400",
+      ]
 
       if (isIndustryCategory || isTechnologiesCategory) {
         const itemsPerPage = 9
@@ -528,6 +643,7 @@ export default function GlassmorphismNavigationHeader({
                   <div className="grid grid-cols-3 gap-4 w-[700px]">
                     {displayItems.map((item, itemIdx) => {
                       const Icon = item.icon
+                      const iconColor = iconColors[(startIdx + itemIdx) % iconColors.length]
                       return (
                         <button
                           key={startIdx + itemIdx}
@@ -535,8 +651,8 @@ export default function GlassmorphismNavigationHeader({
                           className="group relative p-4 rounded-lg border border-white/10 bg-white/5 hover:bg-white/10 transition-all duration-200 hover:border-white/20 animate-fadeIn cursor-pointer text-left"
                         >
                           <div className="flex items-start gap-3">
-                            <div className="flex-shrink-0 p-2 rounded-lg bg-gradient-to-br from-blue-500/20 to-orange-500/20 group-hover:from-blue-500/30 group-hover:to-orange-500/30 transition-all duration-200">
-                              <Icon className="w-5 h-5 text-white" />
+                            <div className="flex-shrink-0 p-2 rounded-lg bg-white/5 group-hover:bg-white/10 transition-all duration-200">
+                              <Icon className={`w-5 h-5 ${iconColor}`} />
                             </div>
                             <div className="flex-1 min-w-0">
                               <h4 className="font-semibold text-white text-sm mb-1">{item.name}</h4>
@@ -609,6 +725,7 @@ export default function GlassmorphismNavigationHeader({
               <div className="grid grid-cols-3 gap-4 w-[700px]">
                 {displayItems.map((item, itemIdx) => {
                   const Icon = item.icon
+                  const iconColor = iconColors[itemIdx % iconColors.length]
                   return (
                     <button
                       key={itemIdx}
@@ -616,8 +733,8 @@ export default function GlassmorphismNavigationHeader({
                       className="group relative p-4 rounded-lg border border-white/10 bg-white/5 hover:bg-white/10 transition-all duration-200 hover:border-white/20 cursor-pointer text-left"
                     >
                       <div className="flex items-start gap-3">
-                        <div className="flex-shrink-0 p-2 rounded-lg bg-gradient-to-br from-blue-500/20 to-orange-500/20 group-hover:from-blue-500/30 group-hover:to-orange-500/30 transition-all duration-200">
-                          <Icon className="w-5 h-5 text-white" />
+                        <div className="flex-shrink-0 p-2 rounded-lg bg-white/5 group-hover:bg-white/10 transition-all duration-200">
+                          <Icon className={`w-5 h-5 ${iconColor}`} />
                         </div>
                         <div className="flex-1 min-w-0">
                           <h4 className="font-semibold text-white text-sm mb-1">{item.name}</h4>
@@ -634,6 +751,29 @@ export default function GlassmorphismNavigationHeader({
       }
     }
     return null
+  }
+
+  // Added handler for desktop dropdowns
+  const handleDropdownMouseEnter = (sectionName: string) => {
+    if (sectionName === "Products & Solutions") {
+      if (solutionsTimeoutRef.current) {
+        clearTimeout(solutionsTimeoutRef.current)
+        solutionsTimeoutRef.current = null
+      }
+      setIsSolutionsOpen(true)
+    } else if (sectionName === "Services") {
+      if (servicesTimeoutRef.current) {
+        clearTimeout(servicesTimeoutRef.current)
+        servicesTimeoutRef.current = null
+      }
+      setIsServicesOpen(true)
+    } else if (sectionName === "About Us") {
+      if (aboutUsTimeoutRef.current) {
+        clearTimeout(aboutUsTimeoutRef.current)
+        aboutUsTimeoutRef.current = null
+      }
+      setIsAboutUsOpen(true)
+    }
   }
 
   return (
@@ -653,86 +793,90 @@ export default function GlassmorphismNavigationHeader({
             mx-auto
             mt-4
             px-6
-            max-w-7xl
+            max-w-5xl
           "
         >
           <div
             className="
               relative
-              flex items-center justify-between
-              px-6 py-3
-              rounded-3xl
+              flex items-center
+              px-5 py-2.5
+              rounded-2xl
               bg-gradient-to-r from-blue-950/30 via-purple-950/30 to-orange-950/30
-            
               shadow-[0_8px_32px_rgba(0,0,0,0.3),inset_0_1px_2px_rgba(255,255,255,0.2)]
               backdrop-blur-xl
             "
           >
+            {/* Logo on left side - made bigger */}
             <button
               onClick={() => scrollToSection(0)}
-              className="flex items-center hover:scale-105 transition-transform duration-200 cursor-pointer"
+              className="flex items-center hover:scale-105 transition-transform duration-200 cursor-pointer flex-shrink-0"
             >
-              <div className="w-10 h-10 md:w-12 md:h-12 ml-10 gap-3 flex items-center justify-center">
-                {/* <div className="w-10 h-10  rounded-lg flex items-center justify-center">
-                     <Image
-                    src="/logo.svg"
-                    alt="Logo"
-                    width={20}
-                    height={20}
-                    className="w-8 h-8 object-contain"
-                  />
-                </div> */}
-                <span className="relative flex items-center gap-2 z-10 text-xl uppercase leading-tight font-montserrat">
-                     <Image
-                    src="/logo.svg"
-                    alt="Logo"
-                    width={20}
-                    height={20}
-                    className="w-8 h-8 object-contain"
-                  />
-                  <span className="block font-extrabold tracking-wide text-white">QWICKBIT</span>
-                </span>
+              <div className="w-12 h-12 flex items-center justify-center">
+                <Image
+                  src="/logo.svg"
+                  alt="Logo"
+                  width={48}
+                  height={48}
+                  className="w-10 h-10 object-contain"
+                  priority
+                />
               </div>
             </button>
 
-            {/* Desktop Menu Items */}
-            <div className="hidden md:flex items-center gap-1 xl:gap-2">
-              {sections.map((section) => (
-                <div
-                  key={section.index}
-                  className="relative group"
-                  onMouseEnter={() => section.hasDropdown && handleMouseEnter(section.name)}
-                  onMouseLeave={handleMouseLeave}
-                >
-                  <button
-                    onClick={() => handleSectionClick(section)}
-                    className={`
-                      flex items-center gap-1.5
-                      px-4 lg:px-5 py-2.5
-                      font-medium text-sm lg:text-base text-white/90
-                      hover:text-white
-                      transition-all duration-200
-                      rounded-2xl
-                      ${
-                        currentSection === section.index
-                          ? "bg-white/20 shadow-[inset_0_1px_3px_rgba(255,255,255,0.3)] text-white"
-                          : "hover:bg-white/10"
-                      }
-                      whitespace-nowrap
-                    `}
+            {/* Desktop Menu Items - Centered */}
+            <div className="flex-1 flex items-center justify-center">
+              <div className="flex items-center gap-1 xl:gap-1">
+                {sections.map((section) => (
+                  <div
+                    key={section.index}
+                    className="relative group"
+                    // ref={navItemRef}  // Removed as it's not used elsewhere
+                    onMouseEnter={(e) => {
+                      e.stopPropagation()
+                      handleMouseEnter(section.name)
+                    }}
+                    // onMouseLeave={() => handleMouseLeave(section.name)} // Removed
                   >
-                    <span>{section.name}</span>
-                    {section.hasDropdown && (
-                      <ChevronDown className="w-4 h-4 transition-transform group-hover:rotate-180 duration-300" />
-                    )}
-                  </button>
-                </div>
-              ))}
+                    <button
+                      onClick={() => handleSectionClick(section)}
+                      className={`
+                        flex items-center gap-1
+                        px-3 lg:px-4 py-2
+                        font-medium text-sm text-white/90
+                        hover:text-white
+                        transition-all duration-200
+                        rounded-xl
+                        ${
+                          currentSection === section.index
+                            ? "bg-white/20 shadow-[inset_0_1px_3px_rgba(255,255,255,0.3)] text-white"
+                            : "hover:bg-white/10"
+                        }
+                        whitespace-nowrap
+                      `}
+                    >
+                      <span className="text-sm">{section.name}</span>
+                      {section.hasDropdown && (
+                        <ChevronDown
+                          className={`w-3.5 h-3.5 transition-transform duration-300 ${
+                            (section.name === "Products & Solutions" && isSolutionsOpen) ||
+                            (section.name === "Services" && isServicesOpen) ||
+                            (section.name === "About Us" && isAboutUsOpen)
+                              ? "rotate-180"
+                              : ""
+                          }`}
+                        />
+                      )}
+                    </button>
+                  </div>
+                ))}
+              </div>
             </div>
 
-            {/* Desktop Right Side Actions */}
-            <div className="hidden md:flex items-center gap-3"></div>
+            {/* Spacer for balance */}
+            <div className="w-12 flex-shrink-0"></div>
 
+            {/* Mobile Menu Button for desktop view (hidden) */}
             <button
               ref={mobileMenuButtonRef}
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -756,6 +900,7 @@ export default function GlassmorphismNavigationHeader({
           </div>
         </nav>
 
+        {/* Mobile Navigation */}
         <nav className="block md:hidden mx-3 mt-3">
           <div
             className="
@@ -767,9 +912,10 @@ export default function GlassmorphismNavigationHeader({
               border border-white/20
               shadow-[0_8px_32px_rgba(0,0,0,0.3),inset_0_1px_2px_rgba(255,255,255,0.2)]
               backdrop-blur-xl
+              z-50
             "
           >
-            {/* Mobile Logo - Updated to match desktop */}
+            {/* Mobile Logo - Made bigger */}
             <button
               onClick={() => {
                 scrollToSection(0)
@@ -777,16 +923,16 @@ export default function GlassmorphismNavigationHeader({
               }}
               className="flex items-center gap-2 flex-shrink-0"
             >
-              <div className="w-8 h-8  rounded-lg flex items-center justify-center">
-                       <Image
-                    src="/logo.svg"
-                    alt="Logo"
-                    width={20}
-                    height={20}
-                    className="w-8 h-8 object-contain"
-                  />
+              <div className="w-14 h-14 rounded-lg flex items-center justify-center">
+                <Image
+                  src="/logo.svg"
+                  alt="Logo"
+                  width={56}
+                  height={56}
+                  className="w-12 h-12 object-contain"
+                  priority
+                />
               </div>
-              <span className="font-bold text-white text-base">QWICKBIT</span>
             </button>
 
             {/* Mobile Menu Button */}
@@ -800,13 +946,102 @@ export default function GlassmorphismNavigationHeader({
             </button>
           </div>
         </nav>
+      </header>
 
+      {/* Desktop Dropdowns - Placed outside header to prevent clipping */}
+      {isSolutionsOpen && (
+        <div
+          ref={solutionsDropdownRef}
+          className="hidden md:block dropdown-container fixed top-20 left-1/2 -translate-x-1/2 z-[9999]"
+          onMouseEnter={() => handleDropdownMouseEnter("Products & Solutions")}
+          onMouseLeave={() => handleDropdownMouseLeave("Products & Solutions")}
+          style={{
+            pointerEvents: "auto",
+          }}
+        >
+          <div className="bg-black/40 backdrop-blur-md border border-white/20 rounded-2xl shadow-2xl overflow-hidden">
+            {renderDropdownContent(productsSolutionsMenu, true)}
+          </div>
+        </div>
+      )}
+
+      {isServicesOpen && (
+        <div
+          ref={servicesDropdownRef}
+          className="hidden md:block dropdown-container fixed top-20 left-1/2 -translate-x-1/2 z-[9999]"
+          onMouseEnter={() => handleDropdownMouseEnter("Services")}
+          onMouseLeave={() => handleDropdownMouseLeave("Services")}
+          style={{
+            pointerEvents: "auto",
+          }}
+        >
+          <div className="bg-black/40 backdrop-blur-md border border-white/20 rounded-2xl shadow-2xl overflow-hidden">
+            {renderDropdownContent(servicesMenu, false)}
+          </div>
+        </div>
+      )}
+
+      {isAboutUsOpen && (
+        <div
+          ref={aboutUsDropdownRef}
+          className="hidden md:block dropdown-container fixed top-20 left-1/2 -translate-x-1/2 z-[9999]"
+          onMouseEnter={() => handleDropdownMouseEnter("About Us")}
+          onMouseLeave={() => handleDropdownMouseLeave("About Us")}
+          style={{
+            pointerEvents: "auto",
+          }}
+        >
+          <div className="bg-black/40 backdrop-blur-md border border-white/20 rounded-2xl shadow-2xl overflow-hidden p-8 min-w-[400px]">
+            <h3 className="font-mono text-sm text-white/80 mb-5 uppercase tracking-widest font-semibold">Company</h3>
+            <button
+              onClick={() => {
+                setIsAboutUsOpen(false)
+                handleNavigate("/projects")
+              }}
+              className="group relative w-full p-4 rounded-lg border border-white/10 bg-white/5 hover:bg-white/10 transition-all duration-200 hover:border-white/20 cursor-pointer text-left mb-3"
+            >
+              <div className="flex items-start gap-3">
+                <div className="flex-shrink-0 p-2 rounded-lg bg-gradient-to-br from-blue-500/20 to-orange-500/20 group-hover:from-blue-500/30 group-hover:to-orange-500/30 transition-all duration-200">
+                  <Briefcase className="w-5 h-5 text-white" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h4 className="font-semibold text-white text-sm mb-1">Our Projects</h4>
+                  <p className="text-white/70 text-xs leading-relaxed">
+                    Explore our portfolio of successful projects and case studies.
+                  </p>
+                </div>
+              </div>
+            </button>
+            <button
+              onClick={() => {
+                setIsAboutUsOpen(false)
+                handleNavigate("/blogs")
+              }}
+              className="group relative w-full p-4 rounded-lg border border-white/10 bg-white/5 hover:bg-white/10 transition-all duration-200 hover:border-white/20 cursor-pointer text-left"
+            >
+              <div className="flex items-start gap-3">
+                <div className="flex-shrink-0 p-2 rounded-lg bg-gradient-to-br from-blue-500/20 to-orange-500/20 group-hover:from-blue-500/30 group-hover:to-orange-500/30 transition-all duration-200">
+                  <FileText className="w-5 h-5 text-white" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h4 className="font-semibold text-white text-sm mb-1">Blogs</h4>
+                  <p className="text-white/70 text-xs leading-relaxed">
+                    Read our latest insights, articles, and industry updates.
+                  </p>
+                </div>
+              </div>
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Mobile Menu Overlay and Content - Placed outside header */}
+      <div className="md:hidden">
         {/* Mobile Menu Overlay */}
         <div
           className={`
-            fixed inset-0 bg-black/60 backdrop-blur-sm z-40 md:hidden
-            transition-opacity duration-300
-            ${isMobileMenuOpen ? "opacity-100" : "opacity-0 pointer-events-none"}
+            fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity duration-300
+            ${isMobileMenuOpen ? "opacity-100 z-[9998]" : "opacity-0 pointer-events-none -z-10"}
           `}
           onClick={() => {
             setIsMobileMenuOpen(false)
@@ -816,23 +1051,43 @@ export default function GlassmorphismNavigationHeader({
           }}
         />
 
-        {/* Mobile Menu Content */}
+        {/* Mobile Menu Content - Slides from right */}
         <div
           ref={mobileMenuRef}
           className={`
-            fixed left-0 right-0 top-[68px] z-50 md:hidden
-            mx-3
-            rounded-2xl
-            bg-gradient-to-br from-blue-950/95 via-purple-950/95 to-orange-950/95
-            border border-white/20
+            fixed right-0 top-0 bottom-0 w-[85vw] max-w-md
+            bg-gradient-to-b from-blue-950/95 via-purple-950/95 to-orange-950/95
+            border-l border-white/20
             shadow-2xl
             backdrop-blur-xl
             transition-all duration-300 ease-out
-            ${isMobileMenuOpen ? "translate-y-0 opacity-100" : "-translate-y-4 opacity-0 pointer-events-none"}
-            max-h-[calc(100vh-88px)]
             overflow-y-auto
+            ${isMobileMenuOpen ? "translate-x-0 opacity-100 z-[9999]" : "translate-x-full opacity-0 -z-10"}
           `}
         >
+          {/* Mobile Menu Header with logo */}
+          <div className="p-6 border-b border-white/10 flex items-center justify-between">
+            <button
+              onClick={() => {
+                scrollToSection(0)
+                setIsMobileMenuOpen(false)
+              }}
+              className="flex items-center gap-3"
+            >
+              <div className="w-10 h-10 rounded-lg flex items-center justify-center">
+                <Image src="/logo.svg" alt="Logo" width={40} height={40} className="w-8 h-8 object-contain" />
+              </div>
+            </button>
+            <button
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="p-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors"
+              aria-label="Close menu"
+            >
+              <X className="w-5 h-5 text-white" />
+            </button>
+          </div>
+
+          {/* Mobile Menu Items */}
           <div className="p-4 space-y-2">
             {sections.map((section) => (
               <div key={section.index}>
@@ -841,7 +1096,7 @@ export default function GlassmorphismNavigationHeader({
                     onClick={() => handleMobileSectionClick(section.index)}
                     className={`
                       w-full text-left px-4 py-3.5
-                      font-medium text-base text-white
+                      font-medium text-sm text-white
                       rounded-xl
                       transition-all duration-200
                       ${
@@ -873,7 +1128,7 @@ export default function GlassmorphismNavigationHeader({
                       }}
                       className={`
                         w-full flex items-center justify-between px-4 py-3.5
-                        font-medium text-base text-white
+                        font-medium text-sm text-white
                         rounded-xl
                         transition-all duration-200
                         ${
@@ -887,7 +1142,7 @@ export default function GlassmorphismNavigationHeader({
                     >
                       <span>{section.name}</span>
                       <ChevronDown
-                        className={`w-5 h-5 transition-transform duration-300 ${
+                        className={`w-4 h-4 transition-transform duration-300 ${
                           (section.name === "Products & Solutions" && mobileSolutionsOpen) ||
                           (section.name === "Services" && mobileServicesOpen) ||
                           (section.name === "About Us" && mobileAboutUsOpen)
@@ -918,9 +1173,9 @@ export default function GlassmorphismNavigationHeader({
                                 onClick={(e) => handleViewAllClick(category.category, e)}
                                 className="w-full flex items-center justify-between mb-2 px-2 py-2 hover:bg-white/5 rounded-lg transition-colors"
                               >
-                                <h4 className="font-semibold text-sm text-white/90">{category.category}</h4>
+                                <h4 className="font-semibold text-xs text-white/90">{category.category}</h4>
                                 <ChevronDown
-                                  className={`w-4 h-4 text-white/70 transition-transform duration-300 ${
+                                  className={`w-3 h-3 text-white/70 transition-transform duration-300 ${
                                     viewAllStates[category.category] ? "rotate-180" : ""
                                   }`}
                                 />
@@ -937,14 +1192,14 @@ export default function GlassmorphismNavigationHeader({
                                     <button
                                       key={itemIdx}
                                       onClick={() => handleItemClickInternal(item, "product")}
-                                      className="w-full text-left p-3 rounded-lg bg-white/5 hover:bg-white/10 active:bg-white/15 transition-all duration-200"
+                                      className="w-full text-left p-2.5 rounded-lg bg-white/5 hover:bg-white/10 active:bg-white/15 transition-all duration-200"
                                     >
-                                      <div className="flex items-start gap-3">
-                                        <div className="flex-shrink-0 p-2 rounded-lg bg-gradient-to-br from-blue-500/20 to-orange-500/20">
-                                          <Icon className="w-4 h-4 text-white" />
+                                      <div className="flex items-start gap-2">
+                                        <div className="flex-shrink-0 p-1.5 rounded-lg bg-gradient-to-br from-blue-500/20 to-orange-500/20">
+                                          <Icon className="w-3.5 h-3.5 text-white" />
                                         </div>
                                         <div className="flex-1 min-w-0">
-                                          <h5 className="font-semibold text-white text-sm mb-1">{item.name}</h5>
+                                          <h5 className="font-semibold text-white text-xs mb-1">{item.name}</h5>
                                           <p className="text-white/70 text-xs line-clamp-2">{item.description}</p>
                                         </div>
                                       </div>
@@ -962,9 +1217,9 @@ export default function GlassmorphismNavigationHeader({
                                 onClick={(e) => handleViewAllClick(category.category, e)}
                                 className="w-full flex items-center justify-between mb-2 px-2 py-2 hover:bg-white/5 rounded-lg transition-colors"
                               >
-                                <h4 className="font-semibold text-sm text-white/90">{category.category}</h4>
+                                <h4 className="font-semibold text-xs text-white/90">{category.category}</h4>
                                 <ChevronDown
-                                  className={`w-4 h-4 text-white/70 transition-transform duration-300 ${
+                                  className={`w-3 h-3 text-white/70 transition-transform duration-300 ${
                                     viewAllStates[category.category] ? "rotate-180" : ""
                                   }`}
                                 />
@@ -981,14 +1236,14 @@ export default function GlassmorphismNavigationHeader({
                                     <button
                                       key={itemIdx}
                                       onClick={() => handleItemClickInternal(item, "service")}
-                                      className="w-full text-left p-3 rounded-lg bg-white/5 hover:bg-white/10 active:bg-white/15 transition-all duration-200"
+                                      className="w-full text-left p-2.5 rounded-lg bg-white/5 hover:bg-white/10 active:bg-white/15 transition-all duration-200"
                                     >
-                                      <div className="flex items-start gap-3">
-                                        <div className="flex-shrink-0 p-2 rounded-lg bg-gradient-to-br from-blue-500/20 to-orange-500/20">
-                                          <Icon className="w-4 h-4 text-white" />
+                                      <div className="flex items-start gap-2">
+                                        <div className="flex-shrink-0 p-1.5 rounded-lg bg-gradient-to-br from-blue-500/20 to-orange-500/20">
+                                          <Icon className="w-3.5 h-3.5 text-white" />
                                         </div>
                                         <div className="flex-1 min-w-0">
-                                          <h5 className="font-semibold text-white text-sm mb-1">{item.name}</h5>
+                                          <h5 className="font-semibold text-white text-xs mb-1">{item.name}</h5>
                                           <p className="text-white/70 text-xs line-clamp-2">{item.description}</p>
                                         </div>
                                       </div>
@@ -1006,11 +1261,11 @@ export default function GlassmorphismNavigationHeader({
                                 handleNavigate("/projects")
                                 setIsMobileMenuOpen(false)
                               }}
-                              className="w-full text-left px-4 py-3 rounded-lg bg-white/5 hover:bg-white/10 active:bg-white/15 transition-all duration-200"
+                              className="w-full text-left px-3 py-2.5 rounded-lg bg-white/5 hover:bg-white/10 active:bg-white/15 transition-all duration-200"
                             >
-                              <div className="flex items-center gap-3">
-                                <Users className="w-4 h-4 text-white/70" />
-                                <span className="text-white text-sm font-medium">Our projects</span>
+                              <div className="flex items-center gap-2">
+                                <Users className="w-3.5 h-3.5 text-white/70" />
+                                <span className="text-white text-xs font-medium">Our projects</span>
                               </div>
                             </button>
                             <button
@@ -1018,11 +1273,11 @@ export default function GlassmorphismNavigationHeader({
                                 handleNavigate("/blogs")
                                 setIsMobileMenuOpen(false)
                               }}
-                              className="w-full text-left px-4 py-3 rounded-lg bg-white/5 hover:bg-white/10 active:bg-white/15 transition-all duration-200"
+                              className="w-full text-left px-3 py-2.5 rounded-lg bg-white/5 hover:bg-white/10 active:bg-white/15 transition-all duration-200"
                             >
-                              <div className="flex items-center gap-3">
-                                <Briefcase className="w-4 h-4 text-white/70" />
-                                <span className="text-white text-sm font-medium">Blogs</span>
+                              <div className="flex items-center gap-2">
+                                <Briefcase className="w-3.5 h-3.5 text-white/70" />
+                                <span className="text-white text-xs font-medium">Blogs</span>
                               </div>
                             </button>
                           </div>
@@ -1035,85 +1290,12 @@ export default function GlassmorphismNavigationHeader({
             ))}
           </div>
         </div>
+      </div>
 
-        {isSolutionsOpen && (
-          <div
-            className="hidden md:block absolute top-full left-1/2 -translate-x-1/2 mt-2 z-50"
-            onMouseEnter={handleDropdownMouseEnter}
-            onMouseLeave={handleDropdownMouseLeave}
-          >
-            <div className="bg-black/40 backdrop-blur-md border border-white/20 rounded-2xl shadow-2xl overflow-hidden">
-              {renderDropdownContent(productsSolutionsMenu, true)}
-            </div>
-          </div>
-        )}
-
-        {isServicesOpen && (
-          <div
-            className="hidden md:block absolute top-full left-1/2 -translate-x-1/2 mt-2 z-50"
-            onMouseEnter={handleDropdownMouseEnter}
-            onMouseLeave={handleDropdownMouseLeave}
-          >
-            <div className="bg-black/40 backdrop-blur-md border border-white/20 rounded-2xl shadow-2xl overflow-hidden">
-              {renderDropdownContent(servicesMenu, false)}
-            </div>
-          </div>
-        )}
-
-        {isAboutUsOpen && (
-          <div
-            className="hidden md:block absolute top-full left-1/2 -translate-x-1/2 mt-2 z-50"
-            onMouseEnter={handleDropdownMouseEnter}
-            onMouseLeave={handleDropdownMouseLeave}
-          >
-            <div className="bg-black/40 backdrop-blur-md border border-white/20 rounded-2xl shadow-2xl overflow-hidden p-8 min-w-[400px]">
-              <h3 className="font-mono text-sm text-white/80 mb-5 uppercase tracking-widest font-semibold">Company</h3>
-              <button
-                onClick={() => {
-                  setIsAboutUsOpen(false)
-                  handleNavigate("/projects")
-                }}
-                className="group relative w-full p-4 rounded-lg border border-white/10 bg-white/5 hover:bg-white/10 transition-all duration-200 hover:border-white/20 cursor-pointer text-left mb-3"
-              >
-                <div className="flex items-start gap-3">
-                  <div className="flex-shrink-0 p-2 rounded-lg bg-gradient-to-br from-blue-500/20 to-orange-500/20 group-hover:from-blue-500/30 group-hover:to-orange-500/30 transition-all duration-200">
-                    <Briefcase className="w-5 h-5 text-white" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <h4 className="font-semibold text-white text-sm mb-1">Our Projects</h4>
-                    <p className="text-white/70 text-xs leading-relaxed">
-                      Explore our portfolio of successful projects and case studies.
-                    </p>
-                  </div>
-                </div>
-              </button>
-              <button
-                onClick={() => {
-                  setIsAboutUsOpen(false)
-                  handleNavigate("/blogs")
-                }}
-                className="group relative w-full p-4 rounded-lg border border-white/10 bg-white/5 hover:bg-white/10 transition-all duration-200 hover:border-white/20 cursor-pointer text-left"
-              >
-                <div className="flex items-start gap-3">
-                  <div className="flex-shrink-0 p-2 rounded-lg bg-gradient-to-br from-blue-500/20 to-orange-500/20 group-hover:from-blue-500/30 group-hover:to-orange-500/30 transition-all duration-200">
-                    <FileText className="w-5 h-5 text-white" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <h4 className="font-semibold text-white text-sm mb-1">Blogs</h4>
-                    <p className="text-white/70 text-xs leading-relaxed">
-                      Read our latest insights, articles, and industry updates.
-                    </p>
-                  </div>
-                </div>
-              </button>
-            </div>
-          </div>
-        )}
-      </header>
-
+      {/* Click outside handler for desktop dropdowns */}
       {(isServicesOpen || isSolutionsOpen || isAboutUsOpen) && (
         <div
-          className="fixed inset-0 z-40"
+          className="hidden md:block fixed inset-0 z-[9997]"
           onClick={() => {
             setIsServicesOpen(false)
             setIsSolutionsOpen(false)

@@ -132,12 +132,9 @@ export function PolicyLayout({ title, children, onClose }: PolicyLayoutProps) {
               <div className="absolute top-0 right-0 w-1/2 h-1/2 bg-gradient-to-bl from-blue-500/10 to-purple-500/10 rounded-full blur-3xl" />
               <div className="absolute bottom-0 left-0 w-1/2 h-1/2 bg-gradient-to-tr from-orange-500/10 to-blue-500/10 rounded-full blur-3xl" />
               
-              <div className="relative z-10 max-w-6xl mx-auto">
-                {/* Header */}
-      
-
-                {/* Content Section */}
-                <div className="max-w-5xl mx-auto px-4">
+              <div className="relative z-10 w-full">
+                {/* Content Section - Full Width */}
+                <div className="w-full">
                   <div className="p-6 md:p-8 lg:p-12 rounded-2xl md:rounded-3xl border border-white/10 bg-white/5 backdrop-blur-md shadow-2xl">
                     <div className="prose prose-lg prose-invert max-w-none policy-content">
                       {children}
@@ -307,4 +304,3 @@ export function PolicyLayout({ title, children, onClose }: PolicyLayoutProps) {
     </div>
   )
 }
-

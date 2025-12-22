@@ -4,6 +4,7 @@ import { Geist, Geist_Mono } from "next/font/google"
 import "./globals.css"
 import { Analytics } from "@vercel/analytics/react"   // ← IMPORTANT
 import { GoodFirmsScript } from "@/components/ui/GoodFirmsWidget"
+import { CustomCursor } from "@/components/custom-cursor"
 
 const _geist = Geist({ subsets: ["latin"] })
 const _geistMono = Geist_Mono({ subsets: ["latin"] })
@@ -27,6 +28,7 @@ export default function RootLayout({
       
       <body className="font-sans antialiased">
 <GoodFirmsScript />
+<CustomCursor />
         {children}
 
         <Analytics />
