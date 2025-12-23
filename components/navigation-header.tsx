@@ -35,6 +35,7 @@ import {
 } from "lucide-react"
 import { useRouter } from "next/navigation"
 import Image from "next/image"
+import { caseStudiesData, openCaseStudyByName } from "@/components/sections/work-section"
 
 interface NavigationHeaderProps {
   currentSection: number
@@ -75,7 +76,7 @@ const productsSolutionsMenu: ProductsSolutionsMenuItem[] = [
     items: [
       { name: "CRM", description: "Integrated CRM with efficient process management.", icon: Users },
       {
-        name: "Retail eCommerce",
+        name: " ECommerce",
         description: "Grow your business with conversion friendly eCommerce store.",
         icon: Store,
       },
@@ -143,48 +144,7 @@ const productsSolutionsMenu: ProductsSolutionsMenuItem[] = [
   },
   {
     category: "Case Studies",
-    items: [
-      {
-        name: "Enterprise CRM Implementation",
-        description: "Scalable CRM solution for Fortune 500 company reducing support tickets by 40%.",
-        icon: Users,
-      },
-      {
-        name: "Retail Automation System",
-        description: "AI-powered inventory management reducing stockouts by 65%.",
-        icon: ShoppingCart,
-      },
-      {
-        name: "Healthcare Analytics Platform",
-        description: "Predictive analytics for patient care optimization in hospital network.",
-        icon: Stethoscope,
-      },
-      {
-        name: "EdTech Learning Platform",
-        description: "Personalized learning platform serving 50,000+ students across 5 countries.",
-        icon: GraduationCap,
-      },
-      {
-        name: "Travel Booking System",
-        description: "High-performance booking engine handling 10,000+ daily transactions.",
-        icon: Plane,
-      },
-      {
-        name: "Financial Risk Assessment",
-        description: "ML-based risk analysis system for banking institution reducing defaults by 25%.",
-        icon: BarChart,
-      },
-      {
-        name: "Supply Chain Optimization",
-        description: "IoT and AI-driven logistics platform reducing delivery times by 30%.",
-        icon: Link,
-      },
-      {
-        name: "Customer Service AI",
-        description: "Chatbot solution handling 80% of customer queries automatically.",
-        icon: MessageSquare,
-      },
-    ],
+    items: caseStudiesData,
   },
 ]
 
@@ -413,7 +373,22 @@ export default function GlassmorphismNavigationHeader({
   }
 
   const handleItemClickInternal = (item: ProductSolutionItem, type: "service" | "product") => {
-    onItemClick(item, type)
+    const isCaseStudy = caseStudiesData.some((study) => study.name === item.name)
+
+    if (isCaseStudy) {
+      // Only open the case study modal if we're already in the Work section (index 1)
+      if (currentSection === 1) {
+        openCaseStudyByName(item.name)
+      } else {
+        // Otherwise, scroll to the Work section first
+        scrollToSection(1)
+      }
+    } else {
+      // Open detail page for other items
+      onItemClick(item, type)
+    }
+
+    // Close all menus
     setIsServicesOpen(false)
     setIsSolutionsOpen(false)
     setIsAboutUsOpen(false)
@@ -470,32 +445,6 @@ export default function GlassmorphismNavigationHeader({
       setIsAboutUsOpen(false)
     }
   }
-
-  // Removed the handleMouseLeave from nav items - only use it on the dropdown itself
-  // const handleMouseLeave = (sectionName: string) => {
-  //   if (sectionName === "Products & Solutions") {
-  //     if (solutionsTimeoutRef.current) {
-  //       clearTimeout(solutionsTimeoutRef.current)
-  //     }
-  //     solutionsTimeoutRef.current = setTimeout(() => {
-  //       setIsSolutionsOpen(false)
-  //     }, 200)
-  //   } else if (sectionName === "Services") {
-  //     if (servicesTimeoutRef.current) {
-  //       clearTimeout(servicesTimeoutRef.current)
-  //     }
-  //     servicesTimeoutRef.current = setTimeout(() => {
-  //       setIsServicesOpen(false)
-  //     }, 200)
-  //   } else if (sectionName === "About Us") {
-  //     if (aboutUsTimeoutRef.current) {
-  //       clearTimeout(aboutUsTimeoutRef.current)
-  //     }
-  //     aboutUsTimeoutRef.current = setTimeout(() => {
-  //       setIsAboutUsOpen(false)
-  //     }, 200)
-  //   }
-  // }
 
   const handleDropdownMouseLeave = (sectionName: string) => {
     if (sectionName === "Products & Solutions") {
@@ -793,18 +742,19 @@ export default function GlassmorphismNavigationHeader({
             mx-auto
             mt-4
             px-6
-            max-w-5xl
+            max-w-3xl
           "
         >
-          <div
+         <div
             className="
               relative
               flex items-center
-              px-5 py-2.5
+              px-1 py-0.5 pr-4
               rounded-2xl
               bg-gradient-to-r from-blue-950/30 via-purple-950/30 to-orange-950/30
               shadow-[0_8px_32px_rgba(0,0,0,0.3),inset_0_1px_2px_rgba(255,255,255,0.2)]
               backdrop-blur-xl
+              w-fit
             "
           >
             {/* Logo on left side - made bigger */}
@@ -813,14 +763,7 @@ export default function GlassmorphismNavigationHeader({
               className="flex items-center hover:scale-105 transition-transform duration-200 cursor-pointer flex-shrink-0"
             >
               <div className="w-12 h-12 flex items-center justify-center">
-                <Image
-                  src="/logo.svg"
-                  alt="Logo"
-                  width={48}
-                  height={48}
-                  className="w-10 h-10 object-contain"
-                  priority
-                />
+                <Image src="/logo.svg" alt="Logo" width={48} height={48} className="w-8 h-8 object-contain" priority />
               </div>
             </button>
 
@@ -873,8 +816,7 @@ export default function GlassmorphismNavigationHeader({
               </div>
             </div>
 
-            {/* Spacer for balance */}
-            <div className="w-12 flex-shrink-0"></div>
+          
 
             {/* Mobile Menu Button for desktop view (hidden) */}
             <button
@@ -923,7 +865,7 @@ export default function GlassmorphismNavigationHeader({
               }}
               className="flex items-center gap-2 flex-shrink-0"
             >
-              <div className="w-14 h-14 rounded-lg flex items-center justify-center">
+              <div className="w-14 h-14  rounded-lg flex items-center justify-center">
                 <Image
                   src="/logo.svg"
                   alt="Logo"
@@ -933,6 +875,7 @@ export default function GlassmorphismNavigationHeader({
                   priority
                 />
               </div>
+              <h1 className="font-[800] text-2xl">QWICKBIT</h1>
             </button>
 
             {/* Mobile Menu Button */}
@@ -991,46 +934,120 @@ export default function GlassmorphismNavigationHeader({
             pointerEvents: "auto",
           }}
         >
-          <div className="bg-black/40 backdrop-blur-md border border-white/20 rounded-2xl shadow-2xl overflow-hidden p-8 min-w-[400px]">
-            <h3 className="font-mono text-sm text-white/80 mb-5 uppercase tracking-widest font-semibold">Company</h3>
-            <button
-              onClick={() => {
-                setIsAboutUsOpen(false)
-                handleNavigate("/projects")
-              }}
-              className="group relative w-full p-4 rounded-lg border border-white/10 bg-white/5 hover:bg-white/10 transition-all duration-200 hover:border-white/20 cursor-pointer text-left mb-3"
-            >
-              <div className="flex items-start gap-3">
-                <div className="flex-shrink-0 p-2 rounded-lg bg-gradient-to-br from-blue-500/20 to-orange-500/20 group-hover:from-blue-500/30 group-hover:to-orange-500/30 transition-all duration-200">
-                  <Briefcase className="w-5 h-5 text-white" />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <h4 className="font-semibold text-white text-sm mb-1">Our Projects</h4>
-                  <p className="text-white/70 text-xs leading-relaxed">
-                    Explore our portfolio of successful projects and case studies.
-                  </p>
-                </div>
-              </div>
-            </button>
-            <button
-              onClick={() => {
-                setIsAboutUsOpen(false)
-                handleNavigate("/blogs")
-              }}
-              className="group relative w-full p-4 rounded-lg border border-white/10 bg-white/5 hover:bg-white/10 transition-all duration-200 hover:border-white/20 cursor-pointer text-left"
-            >
-              <div className="flex items-start gap-3">
-                <div className="flex-shrink-0 p-2 rounded-lg bg-gradient-to-br from-blue-500/20 to-orange-500/20 group-hover:from-blue-500/30 group-hover:to-orange-500/30 transition-all duration-200">
-                  <FileText className="w-5 h-5 text-white" />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <h4 className="font-semibold text-white text-sm mb-1">Blogs</h4>
-                  <p className="text-white/70 text-xs leading-relaxed">
-                    Read our latest insights, articles, and industry updates.
-                  </p>
+          <div className="bg-black/40 backdrop-blur-md border border-white/20 rounded-2xl shadow-2xl overflow-hidden">
+            <div className="grid grid-cols-2 gap-5 p-8 min-w-[800px]">
+              <div className="border-r border-white/20 w-[250px] pr-10">
+                <h3 className="font-mono text-sm text-white/80 mb-5 uppercase tracking-widest font-semibold">
+                  Company
+                </h3>
+                <div className="space-y-3">
+                  <button
+                    onClick={() => {
+                      setIsAboutUsOpen(false)
+                      scrollToSection(3)
+                    }}
+                    onMouseEnter={() => setActiveCategory(0)}
+                    className={`block w-full text-left px-4 py-3 rounded-md text-base font-sans transition-all duration-200 ${
+                      activeCategory === 0
+                        ? "text-white bg-white/20 font-semibold"
+                        : "text-white/80 hover:text-white hover:bg-white/10"
+                    }`}
+                  >
+                    Our Company
+                  </button>
+                  <button
+                    onClick={() => {
+                      setIsAboutUsOpen(false)
+                      handleNavigate("/blogs")
+                    }}
+                    onMouseEnter={() => setActiveCategory(1)}
+                    className={`block w-full text-left px-4 py-3 rounded-md text-base font-sans transition-all duration-200 ${
+                      activeCategory === 1
+                        ? "text-white bg-white/20 font-semibold"
+                        : "text-white/80 hover:text-white hover:bg-white/10"
+                    }`}
+                  >
+                    Blogs
+                  </button>
                 </div>
               </div>
-            </button>
+
+              <div className="-ml-20 w-[400px]">
+                {activeCategory === 0 ? (
+                  <div>
+                    <h3 className="font-mono text-sm text-white/80 mb-5 uppercase tracking-widest font-semibold">
+                      About Our Company
+                    </h3>
+                    <div className="space-y-4">
+                      <div className="p-4 rounded-lg border border-white/10 bg-white/5">
+                        <div className="flex items-start gap-3 mb-3">
+                          <div className="flex-shrink-0 p-2 rounded-lg bg-white/5">
+                            <Building className="w-5 h-5 text-blue-400" />
+                          </div>
+                          <div>
+                            <h4 className="font-semibold text-white text-sm mb-1">Who We Are</h4>
+                            <p className="text-white/70 text-xs leading-relaxed">
+                              A leading technology solutions provider specializing in custom software development, AI/ML
+                              solutions, and digital transformation services for businesses worldwide.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <div>
+                    <h3 className="font-mono text-sm text-white/80 mb-5 uppercase tracking-widest font-semibold">
+                      Insights & Updates
+                    </h3>
+                    <div className="space-y-4">
+                      <div className="p-4 rounded-lg border border-white/10 bg-white/5">
+                        <div className="flex items-start gap-3 mb-3">
+                          <div className="flex-shrink-0 p-2 rounded-lg bg-white/5">
+                            <FileText className="w-5 h-5 text-rose-400" />
+                          </div>
+                          <div>
+                            <h4 className="font-semibold text-white text-sm mb-1">Technical Articles</h4>
+                            <p className="text-white/70 text-xs leading-relaxed">
+                              In-depth technical guides, tutorials, and best practices from our experienced development
+                              team covering latest frameworks and technologies.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="p-4 rounded-lg border border-white/10 bg-white/5">
+                        <div className="flex items-start gap-3 mb-3">
+                          <div className="flex-shrink-0 p-2 rounded-lg bg-white/5">
+                            <Brain className="w-5 h-5 text-amber-400" />
+                          </div>
+                          <div>
+                            <h4 className="font-semibold text-white text-sm mb-1">Industry Insights</h4>
+                            <p className="text-white/70 text-xs leading-relaxed">
+                              Expert analysis on emerging trends, market dynamics, and strategic perspectives on
+                              technology adoption and digital transformation.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="p-4 rounded-lg border border-white/10 bg-white/5">
+                        <div className="flex items-start gap-3">
+                          <div className="flex-shrink-0 p-2 rounded-lg bg-white/5">
+                            <Briefcase className="w-5 h-5 text-cyan-400" />
+                          </div>
+                          <div>
+                            <h4 className="font-semibold text-white text-sm mb-1">Case Studies</h4>
+                            <p className="text-white/70 text-xs leading-relaxed">
+                              Real-world success stories, project highlights, and detailed breakdowns of how we've
+                              helped clients achieve their business objectives.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
         </div>
       )}
@@ -1052,244 +1069,262 @@ export default function GlassmorphismNavigationHeader({
         />
 
         {/* Mobile Menu Content - Slides from right */}
-        <div
-          ref={mobileMenuRef}
-          className={`
-            fixed right-0 top-0 bottom-0 w-[85vw] max-w-md
-            bg-gradient-to-b from-blue-950/95 via-purple-950/95 to-orange-950/95
-            border-l border-white/20
-            shadow-2xl
-            backdrop-blur-xl
-            transition-all duration-300 ease-out
-            overflow-y-auto
-            ${isMobileMenuOpen ? "translate-x-0 opacity-100 z-[9999]" : "translate-x-full opacity-0 -z-10"}
-          `}
-        >
-          {/* Mobile Menu Header with logo */}
-          <div className="p-6 border-b border-white/10 flex items-center justify-between">
+     <div
+  ref={mobileMenuRef}
+  className={`
+    fixed right-0 top-0 bottom-0 w-[85vw] max-w-md
+    transition-all duration-300 ease-out
+    overflow-y-auto
+
+    ${
+      isMobileMenuOpen
+        ? `
+          translate-x-0 opacity-100 z-[9999]
+          bg-white/10
+          backdrop-blur-2xl backdrop-saturate-150
+          border-l border-white/20
+          shadow-[0_8px_40px_rgba(0,0,0,0.35)]
+        `
+        : `
+          translate-x-full opacity-0 -z-10
+          bg-transparent backdrop-blur-0 border-none shadow-none
+        `
+    }
+  `}
+>
+  {/* Glass reflection */}
+  {isMobileMenuOpen && (
+    <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/20 to-transparent opacity-50" />
+  )}
+
+  {/* Header */}
+  <div className="relative p-6 border-b border-white/20 bg-white/5 backdrop-blur-xl flex items-center justify-between">
+    <button
+      onClick={() => {
+        scrollToSection(0)
+        setIsMobileMenuOpen(false)
+      }}
+      className="flex items-center gap-3"
+    >
+      <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-white/10 backdrop-blur-md">
+        <Image
+          src="/logo.svg"
+          alt="Logo"
+          width={40}
+          height={40}
+          className="w-8 h-8 object-contain"
+        />
+      </div>
+      <h1 className="font-[800] text-2xl tracking-wide">QWICKBIT</h1>
+    </button>
+
+    <button
+      onClick={() => setIsMobileMenuOpen(false)}
+      className="p-2 rounded-xl bg-white/15 hover:bg-white/25 backdrop-blur-md transition-all"
+      aria-label="Close menu"
+    >
+      <X className="w-5 h-5 text-white" />
+    </button>
+  </div>
+
+  {/* Menu Items */}
+  <div className="relative p-4 space-y-3">
+    {sections.map((section) => (
+      <div key={section.index}>
+        {/* MAIN HEADER (NO DROPDOWN) */}
+        {!section.hasDropdown ? (
+          <button
+            onClick={() => handleMobileSectionClick(section.index)}
+            className={`
+              w-full text-left
+              px-5 py-4
+              font-semibold text-[15px] tracking-wide text-white
+              rounded-2xl
+              transition-all duration-200
+              ${
+                currentSection === section.index
+                  ? "bg-white/20 shadow-lg"
+                  : "bg-white/5 hover:bg-white/10 active:bg-white/15"
+              }
+            `}
+          >
+            {section.name}
+          </button>
+        ) : (
+          <div>
+            {/* MAIN HEADER (WITH DROPDOWN) */}
             <button
               onClick={() => {
-                scrollToSection(0)
-                setIsMobileMenuOpen(false)
+                if (section.name === "Products & Solutions") {
+                  setMobileSolutionsOpen(!mobileSolutionsOpen)
+                  setMobileServicesOpen(false)
+                  setMobileAboutUsOpen(false)
+                } else if (section.name === "Services") {
+                  setMobileServicesOpen(!mobileServicesOpen)
+                  setMobileSolutionsOpen(false)
+                  setMobileAboutUsOpen(false)
+                } else if (section.name === "About Us") {
+                  setMobileAboutUsOpen(!mobileAboutUsOpen)
+                  setMobileSolutionsOpen(false)
+                  setMobileServicesOpen(false)
+                }
               }}
-              className="flex items-center gap-3"
+              className={`
+                w-full flex items-center justify-between
+                px-5 py-4
+                font-semibold text-[15px] tracking-wide text-white
+                rounded-2xl
+                transition-all duration-200
+                ${
+                  (section.name === "Products & Solutions" && mobileSolutionsOpen) ||
+                  (section.name === "Services" && mobileServicesOpen) ||
+                  (section.name === "About Us" && mobileAboutUsOpen)
+                    ? "bg-white/20 shadow-lg"
+                    : "bg-white/5 hover:bg-white/10 active:bg-white/15"
+                }
+              `}
             >
-              <div className="w-10 h-10 rounded-lg flex items-center justify-center">
-                <Image src="/logo.svg" alt="Logo" width={40} height={40} className="w-8 h-8 object-contain" />
-              </div>
+              <span>{section.name}</span>
+              <ChevronDown
+                className={`w-4 h-4 transition-transform duration-300 ${
+                  (section.name === "Products & Solutions" && mobileSolutionsOpen) ||
+                  (section.name === "Services" && mobileServicesOpen) ||
+                  (section.name === "About Us" && mobileAboutUsOpen)
+                    ? "rotate-180"
+                    : ""
+                }`}
+              />
             </button>
-            <button
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="p-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors"
-              aria-label="Close menu"
-            >
-              <X className="w-5 h-5 text-white" />
-            </button>
-          </div>
 
-          {/* Mobile Menu Items */}
-          <div className="p-4 space-y-2">
-            {sections.map((section) => (
-              <div key={section.index}>
-                {!section.hasDropdown ? (
-                  <button
-                    onClick={() => handleMobileSectionClick(section.index)}
-                    className={`
-                      w-full text-left px-4 py-3.5
-                      font-medium text-sm text-white
-                      rounded-xl
-                      transition-all duration-200
-                      ${
-                        currentSection === section.index
-                          ? "bg-white/20 shadow-lg"
-                          : "bg-white/5 hover:bg-white/10 active:bg-white/15"
-                      }
-                    `}
+            {/* SUB MENU */}
+            <div
+              className={`
+                overflow-hidden transition-all duration-300 ease-in-out
+                ${
+                  (section.name === "Products & Solutions" && mobileSolutionsOpen) ||
+                  (section.name === "Services" && mobileServicesOpen) ||
+                  (section.name === "About Us" && mobileAboutUsOpen)
+                    ? "max-h-[2000px] opacity-100 mt-3"
+                    : "max-h-0 opacity-0"
+                }
+              `}
+            >
+              <div className="space-y-3 px-2">
+                {(section.name === "Products & Solutions"
+                  ? productsSolutionsMenu
+                  : section.name === "Services"
+                  ? servicesMenu
+                  : []
+                ).map((category, idx) => (
+                  <div
+                    key={idx}
+                    className="bg-white/10 backdrop-blur-xl rounded-xl p-3 border border-white/15"
                   >
-                    {section.name}
-                  </button>
-                ) : (
-                  <div>
+                    {/* SUB HEADER */}
                     <button
-                      onClick={() => {
-                        if (section.name === "Products & Solutions") {
-                          setMobileSolutionsOpen(!mobileSolutionsOpen)
-                          setMobileServicesOpen(false)
-                          setMobileAboutUsOpen(false)
-                        } else if (section.name === "Services") {
-                          setMobileServicesOpen(!mobileServicesOpen)
-                          setMobileSolutionsOpen(false)
-                          setMobileAboutUsOpen(false)
-                        } else if (section.name === "About Us") {
-                          setMobileAboutUsOpen(!mobileAboutUsOpen)
-                          setMobileSolutionsOpen(false)
-                          setMobileServicesOpen(false)
-                        }
-                      }}
-                      className={`
-                        w-full flex items-center justify-between px-4 py-3.5
-                        font-medium text-sm text-white
-                        rounded-xl
-                        transition-all duration-200
-                        ${
-                          (section.name === "Products & Solutions" && mobileSolutionsOpen) ||
-                          (section.name === "Services" && mobileServicesOpen) ||
-                          (section.name === "About Us" && mobileAboutUsOpen)
-                            ? "bg-white/20 shadow-lg"
-                            : "bg-white/5 hover:bg-white/10 active:bg-white/15"
-                        }
-                      `}
+                      onClick={(e) => handleViewAllClick(category.category, e)}
+                      className="w-full flex items-center justify-between px-2 py-1.5 rounded-lg hover:bg-white/10 transition"
                     >
-                      <span>{section.name}</span>
+                      <h4 className="font-medium text-[11px] text-white/80">
+                        {category.category}
+                      </h4>
                       <ChevronDown
-                        className={`w-4 h-4 transition-transform duration-300 ${
-                          (section.name === "Products & Solutions" && mobileSolutionsOpen) ||
-                          (section.name === "Services" && mobileServicesOpen) ||
-                          (section.name === "About Us" && mobileAboutUsOpen)
-                            ? "rotate-180"
-                            : ""
+                        className={`w-3 h-3 text-white/70 transition-transform ${
+                          viewAllStates[category.category] ? "rotate-180" : ""
                         }`}
                       />
                     </button>
 
-                    {/* Mobile Submenu */}
+                    {/* SUB ITEMS */}
                     <div
                       className={`
-                        overflow-hidden transition-all duration-300 ease-in-out
-                        ${
-                          (section.name === "Products & Solutions" && mobileSolutionsOpen) ||
-                          (section.name === "Services" && mobileServicesOpen) ||
-                          (section.name === "About Us" && mobileAboutUsOpen)
-                            ? "max-h-[2000px] opacity-100 mt-2"
-                            : "max-h-0 opacity-0"
-                        }
+                        space-y-2 overflow-hidden transition-all duration-300
+                        ${viewAllStates[category.category] ? "max-h-[2000px] mt-2" : "max-h-0"}
                       `}
                     >
-                      <div className="space-y-3 px-2">
-                        {section.name === "Products & Solutions" &&
-                          productsSolutionsMenu.map((category, idx) => (
-                            <div key={idx} className="bg-white/5 rounded-lg p-3">
-                              <button
-                                onClick={(e) => handleViewAllClick(category.category, e)}
-                                className="w-full flex items-center justify-between mb-2 px-2 py-2 hover:bg-white/5 rounded-lg transition-colors"
-                              >
-                                <h4 className="font-semibold text-xs text-white/90">{category.category}</h4>
-                                <ChevronDown
-                                  className={`w-3 h-3 text-white/70 transition-transform duration-300 ${
-                                    viewAllStates[category.category] ? "rotate-180" : ""
-                                  }`}
-                                />
-                              </button>
-                              <div
-                                className={`
-                                  space-y-2 overflow-hidden transition-all duration-300
-                                  ${viewAllStates[category.category] ? "max-h-[2000px]" : "max-h-0"}
-                                `}
-                              >
-                                {category.items.map((item, itemIdx) => {
-                                  const Icon = item.icon
-                                  return (
-                                    <button
-                                      key={itemIdx}
-                                      onClick={() => handleItemClickInternal(item, "product")}
-                                      className="w-full text-left p-2.5 rounded-lg bg-white/5 hover:bg-white/10 active:bg-white/15 transition-all duration-200"
-                                    >
-                                      <div className="flex items-start gap-2">
-                                        <div className="flex-shrink-0 p-1.5 rounded-lg bg-gradient-to-br from-blue-500/20 to-orange-500/20">
-                                          <Icon className="w-3.5 h-3.5 text-white" />
-                                        </div>
-                                        <div className="flex-1 min-w-0">
-                                          <h5 className="font-semibold text-white text-xs mb-1">{item.name}</h5>
-                                          <p className="text-white/70 text-xs line-clamp-2">{item.description}</p>
-                                        </div>
-                                      </div>
-                                    </button>
-                                  )
-                                })}
+                      {category.items.map((item, itemIdx) => {
+                        const Icon = item.icon
+                        return (
+                          <button
+                            key={itemIdx}
+                            onClick={() =>
+                              handleItemClickInternal(
+                                item,
+                                section.name === "Services" ? "service" : "product"
+                              )
+                            }
+                            className="w-full text-left p-2 rounded-xl
+                              bg-white/10 hover:bg-white/20 active:bg-white/25
+                              backdrop-blur-md border border-white/10
+                              transition-all"
+                          >
+                            <div className="flex items-start gap-2">
+                              <div className="p-1.5 rounded-lg bg-gradient-to-br from-blue-500/20 to-orange-500/20">
+                                <Icon className="w-3.5 h-3.5 text-white" />
+                              </div>
+                              <div>
+                                <h5 className="font-medium text-white text-[11px]">
+                                  {item.name}
+                                </h5>
+                                <p className="text-white/70 text-[10px] leading-tight">
+                                  {item.description}
+                                </p>
                               </div>
                             </div>
-                          ))}
-
-                        {section.name === "Services" &&
-                          servicesMenu.map((category, idx) => (
-                            <div key={idx} className="bg-white/5 rounded-lg p-3">
-                              <button
-                                onClick={(e) => handleViewAllClick(category.category, e)}
-                                className="w-full flex items-center justify-between mb-2 px-2 py-2 hover:bg-white/5 rounded-lg transition-colors"
-                              >
-                                <h4 className="font-semibold text-xs text-white/90">{category.category}</h4>
-                                <ChevronDown
-                                  className={`w-3 h-3 text-white/70 transition-transform duration-300 ${
-                                    viewAllStates[category.category] ? "rotate-180" : ""
-                                  }`}
-                                />
-                              </button>
-                              <div
-                                className={`
-                                  space-y-2 overflow-hidden transition-all duration-300
-                                  ${viewAllStates[category.category] ? "max-h-[2000px]" : "max-h-0"}
-                                `}
-                              >
-                                {category.items.map((item, itemIdx) => {
-                                  const Icon = item.icon
-                                  return (
-                                    <button
-                                      key={itemIdx}
-                                      onClick={() => handleItemClickInternal(item, "service")}
-                                      className="w-full text-left p-2.5 rounded-lg bg-white/5 hover:bg-white/10 active:bg-white/15 transition-all duration-200"
-                                    >
-                                      <div className="flex items-start gap-2">
-                                        <div className="flex-shrink-0 p-1.5 rounded-lg bg-gradient-to-br from-blue-500/20 to-orange-500/20">
-                                          <Icon className="w-3.5 h-3.5 text-white" />
-                                        </div>
-                                        <div className="flex-1 min-w-0">
-                                          <h5 className="font-semibold text-white text-xs mb-1">{item.name}</h5>
-                                          <p className="text-white/70 text-xs line-clamp-2">{item.description}</p>
-                                        </div>
-                                      </div>
-                                    </button>
-                                  )
-                                })}
-                              </div>
-                            </div>
-                          ))}
-
-                        {section.name === "About Us" && (
-                          <div className="space-y-2 px-2">
-                            <button
-                              onClick={() => {
-                                handleNavigate("/projects")
-                                setIsMobileMenuOpen(false)
-                              }}
-                              className="w-full text-left px-3 py-2.5 rounded-lg bg-white/5 hover:bg-white/10 active:bg-white/15 transition-all duration-200"
-                            >
-                              <div className="flex items-center gap-2">
-                                <Users className="w-3.5 h-3.5 text-white/70" />
-                                <span className="text-white text-xs font-medium">Our projects</span>
-                              </div>
-                            </button>
-                            <button
-                              onClick={() => {
-                                handleNavigate("/blogs")
-                                setIsMobileMenuOpen(false)
-                              }}
-                              className="w-full text-left px-3 py-2.5 rounded-lg bg-white/5 hover:bg-white/10 active:bg-white/15 transition-all duration-200"
-                            >
-                              <div className="flex items-center gap-2">
-                                <Briefcase className="w-3.5 h-3.5 text-white/70" />
-                                <span className="text-white text-xs font-medium">Blogs</span>
-                              </div>
-                            </button>
-                          </div>
-                        )}
-                      </div>
+                          </button>
+                        )
+                      })}
                     </div>
+                  </div>
+                ))}
+
+                {/* ABOUT US */}
+                {section.name === "About Us" && (
+                  <div className="space-y-2 px-2">
+                    <button
+                    onClick={() => {
+                      setIsAboutUsOpen(false)
+                      scrollToSection(3)
+                      setIsMobileMenuOpen(false)
+
+                    }}
+                      className="w-full text-left px-4 py-3 rounded-xl
+                        bg-white/10 hover:bg-white/20 backdrop-blur-md transition"
+                    >
+                      <div className="flex items-center gap-2">
+                        <Users className="w-3.5 h-3.5 text-white/70" />
+                        <span className="text-[12px] font-medium text-white">
+                          Our Company
+                        </span>
+                      </div>
+                    </button>
+
+                    <button
+                      onClick={() => {
+                        handleNavigate("/blogs")
+                        setIsMobileMenuOpen(false)
+                      }}
+                      className="w-full text-left px-4 py-3 rounded-xl
+                        bg-white/10 hover:bg-white/20 backdrop-blur-md transition"
+                    >
+                      <div className="flex items-center gap-2">
+                        <Briefcase className="w-3.5 h-3.5 text-white/70" />
+                        <span className="text-[12px] font-medium text-white">
+                          Blogs
+                        </span>
+                      </div>
+                    </button>
                   </div>
                 )}
               </div>
-            ))}
+            </div>
           </div>
-        </div>
+        )}
+      </div>
+    ))}
+  </div>
+</div>
+
       </div>
 
       {/* Click outside handler for desktop dropdowns */}

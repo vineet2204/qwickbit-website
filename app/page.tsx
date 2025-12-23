@@ -351,13 +351,13 @@ export default function Home() {
       <div
         ref={scrollContainerRef}
         data-scroll-container
-        className={`relative z-10 flex h-screen overflow-x-auto overflow-y-hidden transition-opacity duration-700 ${
+        className={`relative z-10 flex h-screen overflow-x-auto overflow-y-hidden snap-x snap-mandatory transition-opacity duration-700 ${
           isLoaded && !detailPageOpen ? "opacity-100" : "opacity-0 pointer-events-none"
         }`}
         style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
       >
         {/* Home Section with Keypad */}
-        <section className="flex min-h-screen w-screen shrink-0 px-6 pb-16 pt-24 md:px-12 md:pb-24">
+        <section className="flex min-h-screen w-screen shrink-0 snap-start px-6 pb-16 pt-24 md:px-12 md:pb-24">
           <div className="flex w-full items-center gap-8 lg:gap-12">
             {/* Left Side - Hero Content */}
             <div className="flex-1 flex flex-col justify-center">
@@ -378,7 +378,7 @@ export default function Home() {
                     and scale faster through AI, IoT, Cloud, and advanced software engineering.
                   </span>
                 </p>
-                <div className="flex animate-in fade-in slide-in-from-bottom-4 flex-col gap-4 duration-1000 delay-300 sm:flex-row sm:items-center">
+                <div className="flex animate-in fade-in duration-1000 delay-300 flex-col gap-4 duration-1000 delay-300 sm:flex-row sm:items-center">
                   <MagneticButton size="lg" variant="primary" onClick={() => scrollToSection(4)}>
                     Book a Demo
                   </MagneticButton>
@@ -415,7 +415,7 @@ export default function Home() {
         <AboutSection scrollToSection={scrollToSection} />
 
         {/* Contact Section */}
-        <section className="flex min-h-screen w-screen shrink-0 flex-col overflow-y-auto overflow-x-hidden">
+        <section className="flex min-h-screen w-screen shrink-0 snap-start flex-col overflow-y-auto overflow-x-hidden">
           <div className="flex-1">
             <ContactSection />
           </div>
