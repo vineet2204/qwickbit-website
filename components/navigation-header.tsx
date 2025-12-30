@@ -555,7 +555,7 @@ export default function GlassmorphismNavigationHeader({
 
             <div className="-ml-48 relative">
               <div className="flex items-center justify-between mb-5">
-                <h3 className="font-mono text-sm text-white/80 uppercase tracking-widest font-semibold">
+                <h3 className="font-mono text-lg text-white/80 uppercase tracking-widest font-semibold">
                   {currentCategory.category}
                 </h3>
                 <div className="flex items-center gap-2">
@@ -600,7 +600,7 @@ export default function GlassmorphismNavigationHeader({
                           className="group relative p-4 rounded-lg border border-white/10 bg-white/5 hover:bg-white/10 transition-all duration-200 hover:border-white/20 animate-fadeIn cursor-pointer text-left"
                         >
                           <div className="flex items-start gap-3">
-                            <div className="flex-shrink-0 p-2 rounded-lg bg-white/5 group-hover:bg-white/10 transition-all duration-200">
+                            <div className="flex-shrink-0 w-10 h-10 flex items-center justify-center p-2 rounded-lg bg-white/5 group-hover:bg-white/10 transition-all duration-200">
                               <Icon className={`w-5 h-5 ${iconColor}`} />
                             </div>
                             <div className="flex-1 min-w-0">
@@ -659,7 +659,7 @@ export default function GlassmorphismNavigationHeader({
 
             <div className="-ml-48">
               <div className="flex items-center justify-between mb-5">
-                <h3 className="font-mono text-sm text-white/80 uppercase tracking-widest font-semibold">
+                <h3 className="font-mono text-lg text-white/80 uppercase tracking-widest font-semibold">
                   {currentCategory.category}
                 </h3>
                 {hasMoreItems && (
@@ -682,7 +682,7 @@ export default function GlassmorphismNavigationHeader({
                       className="group relative p-4 rounded-lg border border-white/10 bg-white/5 hover:bg-white/10 transition-all duration-200 hover:border-white/20 cursor-pointer text-left"
                     >
                       <div className="flex items-start gap-3">
-                        <div className="flex-shrink-0 p-2 rounded-lg bg-white/5 group-hover:bg-white/10 transition-all duration-200">
+                        <div className="flex-shrink-0 w-10 h-10 flex items-center justify-center p-2 rounded-lg bg-white/5 group-hover:bg-white/10 transition-all duration-200">
                           <Icon className={`w-5 h-5 ${iconColor}`} />
                         </div>
                         <div className="flex-1 min-w-0">
@@ -978,10 +978,14 @@ export default function GlassmorphismNavigationHeader({
                     <h3 className="font-mono text-sm text-white/80 mb-5 uppercase tracking-widest font-semibold">
                       About Our Company
                     </h3>
-                    <div className="space-y-4">
+                    <div className="space-y-4" onClick={() => {
+                      setIsAboutUsOpen(false)
+                      scrollToSection(3)
+                    }}
+                    onMouseEnter={() => setActiveCategory(0)}>
                       <div className="p-4 rounded-lg border border-white/10 bg-white/5">
                         <div className="flex items-start gap-3 mb-3">
-                          <div className="flex-shrink-0 p-2 rounded-lg bg-white/5">
+                          <div className="flex-shrink-0 w-10 h-10 flex items-center justify-center p-2 rounded-lg bg-white/5">
                             <Building className="w-5 h-5 text-blue-400" />
                           </div>
                           <div>
@@ -1000,10 +1004,15 @@ export default function GlassmorphismNavigationHeader({
                     <h3 className="font-mono text-sm text-white/80 mb-5 uppercase tracking-widest font-semibold">
                       Insights & Updates
                     </h3>
-                    <div className="space-y-4">
+                    <div className="space-y-4" 
+                    onClick={() => {
+                      setIsAboutUsOpen(false)
+                      handleNavigate("/blogs")
+                    }}
+                    onMouseEnter={() => setActiveCategory(1)}>
                       <div className="p-4 rounded-lg border border-white/10 bg-white/5">
                         <div className="flex items-start gap-3 mb-3">
-                          <div className="flex-shrink-0 p-2 rounded-lg bg-white/5">
+                          <div className="flex-shrink-0 w-10 h-10 flex items-center justify-center p-2 rounded-lg bg-white/5">
                             <FileText className="w-5 h-5 text-rose-400" />
                           </div>
                           <div>
@@ -1017,7 +1026,7 @@ export default function GlassmorphismNavigationHeader({
                       </div>
                       <div className="p-4 rounded-lg border border-white/10 bg-white/5">
                         <div className="flex items-start gap-3 mb-3">
-                          <div className="flex-shrink-0 p-2 rounded-lg bg-white/5">
+                          <div className="flex-shrink-0 w-10 h-10 flex items-center justify-center p-2 rounded-lg bg-white/5">
                             <Brain className="w-5 h-5 text-amber-400" />
                           </div>
                           <div>
@@ -1029,20 +1038,7 @@ export default function GlassmorphismNavigationHeader({
                           </div>
                         </div>
                       </div>
-                      <div className="p-4 rounded-lg border border-white/10 bg-white/5">
-                        <div className="flex items-start gap-3">
-                          <div className="flex-shrink-0 p-2 rounded-lg bg-white/5">
-                            <Briefcase className="w-5 h-5 text-cyan-400" />
-                          </div>
-                          <div>
-                            <h4 className="font-semibold text-white text-sm mb-1">Case Studies</h4>
-                            <p className="text-white/70 text-xs leading-relaxed">
-                              Real-world success stories, project highlights, and detailed breakdowns of how we've
-                              helped clients achieve their business objectives.
-                            </p>
-                          </div>
-                        </div>
-                      </div>
+                   
                     </div>
                   </div>
                 )}
@@ -1259,7 +1255,7 @@ export default function GlassmorphismNavigationHeader({
                               transition-all"
                           >
                             <div className="flex items-start gap-2">
-                              <div className="p-1.5 rounded-lg bg-gradient-to-br from-blue-500/20 to-orange-500/20">
+                              <div className="flex-shrink-0 w-8 h-8 flex items-center justify-center p-1.5 rounded-lg bg-gradient-to-br from-blue-500/20 to-orange-500/20">
                                 <Icon className="w-3.5 h-3.5 text-white" />
                               </div>
                               <div>
@@ -1292,7 +1288,9 @@ export default function GlassmorphismNavigationHeader({
                         bg-white/10 hover:bg-white/20 backdrop-blur-md transition"
                     >
                       <div className="flex items-center gap-2">
-                        <Users className="w-3.5 h-3.5 text-white/70" />
+                        <div className="flex-shrink-0 w-8 h-8 flex items-center justify-center p-1.5 rounded-lg bg-white/10">
+                          <Users className="w-3.5 h-3.5 text-white/70" />
+                        </div>
                         <span className="text-[12px] font-medium text-white">
                           Our Company
                         </span>
@@ -1308,7 +1306,9 @@ export default function GlassmorphismNavigationHeader({
                         bg-white/10 hover:bg-white/20 backdrop-blur-md transition"
                     >
                       <div className="flex items-center gap-2">
-                        <Briefcase className="w-3.5 h-3.5 text-white/70" />
+                        <div className="flex-shrink-0 w-8 h-8 flex items-center justify-center p-1.5 rounded-lg bg-white/10">
+                          <Briefcase className="w-3.5 h-3.5 text-white/70" />
+                        </div>
                         <span className="text-[12px] font-medium text-white">
                           Blogs
                         </span>
