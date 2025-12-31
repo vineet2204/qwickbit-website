@@ -749,8 +749,8 @@ export default function GlassmorphismNavigationHeader({
             className="
               relative
               flex items-center
-              px-1 py-0.5 pr-4
-              rounded-2xl
+              px-36 py-2.5 pr-4
+              rounded-4xl
               bg-gradient-to-r from-blue-950/30 via-purple-950/30 to-orange-950/30
               shadow-[0_8px_32px_rgba(0,0,0,0.3),inset_0_1px_2px_rgba(255,255,255,0.2)]
               backdrop-blur-xl
@@ -762,8 +762,8 @@ export default function GlassmorphismNavigationHeader({
               onClick={() => scrollToSection(0)}
               className="flex items-center hover:scale-105 transition-transform duration-200 cursor-pointer flex-shrink-0"
             >
-              <div className="w-12 h-12 flex items-center justify-center">
-                <Image src="/logo.svg" alt="Logo" width={48} height={48} className="w-8 h-8 object-contain" priority />
+              <div className="w-12 h-12 flex items-center justify-start -ml-28">
+                <Image src="/logo.svg" alt="Logo" width={80} height={80} className="w-9 h-9 object-contain" priority />
               </div>
             </button>
 

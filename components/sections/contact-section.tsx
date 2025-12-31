@@ -158,7 +158,7 @@ export default function ContactSection() {
     const digitsOnly = phone.replace(/\D/g, "")
 
     // Check if contains only valid characters
-    const validCharsRegex = /^[\d\s\-+$$$$]+$/
+    const validCharsRegex = /^[\d\s\-+()]+$/
     if (!validCharsRegex.test(phone)) {
       return { isValid: false, message: "Phone number can only contain digits, spaces, +, -, ( )" }
     }
@@ -328,37 +328,56 @@ export default function ContactSection() {
   const socialLinks = [
     {
       name: "Call",
-      icon: Phone,
+      svg: (
+        <svg className="h-6 w-6" viewBox="0 0 24 24" fill="none">
+          <path
+            d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"
+            fill="#3B82F6"
+          />
+        </svg>
+      ),
       href: "tel:+919591622608",
-      bgColor: "bg-blue-500",
-      hoverBg: "hover:bg-blue-600",
-      iconColor: "text-white",
     },
     {
       name: "Email",
-      icon: Mail,
+      svg: (
+        <svg className="h-6 w-6" viewBox="0 0 24 24" fill="none">
+          <path
+            d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+            fill="#EF4444"
+          />
+          <path d="M22 6l-10 7L2 6" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      ),
       href: "mailto:contact@qwickbit.com",
-      bgColor: "bg-red-500",
-      hoverBg: "hover:bg-red-600",
-      iconColor: "text-white",
     },
     {
       name: "WhatsApp",
-      icon: MessageCircle,
+      svg: (
+        <svg className="h-6 w-6" viewBox="0 0 24 24" fill="none">
+          <circle cx="12" cy="12" r="10" fill="#25D366" />
+          <path
+            d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0012.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 012.41 5.83c0 4.54-3.7 8.23-8.24 8.23-1.48 0-2.93-.39-4.19-1.15l-.3-.17-3.12.82.83-3.04-.2-.32a8.188 8.188 0 01-1.26-4.38c.01-4.54 3.7-8.24 8.25-8.24M8.53 7.33c-.16 0-.43.06-.66.31-.22.25-.87.86-.87 2.07 0 1.22.89 2.39 1 2.56.14.17 1.76 2.67 4.25 3.73.59.27 1.05.42 1.41.53.59.19 1.13.16 1.56.1.48-.07 1.46-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.07-.1-.23-.16-.48-.27-.25-.14-1.47-.74-1.69-.82-.23-.08-.37-.12-.56.12-.16.25-.64.81-.78.97-.15.17-.29.19-.53.07-.26-.13-1.06-.39-2-1.23-.74-.66-1.23-1.47-1.38-1.72-.12-.24-.01-.39.11-.5.11-.11.27-.29.37-.44.13-.14.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.11-.56-1.35-.77-1.84-.2-.48-.4-.42-.56-.43-.14 0-.3-.01-.46-.01z"
+            fill="white"
+          />
+        </svg>
+      ),
       href: "https://wa.me/919591622608",
       external: true,
-      bgColor: "bg-green-500",
-      hoverBg: "hover:bg-green-600",
-      iconColor: "text-white",
     },
     {
       name: "LinkedIn",
-      icon: Linkedin,
+      svg: (
+        <svg className="h-6 w-6" viewBox="0 0 24 24" fill="none">
+          <rect width="24" height="24" rx="4" fill="#0A66C2" />
+          <path
+            d="M6.5 8.5h3v10h-3v-10zM8 5c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zM12 8.5h2.8v1.4c.4-.7 1.3-1.4 2.7-1.4 2.9 0 3.5 1.9 3.5 4.4v5.6h-3v-5c0-1.1 0-2.5-1.5-2.5s-1.5 1.2-1.5 2.4v5.1h-3v-10z"
+            fill="white"
+          />
+        </svg>
+      ),
       href: "https://in.linkedin.com/company/qwickbit-technologies-pvt.-ltd",
       external: true,
-      bgColor: "bg-blue-600",
-      hoverBg: "hover:bg-blue-700",
-      iconColor: "text-white",
     },
   ]
 
@@ -401,7 +420,7 @@ export default function ContactSection() {
               </div>
 
               {/* Social Media Icons */}
-              <div className="flex flex-wrap gap-3">
+              <div className="flex flex-wrap gap-4">
                 {socialLinks.map((social) => (
                   <a
                     key={social.name}
@@ -409,10 +428,12 @@ export default function ContactSection() {
                     target={social.external ? "_blank" : undefined}
                     rel={social.external ? "noopener noreferrer" : undefined}
                     aria-label={social.name}
-                    className={`group flex items-center gap-2 rounded-full ${social.bgColor} ${social.hoverBg} px-4 py-2 transition-all duration-300 transform hover:scale-105 shadow-lg`}
+                    className="group flex items-center gap-2 transition-all duration-300 transform hover:scale-110"
                   >
-                    <social.icon className={`h-4 w-4 ${social.iconColor}`} />
-                    <span className={`font-mono text-xs ${social.iconColor}`}>{social.name}</span>
+                    {social.svg}
+                    <span className="font-mono text-sm font-semibold text-white transition-colors">
+                      {social.name}
+                    </span>
                   </a>
                 ))}
               </div>
@@ -533,30 +554,38 @@ export default function ContactSection() {
                   <label className="mb-2 block font-mono text-xs uppercase tracking-wider text-white">
                     Inquiry Type <span className="text-red-500">*</span>
                   </label>
-                  <select
-                    value={formData.inquiryType}
-                    onChange={(e) => handleInputChange("inquiryType", e.target.value)}
-                    className={`w-full rounded-lg border ${errors.inquiryType ? "border-red-500" : "border-foreground/20"} bg-transparent px-4 py-3 text-sm text-foreground focus:border-foreground/50 focus:outline-none focus:ring-2 focus:ring-foreground/10 md:text-base`}
-                  >
-                    <option value="" className="bg-background">
-                      Select inquiry type
-                    </option>
-                    <option value="Support" className="bg-background">
-                      Support
-                    </option>
-                    <option value="Sales" className="bg-background">
-                      Sales
-                    </option>
-                    <option value="General" className="bg-background">
-                      General
-                    </option>
-                    <option value="Partnership" className="bg-background">
-                      Partnership
-                    </option>
-                    <option value="Career" className="bg-background">
-                      Career
-                    </option>
-                  </select>
+                  <div className="relative">
+                    <select
+                      value={formData.inquiryType}
+                      onChange={(e) => handleInputChange("inquiryType", e.target.value)}
+                      className={`w-full appearance-none rounded-lg border ${errors.inquiryType ? "border-red-500" : "border-foreground/20"} bg-transparent px-4 py-3 pr-10 text-sm text-foreground focus:border-foreground/50 focus:outline-none focus:ring-2 focus:ring-foreground/10 md:text-base cursor-pointer transition-all`}
+                      style={{
+                        backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23ffffff'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")`,
+                        backgroundRepeat: 'no-repeat',
+                        backgroundPosition: 'right 0.75rem center',
+                        backgroundSize: '1.25rem'
+                      }}
+                    >
+                      <option value="" className="bg-black text-gray-400">
+                        Select inquiry type
+                      </option>
+                      <option value="Support" className="bg-black text-white">
+                        Support
+                      </option>
+                      <option value="Sales" className="bg-black text-white">
+                        Sales
+                      </option>
+                      <option value="General" className="bg-black text-white">
+                        General
+                      </option>
+                      <option value="Partnership" className="bg-black text-white">
+                        Partnership
+                      </option>
+                      <option value="Career" className="bg-black text-white">
+                        Career
+                      </option>
+                    </select>
+                  </div>
                   {errors.inquiryType && <p className="mt-1 text-xs text-red-500">{errors.inquiryType}</p>}
                 </div>
 

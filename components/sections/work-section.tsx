@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from "react"
 import { Shield, Wrench, Activity, Plane, Heart, X, ArrowRight, ExternalLink } from "lucide-react"
+import { MdArrowRightAlt } from "react-icons/md";
+
 
 interface ProductSolutionItem {
   name: string
@@ -436,41 +438,74 @@ function ProjectCard({
   return (
     <button
       onClick={onClick}
-      className="group flex flex-col overflow-hidden rounded-2xl border border-foreground/10 bg-white/5 backdrop-blur-sm transition-all duration-300 hover:border-foreground/20 hover:shadow-xl"
+      className="
+        group relative w-full text-left
+        rounded-[28px]
+        border border-white/30
+        bg-white/10
+        p-4
+        transition-all duration-300
+        hover:shadow-2xl
+      "
     >
-      <div className={`relative h-48 w-full ${project.color} flex items-center justify-center overflow-hidden`}>
-        <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent" />
-        <Icon className="relative z-10 h-24 w-24 text-white/90 transition-transform duration-300 group-hover:scale-110" />
-      </div>
+      {/* INNER BORDER */}
+      <div className="overflow-hidden rounded-[24px] ">
+        
+        {/* HERO SECTION */}
+        <div className="relative h-56 w-full rounded-[20px] overflow-hidden">
+          {/* BLUE PANEL */}
+          <div className="absolute inset-0 bg-indigo-700/90" />
 
-      <div className="flex flex-col gap-3  p-6 text-left">
-        <div className="inline-flex w-fit items-center rounded-md bg-foreground/10 px-3 py-1">
-          <span className="font-mono text-xs font-medium text-white">{project.category}</span>
+          {/* SOFT GRADIENT */}
+          <div className="absolute inset-0 bg-gradient-to-t from-indigo-900/70 via-indigo-800/30 to-transparent" />
+
+          {/* ICON */}
+          <Icon className="absolute right-6 top-6 h-16 w-16 text-white/90" />
+
+          {/* CATEGORY PILL */}
+          <span
+            className="
+              absolute bottom-4 left-4
+              rounded-xl
+              border border-white/40
+              bg-white/10
+              px-4 py-2
+              text-sm
+              font-medium
+              text-white
+              backdrop-blur
+            "
+          >
+            {project.category}
+          </span>
         </div>
 
-        <p className="text-sm text-foreground/60">Web application development</p>
+        {/* CONTENT */}
+        <div className="px-6 py-6">
+         
 
-        <h3 className="text-xl font-semibold text-foreground transition-colors group-hover:text-foreground/80">
-          {project.title}
-        </h3>
+          <h3 className="mb-3 text-3xl font-bold text-white">
+            {project.title}
+          </h3>
 
-        <p className="text-sm leading-relaxed text-white">{project.description}</p>
+          <p className="mb-6 text-base leading-relaxed text-white/80">
+            {project.description}
+          </p>
 
-        <div className="mt-2 flex items-center gap-2 text-white transition-colors group-hover:text-gray-200">
-          <span className="text-sm font-medium">Read Case Study</span>
-          <svg
-            className="h-4 w-4 transition-transform group-hover:translate-x-1"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-          </svg>
+          {/* CTA */}
+          <div className="flex items-center gap-2 font-medium text-white underline underline-offset-4">
+            Read Case Study
+            <span className="transition-transform group-hover:translate-x-1">
+              <MdArrowRightAlt />
+
+            </span>
+          </div>
         </div>
       </div>
     </button>
   )
 }
+
 
 function FirestoreProjectCard({
   project,

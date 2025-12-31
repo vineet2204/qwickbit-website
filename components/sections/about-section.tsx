@@ -7,6 +7,7 @@ import { ArrowRight, Sparkles, TrendingUp, Users, Code, Lightbulb, Target, Zap, 
 import { useReveal } from "@/hooks/use-reveal"
 import { useEffect, useRef } from "react"
 import TrustedClients from "../TrustedClientsSection"
+import { MagneticButton } from "../magnetic-button"
 
 interface Review {
   id: string
@@ -175,9 +176,9 @@ export default function AboutSection({
   }, [])
 
   return (
-    <section className="w-screen min-h-screen mt-20 shrink-0 snap-start overflow-y-auto overflow-x-hidden">
+    <section className="w-screen min-h-screen md:mt-20 shrink-0 snap-start overflow-y-auto overflow-x-hidden">
       {/* Why Choose Section */}
-      <div className="h-screen w-full -mt-14 shrink-0 snap-start flex items-center px-4 pt-20 md:px-12 md:pt-0 lg:px-16">
+      <div className="h-screen w-full md:-mt-14 mt-24 shrink-0 snap-start flex items-center px-4 pt-20 md:px-12 md:pt-0 lg:px-16">
         <div ref={ref as React.RefObject<HTMLDivElement>} className="mx-auto w-full max-w-7xl">
           <div className="grid gap-8 mt-10 md:grid-cols-2 md:gap-16 lg:gap-24">
             {/* Left side - Story */}
@@ -192,7 +193,7 @@ export default function AboutSection({
                   <span className="text-sm font-medium text-white">Why Choose Us</span>
                 </div>
 
-                <h2 className="mb-3 font-sans text-4xl font-bold leading-[1.1] tracking-tight text-foreground md:mb-4 md:text-6xl lg:text-7xl">
+            <h2 className="mb-2 font-sans text-5xl font-light tracking-tight text-foreground md:text-6xl lg:text-7xl">
                   Excellence in
                   <br />
                   <span className="bg-white bg-clip-text text-transparent">Digital Innovation</span>
@@ -269,62 +270,28 @@ export default function AboutSection({
             }`}
             style={{ transitionDelay: "750ms" }}
           >
-            <button
+            <MagneticButton
               onClick={() => scrollToSection?.(4)}
-              className="
-                flex items-center gap-2.5 px-4 py-2.5
-                rounded-xl
-                bg-white/10
-                border border-white/30
-                backdrop-blur-xl
-                shadow-[inset_0_0_0_0_rgba(255,255,255,0.25),0_6px_20px_rgba(0,0,0,0.18)]
-                transition-all duration-300
-                hover:bg-white/20
-                hover:shadow-[inset_0_1px_2px_rgba(255,255,255,0.4),0_8px_28px_rgba(0,0,0,0.22)]
-                hover:scale-[1.03]
-                active:scale-[0.97]
-                relative overflow-hidden
-                text-white font-montserrat font-semibold
-                before:absolute before:inset-0
-                before:bg-gradient-to-b before:from-white/40 before:to-transparent
-                before:opacity-60 before:pointer-events-none
-              "
+              
             >
               <span className="relative z-10 flex items-center">
                 Start a Project <ArrowRight className="w-4 h-4 ml-1" />
               </span>
-            </button>
+            </MagneticButton>
 
-            <button
+            <MagneticButton
               onClick={() => scrollToSection?.(1)}
-              className="
-                flex items-center gap-2.5 px-4 py-2.5
-                rounded-xl
-                bg-white/10
-                border border-white/30
-                backdrop-blur-xl
-                shadow-[inset_0_0_0_0_rgba(255,255,255,0.25),0_6px_20px_rgba(0,0,0,0.18)]
-                transition-all duration-300
-                hover:bg-white/20
-                hover:shadow-[inset_0_1px_2px_rgba(255,255,255,0.4),0_8px_28px_rgba(0,0,0,0.22)]
-                hover:scale-[1.03]
-                active:scale-[0.97]
-                relative overflow-hidden
-                text-white font-montserrat font-semibold
-                before:absolute before:inset-0
-                before:bg-gradient-to-b before:from-white/40 before:to-transparent
-                before:opacity-60 before:pointer-events-none
-              "
+            
             >
               <span className="relative z-10 flex items-center">View Our Work</span>
-            </button>
+            </MagneticButton>
           </div>
         </div>
       </div>
 
       <div className="w-full bg-transparent">
         {/* About Qwickbit Section */}
-        <section className="w-full mt-32 px-4  py-20 md:px-12 md:py-32 lg:px-16">
+<section className="w-full mt-56 md:mt-0 px-4 py-20 md:px-12 md:py-32 lg:px-16">
           <div className="mx-auto max-w-7xl">
             <div className="mb-16">
               <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 mb-6">
@@ -368,7 +335,7 @@ export default function AboutSection({
         </section>
 
         {/* Services Section */}
-        <section className="w-full px-4 py-20 md:px-12 md:py-32 lg:px-16 bg-gradient-to-b from-transparent to-primary/5">
+        <section className="w-full md:-mt-40 -mt-24 px-4 py-20 md:px-12 md:py-32 lg:px-16 bg-gradient-to-b from-transparent to-primary/5">
           <div className="mx-auto max-w-7xl">
             <div className="mb-16">
               <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 mb-6">
@@ -407,7 +374,7 @@ export default function AboutSection({
                       </div>
                     </CardHeader>
                     <CardContent>
-                      <div className="space-y-2">
+                      <div className="space-y-2 ml-18">
                         {service.features.map((feature, featureIdx) => (
                           <div key={featureIdx} className="flex items-center gap-2">
                             <div className="w-1.5 h-1.5 rounded-full bg-white" />
@@ -519,31 +486,14 @@ export default function AboutSection({
 
             {/* CTA Button */}
             <div className="flex justify-center mt-16">
-              <button
+              <MagneticButton
                 onClick={() => scrollToSection?.(4)}
-                className="
-                  flex items-center gap-2.5 px-6 py-3
-                  rounded-xl
-                  bg-white/10
-                  border border-white/30
-                  backdrop-blur-xl
-                  shadow-[inset_0_0_0_0_rgba(255,255,255,0.25),0_6px_20px_rgba(0,0,0,0.18)]
-                  transition-all duration-300
-                  hover:bg-white/20
-                  hover:shadow-[inset_0_1px_2px_rgba(255,255,255,0.4),0_8px_28px_rgba(0,0,0,0.22)]
-                  hover:scale-[1.03]
-                  active:scale-[0.97]
-                  relative overflow-hidden
-                  text-white font-montserrat font-semibold text-lg
-                  before:absolute before:inset-0
-                  before:bg-gradient-to-b before:from-white/40 before:to-transparent
-                  before:opacity-60 before:pointer-events-none
-                "
+                
               >
                 <span className="relative z-10 flex items-center">
                   Let's Start Your Project <ArrowRight className="w-5 h-5 ml-2" />
                 </span>
-              </button>
+              </MagneticButton>
             </div>
           </div>
         </section>

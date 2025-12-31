@@ -113,12 +113,12 @@ export function PolicyLayout({ title, children, onClose }: PolicyLayoutProps) {
                   </button>
 
 
-                  <button
+                  {/* <button
                     onClick={handleClose}
                     className="p-2 rounded-full border border-white/20 bg-white/10 hover:bg-white/20 transition-all duration-300 backdrop-blur-md"
                   >
                     <X className="w-4 h-4 md:w-5 md:h-5 text-white" />
-                  </button>
+                  </button> */}
                 </div>
               </div>
             </div>
