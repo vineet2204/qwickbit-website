@@ -360,7 +360,7 @@ export default function Home() {
         <section className="flex min-h-screen w-screen shrink-0 snap-start px-6 pb-16 pt-24 md:px-12 md:pb-24">
           <div className="flex w-full items-center gap-8 lg:gap-12">
             {/* Left Side - Hero Content */}
-            <div className="flex-1 flex flex-col justify-end ml-14 mt-2">
+            <div className="flex-1 flex flex-col justify-end  mt-2">
               <div className="max-w-3xl">
                 <div className="mb-4 inline-block animate-in fade-in slide-in-from-bottom-4 rounded-full border border-foreground/20 bg-foreground/15 px-4 py-1.5 backdrop-blur-md duration-700">
                   <p className="font-mono text-xs text-foreground/90">AI-Powered Digital Transformation</p>
