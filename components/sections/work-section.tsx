@@ -1,9 +1,9 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import { createPortal } from "react-dom"
 import { Shield, Wrench, Activity, Plane, Heart, X, ArrowRight, ExternalLink } from "lucide-react"
-import { MdArrowRightAlt } from "react-icons/md";
-
+import { MdArrowRightAlt } from "react-icons/md"
 
 interface ProductSolutionItem {
   name: string
@@ -15,7 +15,6 @@ interface WorkSectionProps {
   onItemClick?: (item: ProductSolutionItem, type: "service" | "product") => void
 }
 
-// Firestore types
 interface FirestoreField {
   stringValue?: string
   integerValue?: string
@@ -101,7 +100,6 @@ export const openCaseStudyByName = (name: string) => {
   }
 }
 
-// Firestore parser
 function parseFirestoreDocument(doc: FirestoreDocument): any {
   const fields = doc.fields
   const parsed: Record<string, any> = {}
@@ -139,7 +137,6 @@ export function WorkSection({ onItemClick }: WorkSectionProps) {
   const [firestoreProjects, setFirestoreProjects] = useState<Project[]>([])
   const [loadingProjects, setLoadingProjects] = useState(true)
 
-  // Fetch projects from Firestore
   useEffect(() => {
     async function fetchProjects() {
       const projectId = 'qwickbit-18382'
@@ -171,11 +168,11 @@ export function WorkSection({ onItemClick }: WorkSectionProps) {
     fetchProjects()
   }, [])
 
-  useState(() => {
+  useEffect(() => {
     setOpenCaseStudyCallback((projectIndex: number) => {
       setSelectedProject(projectIndex)
     })
-  })
+  }, [])
 
   const projects: ProjectType[] = [
     {
@@ -370,7 +367,6 @@ export function WorkSection({ onItemClick }: WorkSectionProps) {
             ))}
           </div>
 
-          {/* Projects Section */}
           <div className="mt-24 mb-16">
             <div className="mb-12">
               <h2 className="mb-2 font-sans text-4xl font-light tracking-tight text-foreground md:text-5xl">
@@ -395,12 +391,10 @@ export function WorkSection({ onItemClick }: WorkSectionProps) {
                   ))}
                 </div>
 
-                {/* View All Projects Button */}
                 <div className="mt-12 flex justify-center">
                   <button
                     onClick={handleViewAllProjects}
-                    className="group flex items-center gap-3 rounded-full  bg-gradient-to-r from-blue-950/30 via-purple-950/30 to-orange-950/30
-    backdrop-blur-xl px-8 py-4 text-lg font-semibold text-white transition-all duration-300 hover:bg-indigo-600 hover:shadow-xl"
+                    className="group flex items-center gap-3 rounded-full bg-gradient-to-r from-blue-950/30 via-purple-950/30 to-orange-950/30 backdrop-blur-xl px-8 py-4 text-lg font-semibold text-white transition-all duration-300 hover:bg-indigo-600 hover:shadow-xl"
                   >
                     <span>View All Projects</span>
                     <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
@@ -438,66 +432,29 @@ function ProjectCard({
   return (
     <button
       onClick={onClick}
-      className="
-        group relative w-full text-left
-        rounded-[28px]
-        border border-white/30
-        bg-white/10
-        p-4
-        transition-all duration-300
-        hover:shadow-2xl
-      "
+      className="group relative w-full text-left rounded-[28px] border border-white/30 bg-white/10 p-4 transition-all duration-300 hover:shadow-2xl"
     >
-      {/* INNER BORDER */}
-      <div className="overflow-hidden rounded-[24px] ">
-        
-        {/* HERO SECTION */}
+      <div className="overflow-hidden rounded-[24px]">
         <div className="relative h-56 w-full rounded-[20px] overflow-hidden">
-          {/* BLUE PANEL */}
           <div className="absolute inset-0 bg-indigo-700/90" />
-
-          {/* SOFT GRADIENT */}
           <div className="absolute inset-0 bg-gradient-to-t from-indigo-900/70 via-indigo-800/30 to-transparent" />
-
-          {/* ICON */}
           <Icon className="absolute right-6 top-6 h-16 w-16 text-white/90" />
-
-          {/* CATEGORY PILL */}
-          <span
-            className="
-              absolute bottom-4 left-4
-              rounded-xl
-              border border-white/40
-              bg-white/10
-              px-4 py-2
-              text-sm
-              font-medium
-              text-white
-              backdrop-blur
-            "
-          >
+          <span className="absolute bottom-4 left-4 rounded-xl border border-white/40 bg-white/10 px-4 py-2 text-sm font-medium text-white backdrop-blur">
             {project.category}
           </span>
         </div>
 
-        {/* CONTENT */}
         <div className="px-6 py-6">
-         
-
           <h3 className="mb-3 text-3xl font-bold text-white">
             {project.title}
           </h3>
-
           <p className="mb-6 text-base leading-relaxed text-white/80">
             {project.description}
           </p>
-
-          {/* CTA */}
           <div className="flex items-center gap-2 font-medium text-white underline underline-offset-4">
             Read Case Study
             <span className="transition-transform group-hover:translate-x-1">
               <MdArrowRightAlt />
-
             </span>
           </div>
         </div>
@@ -505,7 +462,6 @@ function ProjectCard({
     </button>
   )
 }
-
 
 function FirestoreProjectCard({
   project,
@@ -555,7 +511,7 @@ function FirestoreProjectCard({
         )}
 
         <div className="mt-2 flex items-center gap-2 text-white transition-colors group-hover:text-gray-100">
-          <span className="text-sm  font-medium">View Project</span>
+          <span className="text-sm font-medium">View Project</span>
           <ExternalLink className="h-4 w-4 transition-transform group-hover:translate-x-1" />
         </div>
       </div>
@@ -585,132 +541,155 @@ function CaseStudyModal({
   onClose: () => void
 }) {
   const Icon = project.icon
+  const [mounted, setMounted] = useState(false)
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4" onClick={onClose}>
-      <div className="relative max-h-[90vh] w-full mt-18 max-w-5xl overflow-y-auto rounded-2xl bg-background shadow-2xl" onClick={(e) => e.stopPropagation()}>
-        <button
-          onClick={onClose}
-          className="sticky top-4 right-4 z-10 float-right m-4 rounded-full bg-foreground/10 p-2 transition-colors hover:bg-foreground/20"
-        >
-          <X className="h-6 w-6 text-foreground" />
-        </button>
+  useEffect(() => {
+    setMounted(true)
+    document.body.style.overflow = 'hidden'
+    
+    return () => {
+      document.body.style.overflow = 'unset'
+    }
+  }, [])
 
-        <div className={`relative h-96 w-full ${project.color} flex items-center justify-center overflow-hidden`}>
-          <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent" />
-          <div className="relative z-10 text-center text-white">
-            <Icon className="mx-auto mb-6 h-32 w-32" />
-            <h1 className="mb-4 text-5xl font-bold">{project.title}</h1>
-            <p className="text-xl opacity-90">{project.category}</p>
+  if (!mounted) return null
+
+  const modalContent = (
+    <div
+      className="fixed inset-0 z-[9999] bg-black/50 backdrop-blur-sm overflow-y-auto"
+      onClick={onClose}
+    >
+      <div 
+        className="min-h-screen bg-[#0a0a0f]"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Header with Back Button */}
+        <div className="sticky top-0 z-10 bg-[#0a0a0f]/95 backdrop-blur-sm border-b border-white/5">
+          <div className="max-w-7xl mx-auto px-6 md:px-12 py-4 flex justify-between items-center">
+            <div className="flex items-center gap-4">
+              <Icon className="h-8 w-8 text-teal-400" />
+              <div>
+                <h1 className="text-lg font-semibold text-white">{project.title}</h1>
+                <p className="text-sm text-gray-400">{project.category}</p>
+              </div>
+            </div>
+            <button
+              onClick={onClose}
+              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 transition-colors text-white"
+            >
+              <X className="h-5 w-5" />
+              <span className="hidden sm:inline">Close</span>
+            </button>
           </div>
         </div>
 
-        <div className="space-y-12 p-8 md:p-12">
-          <div className="rounded-xl border border-foreground/10 bg-foreground/5 p-8">
-            <h2 className="mb-6 text-2xl font-bold text-foreground">Case Study Outline</h2>
-            <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
-              {["Customer Background", "The Problem", "The Solution", "Our Approach", "Results", "Technologies"].map(
-                (item, i) => (
-                  <div key={i} className="flex items-center gap-2">
-                    <span className="text-lg font-bold text-foreground/40">{String(i + 1).padStart(2, "0")}</span>
-                    <span className="text-sm text-foreground/70">{item}</span>
-                  </div>
-                ),
-              )}
+        {/* Hero Section */}
+        <div className="relative h-[50vh] bg-gradient-to-br from-teal-600/20 via-teal-700/10 to-transparent overflow-hidden">
+          <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1920&h=1080&fit=crop')] opacity-20 bg-cover bg-center" />
+          <div className="relative h-full max-w-7xl mx-auto px-6 md:px-12 flex flex-col justify-center">
+            <h1 className="text-5xl md:text-7xl font-bold text-white mb-4">{project.title}</h1>
+            <p className="text-xl md:text-2xl text-teal-300 mb-2">{project.category}</p>
+            <p className="text-lg text-gray-300 max-w-3xl">{project.description}</p>
+          </div>
+        </div>
+
+        {/* Content */}
+        <div className="max-w-7xl mx-auto px-6 md:px-12 py-16 space-y-20">
+          
+          {/* Customer Background */}
+          <section>
+            <h2 className="text-4xl font-bold text-white mb-6">Customer Background</h2>
+            <p className="text-lg text-gray-300 leading-relaxed mb-8">{project.caseStudy.background}</p>
+          </section>
+
+          {/* The Problem */}
+          <section>
+            <h2 className="text-4xl font-bold text-white mb-6">The Problem</h2>
+            <p className="text-lg text-gray-300 leading-relaxed mb-8">{project.caseStudy.problem}</p>
+            
+            <div className="relative h-96 rounded-2xl overflow-hidden bg-gradient-to-br from-gray-800 to-gray-900">
+              <img
+                src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1400&h=600&fit=crop"
+                alt="Problem visualization"
+                className="w-full h-full object-cover opacity-60"
+              />
             </div>
-          </div>
+          </section>
 
-          <div>
-            <div className="mb-4 flex items-center gap-3">
-              <span className="text-3xl font-bold text-foreground/30">01</span>
-              <h2 className="text-3xl font-bold text-foreground">Customer Background</h2>
+          {/* The Solution */}
+          <section>
+            <h2 className="text-4xl font-bold text-white mb-6">The Solution</h2>
+            <p className="text-lg text-gray-300 leading-relaxed mb-8">{project.caseStudy.solution}</p>
+            
+            <div className="relative h-96 rounded-2xl overflow-hidden bg-gradient-to-br from-teal-900 to-blue-900">
+              <img
+                src="https://images.unsplash.com/photo-1551434678-e076c223a692?w=1400&h=600&fit=crop"
+                alt="Solution implementation"
+                className="w-full h-full object-cover opacity-70"
+              />
             </div>
-            <p className="text-lg leading-relaxed text-foreground/70">{project.caseStudy.background}</p>
-          </div>
+          </section>
 
-          <div className="overflow-hidden rounded-xl">
-            <img
-              src="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=1200&h=600&fit=crop"
-              alt="Project showcase"
-              className="h-80 w-full object-cover"
-            />
-          </div>
-
-          <div>
-            <div className="mb-4 flex items-center gap-3">
-              <span className="text-3xl font-bold text-foreground/30">02</span>
-              <h2 className="text-3xl font-bold text-foreground">The Problem</h2>
-            </div>
-            <p className="text-lg leading-relaxed text-foreground/70">{project.caseStudy.problem}</p>
-          </div>
-
-          <div>
-            <div className="mb-4 flex items-center gap-3">
-              <span className="text-3xl font-bold text-foreground/30">03</span>
-              <h2 className="text-3xl font-bold text-foreground">The Solution</h2>
-            </div>
-            <p className="text-lg leading-relaxed text-foreground/70">{project.caseStudy.solution}</p>
-          </div>
-
-          <div className="overflow-hidden rounded-xl">
-            <img
-              src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&h=600&fit=crop"
-              alt="Solution visualization"
-              className="h-80 w-full object-cover"
-            />
-          </div>
-
-          <div>
-            <div className="mb-4 flex items-center gap-3">
-              <span className="text-3xl font-bold text-foreground/30">04</span>
-              <h2 className="text-3xl font-bold text-foreground">Our Approach</h2>
-            </div>
-            <div className="grid gap-4 md:grid-cols-2">
+          {/* Our Approach */}
+          <section>
+            <h2 className="text-4xl font-bold text-white mb-8">Our Approach</h2>
+            <div className="grid md:grid-cols-2 gap-6">
               {project.caseStudy.approach.map((item, i) => (
-                <div key={i} className="flex gap-3 rounded-lg border border-foreground/10 bg-foreground/5 p-4">
-                  <ArrowRight className="mt-1 h-5 w-5 shrink-0 text-foreground/50" />
-                  <p className="text-foreground/70">{item}</p>
+                <div key={i} className="flex gap-4 p-6 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors">
+                  <div className="flex-shrink-0">
+                    <div className="w-10 h-10 rounded-lg bg-teal-500/20 flex items-center justify-center">
+                      <Activity className="h-5 w-5 text-teal-400" />
+                    </div>
+                  </div>
+                  <p className="text-gray-300">{item}</p>
                 </div>
               ))}
             </div>
-          </div>
+          </section>
 
-          <div>
-            <div className="mb-4 flex items-center gap-3">
-              <span className="text-3xl font-bold text-foreground/30">05</span>
-              <h2 className="text-3xl font-bold text-foreground">Result</h2>
+          {/* Result */}
+          <section>
+            <h2 className="text-4xl font-bold text-white mb-6">Result</h2>
+            <div className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-pink-900/30 via-purple-900/30 to-blue-900/30 border border-pink-500/20 p-8 md:p-12">
+              <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1400&h=600&fit=crop')] opacity-10 bg-cover bg-center" />
+              <div className="relative">
+                <div className="grid md:grid-cols-3 gap-8 mb-8">
+                  <div className="text-center">
+                    <div className="text-5xl md:text-6xl font-bold text-pink-400 mb-2">80<span className="text-3xl">%</span></div>
+                    <div className="text-gray-300">Automation of booking process</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-5xl md:text-6xl font-bold text-pink-400 mb-2">10k<span className="text-3xl">+</span></div>
+                    <div className="text-gray-300">Active service professionals</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-5xl md:text-6xl font-bold text-pink-400 mb-2">95<span className="text-3xl">%</span></div>
+                    <div className="text-gray-300">Customer satisfaction rate</div>
+                  </div>
+                </div>
+                <p className="text-lg text-gray-200 text-center">{project.caseStudy.result}</p>
+              </div>
             </div>
-            <div className="rounded-xl bg-gradient-to-br from-green-500/10 to-blue-500/10 border border-green-500/20 p-8">
-              <p className="text-lg leading-relaxed text-foreground">{project.caseStudy.result}</p>
-            </div>
-          </div>
+          </section>
 
-          <div>
-            <div className="mb-4 flex items-center gap-3">
-              <span className="text-3xl font-bold text-foreground/30">06</span>
-              <h2 className="text-3xl font-bold text-foreground">Technologies Used</h2>
-            </div>
-            <div className="flex flex-wrap gap-3">
+          {/* Technologies Used */}
+          <section className="pb-20">
+            <h2 className="text-4xl font-bold text-white mb-8">Technologies Used</h2>
+            <div className="flex flex-wrap gap-4">
               {project.caseStudy.technologies.map((tech, i) => (
                 <span
                   key={i}
-                  className="rounded-full border border-foreground/20 bg-foreground/5 px-6 py-2 font-mono text-sm text-foreground/80"
+                  className="px-6 py-3 rounded-full bg-white/5 border border-white/10 text-white font-medium hover:bg-white/10 transition-colors"
                 >
                   {tech}
                 </span>
               ))}
             </div>
-          </div>
-
-          <div className="overflow-hidden rounded-xl">
-            <img
-              src="https://images.unsplash.com/photo-1551434678-e076c223a692?w=1200&h=600&fit=crop"
-              alt="Team collaboration"
-              className="h-80 w-full object-cover"
-            />
-          </div>
+          </section>
         </div>
       </div>
     </div>
   )
+
+  return createPortal(modalContent, document.body)
 }
