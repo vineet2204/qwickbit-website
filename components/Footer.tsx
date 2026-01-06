@@ -115,9 +115,9 @@ export function Footer() {
             <span>Qwickbit Technologies Pvt Ltd</span>
           </div>
 
-          <div className="flex items-start gap-2 max-w-xs">
+          <div className="flex items-start mr-8 gap-2 max-w-xs">
             <IoLocationOutline className="mt-1 text-lg shrink-0" />
-            <p>
+            <p className="text-left">
               #721 A Sector 16th A Main Road<br />
               Yelahanka New Town,<br />
               Bangalore 560064

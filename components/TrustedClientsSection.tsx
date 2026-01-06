@@ -86,7 +86,7 @@ export default function TrustedClients() {
   return (
     <section className="w-full py-16 bg-transparent overflow-hidden">
       <div className="container mx-auto px-4">
-        <h2 className="text-4xl md:text-5xl font-bold text-center mb-12 text-white">
+        <h2 className="text-4xl font-sans tracking-tight md:text-5xl font-light text-center mb-12 text-white">
           Trusted by awesome clients
         </h2>
 

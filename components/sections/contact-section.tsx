@@ -388,12 +388,12 @@ export default function ContactSection() {
           {/* Left side - Contact Info */}
           <div className="flex mt-18 flex-col justify-start space-y-8 md:space-y-12">
             <div className="space-y-4">
-              <h2 className="font-sans text-5xl font-light leading-[1.05] tracking-tight text-foreground md:text-6xl lg:text-7xl xl:text-8xl">
+              <h2 className="font-sans text-5xl font-light tracking-tight text-foreground md:text-6xl lg:text-7xl">
                 Ready to
                 <br />
                 transform?
               </h2>
-              <p className="font-mono text-sm text-white md:text-base lg:text-lg">
+              <p className="font-mono text-sm text-foreground/60 md:text-base">
                 / Let's build something intelligent together
               </p>
             </div>

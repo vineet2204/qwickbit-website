@@ -298,7 +298,7 @@ export default function AboutSection({
                 <Lightbulb className="w-4 h-4 text-white" />
                 <span className="text-sm font-medium text-white">About Us</span>
               </div>
-              <h2 className="font-sans text-4xl font-bold leading-tight text-foreground md:text-6xl lg:text-7xl">
+              <h2 className="mb-2 font-sans text-5xl font-light tracking-tight text-foreground md:text-6xl lg:text-7xl">
                 Transforming Ideas into
                 <br />
                 <span className="bg-white bg-clip-text text-transparent">Digital Reality</span>
@@ -342,10 +342,10 @@ export default function AboutSection({
                 <Code className="w-4 h-4 text-white" />
                 <span className="text-sm font-medium text-white">What We Offer</span>
               </div>
-              <h2 className="font-sans text-4xl font-bold leading-tight text-foreground md:text-6xl lg:text-7xl">
-                Our Core
-                <br />
-                <span className="bg-white bg-clip-text text-transparent">Solutions</span>
+              <h2 className="mb-2 font-sans text-5xl font-light tracking-tight text-foreground md:text-6xl lg:text-7xl">
+                Our Core Solutions
+                {/* <br />
+                <span className="bg-white bg-clip-text text-transparent">Solutions</span> */}
               </h2>
               <p className="mt-4 text-lg text-foreground/70 max-w-2xl">
                 Comprehensive technology services designed to accelerate your digital transformation journey.
@@ -358,23 +358,23 @@ export default function AboutSection({
                 return (
                   <Card
                     key={service.id}
-                    className="group overflow-hidden border border-primary/20 shadow-lg transition-all hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-1 bg-gradient-to-br from-background to-primary/5"
+                    className="group overflow-hidden border border-primary/20 shadow-lg transition-all hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-1 "
                   >
                     <CardHeader className="pb-4">
-                      <div className="flex items-start gap-4">
+                      <div className="flex flex-col items-start gap-4">
+                        <div className="flex flex-row justify-center items-center gap-5">
                         <div className="rounded-xl bg-primary/10 p-3 group-hover:bg-primary/20 transition-colors">
-                          <Icon className="w-8 h-8 text-white" />
+                          <Icon className="w-5 h-5 text-white" />
                         </div>
-                        <div className="flex-1">
-                          <h3 className="font-sans text-2xl font-bold text-foreground group-hover:text-white transition-colors mb-2">
+                          <h3 className="font-sans text-2xl mt-2 font-bold text-foreground group-hover:text-white transition-colors mb-2">
                             {service.title}
                           </h3>
-                          <p className="text-sm leading-relaxed text-foreground/80">{service.description}</p>
                         </div>
+                          <p className="text-sm leading-relaxed text-foreground/80">{service.description}</p>
                       </div>
                     </CardHeader>
                     <CardContent>
-                      <div className="space-y-2 ml-18">
+                      <div className="space-y-2 -mt-8">
                         {service.features.map((feature, featureIdx) => (
                           <div key={featureIdx} className="flex items-center gap-2">
                             <div className="w-1.5 h-1.5 rounded-full bg-white" />
@@ -400,10 +400,9 @@ export default function AboutSection({
                 <Target className="w-4 h-4 text-white" />
                 <span className="text-sm font-medium text-white">Our Approach</span>
               </div>
-              <h2 className="font-sans text-4xl font-bold leading-tight text-foreground md:text-6xl lg:text-7xl mb-6">
-                <span className="bg-white bg-clip-text text-transparent">Process</span>
-                <br />
-                Model
+              <h2 className="mb-2 font-sans text-5xl font-light tracking-tight text-foreground md:text-6xl lg:text-7xl mb-6">
+                <span className="bg-white bg-clip-text text-transparent">Process Model</span>
+                
               </h2>
               <p className="text-lg text-foreground/70 max-w-3xl leading-relaxed">
                 With Agile first mindset, We enable our clients to get to see important features within a hand full of

@@ -354,14 +354,14 @@ export function WorkSection({ onItemClick }: WorkSectionProps) {
     <section className="flex h-screen w-screen shrink-0 snap-start items-center px-6 md:px-12 lg:px-16">
       <div data-vertically-scrollable className="h-full w-full overflow-y-auto overflow-x-hidden">
         <div className="mx-auto w-full max-w-7xl py-8">
-          <div className="mb-12 mt-20 md:mb-16">
+          <div className="mb-12 mt-32 md:mb-16">
             <h2 className="mb-2 font-sans text-5xl font-light tracking-tight text-foreground md:text-6xl lg:text-7xl">
               Featured Case Studies
             </h2>
             <p className="font-mono text-sm text-foreground/60 md:text-base">/ Recent explorations</p>
           </div>
 
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-1 -mt-6 gap-6 md:grid-cols-2 lg:grid-cols-3">
             {projects.map((project, i) => (
               <ProjectCard key={i} project={project} onClick={() => handleProjectClick(i)} />
             ))}
@@ -432,27 +432,27 @@ function ProjectCard({
   return (
     <button
       onClick={onClick}
-      className="group relative w-full text-left rounded-[28px] border border-white/30 bg-white/10 p-4 transition-all duration-300 hover:shadow-2xl"
+      className="group relative w-full text-left rounded-[28px] border border-white/30 bg-white/10 pl-4 pr-4 pt-4 pb-4 transition-all duration-300 hover:shadow-2xl"
     >
       <div className="overflow-hidden rounded-[24px]">
         <div className="relative h-56 w-full rounded-[20px] overflow-hidden">
           <div className="absolute inset-0 bg-indigo-700/90" />
           <div className="absolute inset-0 bg-gradient-to-t from-indigo-900/70 via-indigo-800/30 to-transparent" />
           <Icon className="absolute right-6 top-6 h-16 w-16 text-white/90" />
-          <span className="absolute bottom-4 left-4 rounded-xl border border-white/40 bg-white/10 px-4 py-2 text-sm font-medium text-white backdrop-blur">
+          {/* <span className="absolute bottom-4 left-4 rounded-xl border border-white/40 bg-white/10 px-4 py-2 text-sm font-medium text-white backdrop-blur">
             {project.category}
-          </span>
+          </span> */}
         </div>
 
-        <div className="px-6 py-6">
-          <h3 className="mb-3 text-3xl font-bold text-white">
-            {project.title}
+        <div className="px-1 py-6">
+          <h3 className="mb-5 text-3xl font-bold text-white">
+            {project.category}
           </h3>
           <p className="mb-6 text-base leading-relaxed text-white/80">
             {project.description}
           </p>
           <div className="flex items-center gap-2 font-medium text-white underline underline-offset-4">
-            Read Case Study
+            Read Full Story
             <span className="transition-transform group-hover:translate-x-1">
               <MdArrowRightAlt />
             </span>

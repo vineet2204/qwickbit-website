@@ -48,10 +48,10 @@ interface NavigationHeaderProps {
 
 const sections = [
   { name: "Home", index: 0 },
-  { name: "Products & Solutions", index: 1, hasDropdown: true },
+  { name: "Solutions", index: 1, hasDropdown: true },
   { name: "Services", index: 2, hasDropdown: true },
   { name: "About Us", index: 3, hasDropdown: true },
-  { name: "Contact", index: 4 },
+  { name: "Contact Us", index: 4 },
 ]
 
 interface ProductSolutionItem {

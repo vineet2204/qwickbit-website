@@ -363,7 +363,7 @@ export default function Home() {
             <div className="flex-1 flex flex-col justify-end  mt-2">
               <div className="max-w-3xl">
                 <div className="mb-4 inline-block animate-in fade-in slide-in-from-bottom-4 rounded-full border border-foreground/20 bg-foreground/15 px-4 py-1.5 backdrop-blur-md duration-700">
-                  <p className="font-mono text-xs text-foreground/90">AI-Powered Digital Transformation</p>
+                  <p className="font-mono text-xs text-foreground/90">Empowering Businesses with Intelligent Software & AI-Driven Solutions</p>
                 </div>
                 <h1 className="mb-6 animate-in fade-in slide-in-from-bottom-8 font-sans text-5xl font-light leading-[1.1] tracking-tight text-foreground duration-1000 md:text-6xl lg:text-7xl">
                   <span className="text-balance">
@@ -374,9 +374,8 @@ export default function Home() {
                 </h1>
                 <p className="mb-8 max-w-xl animate-in fade-in slide-in-from-bottom-4 text-base leading-relaxed text-foreground/90 duration-1000 delay-200 md:text-lg">
                   <span className="text-pretty">
-                    We build intelligent products that help enterprises automate operations, enhance decision-making,
-                    and scale faster through AI, IoT, Cloud, and advanced software engineering.
-                  </span>
+ Build Smarter Digital Products with AI, Cloud, Web & Mobile Solutions
+ Transform ideas into scalable technology solutions that deliver value.                  </span>
                 </p>
                 <div className="flex animate-in fade-in duration-1000 delay-300 flex-col gap-4 duration-1000 delay-300 sm:flex-row sm:items-center">
                   <MagneticButton size="lg" variant="primary" onClick={() => scrollToSection(4)}>
