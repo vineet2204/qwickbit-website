@@ -409,7 +409,7 @@ export default function GlassmorphismNavigationHeader({
   }
 
   const handleMouseEnter = (sectionName: string) => {
-    if (sectionName === "Products & Solutions") {
+    if (sectionName === "Solutions") {
       // Clear any pending close timeout for Solutions
       if (solutionsTimeoutRef.current) {
         clearTimeout(solutionsTimeoutRef.current)
@@ -447,7 +447,7 @@ export default function GlassmorphismNavigationHeader({
   }
 
   const handleDropdownMouseLeave = (sectionName: string) => {
-    if (sectionName === "Products & Solutions") {
+    if (sectionName === "Solutions") {
       if (solutionsTimeoutRef.current) {
         clearTimeout(solutionsTimeoutRef.current)
       }
@@ -704,7 +704,7 @@ export default function GlassmorphismNavigationHeader({
 
   // Added handler for desktop dropdowns
   const handleDropdownMouseEnter = (sectionName: string) => {
-    if (sectionName === "Products & Solutions") {
+    if (sectionName === "Solutions") {
       if (solutionsTimeoutRef.current) {
         clearTimeout(solutionsTimeoutRef.current)
         solutionsTimeoutRef.current = null
@@ -802,7 +802,7 @@ export default function GlassmorphismNavigationHeader({
                       {section.hasDropdown && (
                         <ChevronDown
                           className={`w-3.5 h-3.5 transition-transform duration-300 ${
-                            (section.name === "Products & Solutions" && isSolutionsOpen) ||
+                            (section.name === "Solutions" && isSolutionsOpen) ||
                             (section.name === "Services" && isServicesOpen) ||
                             (section.name === "About Us" && isAboutUsOpen)
                               ? "rotate-180"
@@ -896,8 +896,8 @@ export default function GlassmorphismNavigationHeader({
         <div
           ref={solutionsDropdownRef}
           className="hidden md:block dropdown-container fixed top-20 left-1/2 -translate-x-1/2 z-[9999]"
-          onMouseEnter={() => handleDropdownMouseEnter("Products & Solutions")}
-          onMouseLeave={() => handleDropdownMouseLeave("Products & Solutions")}
+          onMouseEnter={() => handleDropdownMouseEnter("Solutions")}
+          onMouseLeave={() => handleDropdownMouseLeave("Solutions")}
           style={{
             pointerEvents: "auto",
           }}
@@ -1151,7 +1151,7 @@ export default function GlassmorphismNavigationHeader({
             {/* MAIN HEADER (WITH DROPDOWN) */}
             <button
               onClick={() => {
-                if (section.name === "Products & Solutions") {
+                if (section.name === "Solutions") {
                   setMobileSolutionsOpen(!mobileSolutionsOpen)
                   setMobileServicesOpen(false)
                   setMobileAboutUsOpen(false)
@@ -1172,7 +1172,7 @@ export default function GlassmorphismNavigationHeader({
                 rounded-2xl
                 transition-all duration-200
                 ${
-                  (section.name === "Products & Solutions" && mobileSolutionsOpen) ||
+                  (section.name === "Solutions" && mobileSolutionsOpen) ||
                   (section.name === "Services" && mobileServicesOpen) ||
                   (section.name === "About Us" && mobileAboutUsOpen)
                     ? "bg-white/20 shadow-lg"
@@ -1183,7 +1183,7 @@ export default function GlassmorphismNavigationHeader({
               <span>{section.name}</span>
               <ChevronDown
                 className={`w-4 h-4 transition-transform duration-300 ${
-                  (section.name === "Products & Solutions" && mobileSolutionsOpen) ||
+                  (section.name === "Solutions" && mobileSolutionsOpen) ||
                   (section.name === "Services" && mobileServicesOpen) ||
                   (section.name === "About Us" && mobileAboutUsOpen)
                     ? "rotate-180"
@@ -1197,7 +1197,7 @@ export default function GlassmorphismNavigationHeader({
               className={`
                 overflow-hidden transition-all duration-300 ease-in-out
                 ${
-                  (section.name === "Products & Solutions" && mobileSolutionsOpen) ||
+                  (section.name === "Solutions" && mobileSolutionsOpen) ||
                   (section.name === "Services" && mobileServicesOpen) ||
                   (section.name === "About Us" && mobileAboutUsOpen)
                     ? "max-h-[2000px] opacity-100 mt-3"
@@ -1206,7 +1206,7 @@ export default function GlassmorphismNavigationHeader({
               `}
             >
               <div className="space-y-3 px-2">
-                {(section.name === "Products & Solutions"
+                {(section.name === "Solutions"
                   ? productsSolutionsMenu
                   : section.name === "Services"
                   ? servicesMenu

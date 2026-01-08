@@ -3,7 +3,7 @@
 import type React from "react"
 
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
-import { ArrowRight, Sparkles, TrendingUp, Users, Code, Lightbulb, Target, Zap, Shield, Globe } from "lucide-react"
+import { ArrowRight, Sparkles, TrendingUp, Users, Code, Lightbulb, Target, Zap, Shield, Globe, Cpu, Database, Cloud, Server } from "lucide-react"
 import { useReveal } from "@/hooks/use-reveal"
 import { useEffect, useRef } from "react"
 import TrustedClients from "../TrustedClientsSection"
@@ -150,6 +150,39 @@ export default function AboutSection({
     },
   ]
 
+  const techStack = [
+    {
+      category: "Frontend",
+      icon: Cpu,
+      technologies: ["React", "Next.js"],
+      color: "from-blue-500/20 to-blue-500/5",
+    },
+    {
+      category: "Backend",
+      icon: Server,
+      technologies: ["Node.js", "Python"],
+      color: "from-green-500/20 to-green-500/5",
+    },
+    {
+      category: "Cloud",
+      icon: Cloud,
+      technologies: ["AWS"],
+      color: "from-orange-500/20 to-orange-500/5",
+    },
+    {
+      category: "DevOps",
+      icon: Shield,
+      technologies: ["Docker"],
+      color: "from-purple-500/20 to-purple-500/5",
+    },
+    {
+      category: "Databases",
+      icon: Database,
+      technologies: ["PostgreSQL", "MongoDB"],
+      color: "from-red-500/20 to-red-500/5",
+    },
+  ]
+
   useEffect(() => {
     // Load GoodFirms widget script
     const script = document.createElement("script")
@@ -193,7 +226,7 @@ export default function AboutSection({
                   <span className="text-sm font-medium text-white">Why Choose Us</span>
                 </div>
 
-            <h2 className="mb-2 font-sans text-5xl font-light tracking-tight text-foreground md:text-6xl lg:text-7xl">
+                <h2 className="mb-2 font-sans text-5xl font-light tracking-tight text-foreground md:text-6xl lg:text-7xl">
                   Excellence in
                   <br />
                   <span className="bg-white bg-clip-text text-transparent">Digital Innovation</span>
@@ -245,7 +278,7 @@ export default function AboutSection({
                 return (
                   <div
                     key={i}
-                    className={`group relative flex items-center gap-6 rounded-2xl   p-6 transition-all duration-700 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5 md:gap-8 ${getRevealClass()}`}
+                    className={`group relative flex items-center gap-6 rounded-2xl p-6 transition-all duration-700 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5 md:gap-8 ${getRevealClass()}`}
                     style={{
                       transitionDelay: `${300 + i * 150}ms`,
                     }}
@@ -270,19 +303,13 @@ export default function AboutSection({
             }`}
             style={{ transitionDelay: "750ms" }}
           >
-            <MagneticButton
-              onClick={() => scrollToSection?.(4)}
-              
-            >
+            <MagneticButton onClick={() => scrollToSection?.(4)}>
               <span className="relative z-10 flex items-center">
                 Start a Project <ArrowRight className="w-4 h-4 ml-1" />
               </span>
             </MagneticButton>
 
-            <MagneticButton
-              onClick={() => scrollToSection?.(1)}
-            
-            >
+            <MagneticButton onClick={() => scrollToSection?.(1)}>
               <span className="relative z-10 flex items-center">View Our Work</span>
             </MagneticButton>
           </div>
@@ -291,7 +318,7 @@ export default function AboutSection({
 
       <div className="w-full bg-transparent">
         {/* About Qwickbit Section */}
-<section className="w-full mt-56 md:mt-0 px-4 py-20 md:px-12 md:py-32 lg:px-16">
+        <section className="w-full mt-56 md:mt-0 px-4 py-20 md:px-12 md:py-32 lg:px-16">
           <div className="mx-auto max-w-7xl">
             <div className="mb-16">
               <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 mb-6">
@@ -303,11 +330,10 @@ export default function AboutSection({
                 <br />
                 <span className="bg-white bg-clip-text text-transparent">Digital Reality</span>
               </h2>
-              <p className="mt-6 text-lg text-foreground/70 max-w-3xl leading-relaxed">
-                Qwickbit Technologies is a leading IT, AI, and technology solutions provider committed to empowering
-                businesses through innovation. With over a decade of experience, we specialize in delivering
-                cutting-edge solutions that drive digital transformation and create lasting value for our clients
-                worldwide.
+              <p className="mt-6 text-lg text-foreground/70 leading-relaxed">
+                Qwickbit is a technology solutions company focused on building intelligent, scalable, and secure digital
+                products. We partner with businesses to solve complex challenges using modern software, AI, and cloud
+                technologies.
               </p>
             </div>
 
@@ -316,9 +342,7 @@ export default function AboutSection({
                 <Target className="w-12 h-12 text-white mb-4" />
                 <h3 className="font-sans text-2xl font-bold text-foreground mb-4">Our Mission</h3>
                 <p className="text-foreground/80 leading-relaxed">
-                  To deliver innovative, scalable, and reliable technology solutions that empower businesses to achieve
-                  their goals. We believe in building long-term partnerships by understanding our clients' unique
-                  challenges and crafting solutions that exceed expectations.
+                  To help businesses grow through smart technology and reliable digital solutions.
                 </p>
               </div>
               <div className="rounded-2xl border border-primary/20 bg-gradient-to-br from-primary/5 to-transparent p-8">
@@ -329,6 +353,54 @@ export default function AboutSection({
                   software development. We strive to continuously innovate and push the boundaries of what's possible,
                   helping businesses thrive in the digital age.
                 </p>
+              </div>
+            </div>
+
+            {/* Technology Stack Section */}
+            <div className="mt-16 mb-20">
+              <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 mb-6">
+                <Cpu className="w-4 h-4 text-white" />
+                <span className="text-sm font-medium text-white">Technology Stack</span>
+              </div>
+              <h3 className="font-sans text-3xl font-bold text-foreground mb-4">
+                Modern, Industry-Proven Technologies
+              </h3>
+              <p className="text-lg text-foreground/70 mb-8 max-w-3xl">
+                We work with cutting-edge technologies to build robust, scalable, and efficient solutions that drive
+                business success.
+              </p>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+                {techStack.map((tech, idx) => {
+                  const Icon = tech.icon
+                  return (
+                    <div
+                      key={idx}
+                      className="group relative overflow-hidden rounded-2xl border border-primary/20 p-6 transition-all duration-300 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5"
+                    >
+                      <div className={`absolute inset-0 bg-gradient-to-br ${tech.color} opacity-50`} />
+                      <div className="relative z-10">
+                        <div className="mb-4 flex items-center gap-3">
+                          <div className="rounded-lg bg-white/10 p-2">
+                            <Icon className="w-5 h-5 text-white" />
+                          </div>
+                          <h4 className="font-sans text-lg font-semibold text-foreground">{tech.category}</h4>
+                        </div>
+                        <div className="space-y-2">
+                          {tech.technologies.map((technology, techIdx) => (
+                            <div
+                              key={techIdx}
+                              className="flex items-center gap-2 rounded-lg bg-white/5 px-3 py-2 transition-all hover:bg-white/10"
+                            >
+                              <div className="h-1.5 w-1.5 rounded-full bg-primary" />
+                              <span className="text-sm font-medium text-foreground/90">{technology}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  )
+                })}
               </div>
             </div>
           </div>
@@ -344,11 +416,9 @@ export default function AboutSection({
               </div>
               <h2 className="mb-2 font-sans text-5xl font-light tracking-tight text-foreground md:text-6xl lg:text-7xl">
                 Our Core Solutions
-                {/* <br />
-                <span className="bg-white bg-clip-text text-transparent">Solutions</span> */}
               </h2>
               <p className="mt-4 text-lg text-foreground/70 max-w-2xl">
-                Comprehensive technology services designed to accelerate your digital transformation journey.
+                We help businesses design, build, and scale secure, high-performance digital products using modern technologies, cloud platforms, and intelligent automation.
               </p>
             </div>
 
@@ -363,14 +433,14 @@ export default function AboutSection({
                     <CardHeader className="pb-4">
                       <div className="flex flex-col items-start gap-4">
                         <div className="flex flex-row justify-center items-center gap-5">
-                        <div className="rounded-xl bg-primary/10 p-3 group-hover:bg-primary/20 transition-colors">
-                          <Icon className="w-5 h-5 text-white" />
-                        </div>
+                          <div className="rounded-xl bg-primary/10 p-3 group-hover:bg-primary/20 transition-colors">
+                            <Icon className="w-5 h-5 text-white" />
+                          </div>
                           <h3 className="font-sans text-2xl mt-2 font-bold text-foreground group-hover:text-white transition-colors mb-2">
                             {service.title}
                           </h3>
                         </div>
-                          <p className="text-sm leading-relaxed text-foreground/80">{service.description}</p>
+                        <p className="text-sm leading-relaxed text-foreground/80">{service.description}</p>
                       </div>
                     </CardHeader>
                     <CardContent>
@@ -402,7 +472,6 @@ export default function AboutSection({
               </div>
               <h2 className="mb-2 font-sans text-5xl font-light tracking-tight text-foreground md:text-6xl lg:text-7xl mb-6">
                 <span className="bg-white bg-clip-text text-transparent">Process Model</span>
-                
               </h2>
               <p className="text-lg text-foreground/70 max-w-3xl leading-relaxed">
                 With Agile first mindset, We enable our clients to get to see important features within a hand full of
@@ -415,7 +484,6 @@ export default function AboutSection({
             <div className="grid md:grid-cols-5 grid-cols-1 gap-8 md:gap-4 my-12 md:my-20">
               {processSteps.map((step, i) => {
                 const isLast = i === processSteps.length - 1
-                const isEven = i % 2 === 0
 
                 return (
                   <div key={i} className="flex flex-col items-center relative">
@@ -485,10 +553,7 @@ export default function AboutSection({
 
             {/* CTA Button */}
             <div className="flex justify-center mt-16">
-              <MagneticButton
-                onClick={() => scrollToSection?.(4)}
-                
-              >
+              <MagneticButton onClick={() => scrollToSection?.(4)}>
                 <span className="relative z-10 flex items-center">
                   Let's Start Your Project <ArrowRight className="w-5 h-5 ml-2" />
                 </span>

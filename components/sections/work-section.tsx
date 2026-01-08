@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import { createPortal } from "react-dom"
 import { Shield, Wrench, Activity, Plane, Heart, X, ArrowRight, ExternalLink } from "lucide-react"
 import { MdArrowRightAlt } from "react-icons/md"
+import Image from "next/image"
 
 interface ProductSolutionItem {
   name: string
@@ -31,6 +32,7 @@ interface FirestoreDocument {
 
 interface Project {
   name: string
+  image:string
   title?: string
   description: string
   photoURL?: string
@@ -41,12 +43,19 @@ interface Project {
   gradient?: string
 }
 
+interface Stat {
+  value: string
+  unit: string
+  label: string
+}
+
 type ProjectType = {
   number: string
   title: string
   category: string
   description: string
   icon: any
+  image:string
   color: string
   caseStudy: {
     background: string
@@ -55,6 +64,7 @@ type ProjectType = {
     approach: string[]
     result: string
     technologies: string[]
+    stats: Stat[]
   }
   item: ProductSolutionItem
 }
@@ -62,12 +72,12 @@ type ProjectType = {
 export const caseStudiesData: ProductSolutionItem[] = [
   {
     name: "Protect Me Well",
-    description: "Smart premium calculation & risk assessment reducing support queries by 70%",
+    description: "AI-powered platform that reduced customer support effort and improved decision-making.",
     icon: Shield,
   },
   {
     name: "Local Tradies",
-    description: "AI-powered marketplace automating 80% of booking process for service professionals",
+    description: "Marketplace solution that streamlined service bookings and increased user engagement.",
     icon: Wrench,
   },
   {
@@ -178,9 +188,10 @@ export function WorkSection({ onItemClick }: WorkSectionProps) {
     {
       number: "01",
       title: "Protect Me Well",
-      category: "Insurance AI Advisory",
-      description: "Smart premium calculation & risk assessment reducing support queries by 70%",
+      category: "Insurance AI Advisory Platform",
+      description: "AI-powered platform that reduced customer support effort and improved decision-making.",
       icon: Shield,
+      image:"/insurance.avif",
       color: "bg-blue-900",
       caseStudy: {
         background:
@@ -198,6 +209,14 @@ export function WorkSection({ onItemClick }: WorkSectionProps) {
         result:
           "70% reduction in customer support queries, 50% faster policy issuance, and improved customer satisfaction scores by 45%.",
         technologies: ["React", "Python", "TensorFlow", "AWS", "Node.js"],
+        stats: [
+          { value: '70', unit: '%', label: 'Reduction in customer queries' },
+          { value: '50', unit: '%', label: 'Faster policy issuance' },
+          { value: '45', unit: '%', label: 'Customer satisfaction increase' },
+          { value: '30', unit: '%', label: 'Reduction in operational costs' },
+          { value: '2x', unit: '', label: 'Faster claim processing' },
+          { value: '90', unit: '%', label: 'Accuracy in risk assessment' },
+        ]
       },
       item: {
         name: "Protect Me Well",
@@ -208,9 +227,10 @@ export function WorkSection({ onItemClick }: WorkSectionProps) {
     },
     {
       number: "02",
+      image:"/case.png",
       title: "Local Tradies",
       category: "Service Booking Platform",
-      description: "AI-powered marketplace automating 80% of booking process for service professionals",
+      description: "Marketplace solution that streamlined service bookings and increased user engagement.",
       icon: Wrench,
       color: "bg-amber-700",
       caseStudy: {
@@ -229,6 +249,14 @@ export function WorkSection({ onItemClick }: WorkSectionProps) {
         result:
           "80% automation of booking process, 10,000+ active service professionals, and 95% customer satisfaction rate.",
         technologies: ["Next.js", "MongoDB", "Stripe", "Google Maps API", "Node.js"],
+        stats: [
+          { value: '80', unit: '%', label: 'Automation of booking process' },
+          { value: '10k', unit: '+', label: 'Active service professionals' },
+          { value: '95', unit: '%', label: 'Customer satisfaction rate' },
+          { value: '50k', unit: '+', label: 'Bookings completed' },
+          { value: '4.8', unit: '/5', label: 'Average service rating' },
+          { value: '24', unit: 'hrs', label: 'Average response time' },
+        ]
       },
       item: {
         name: "Local Tradies",
@@ -240,6 +268,7 @@ export function WorkSection({ onItemClick }: WorkSectionProps) {
     {
       number: "03",
       title: "Vertex Sports",
+      image:"/tennis.png",
       category: "Tennis Performance Analytics",
       description: "AI object tracking for player movement, shot analysis, and coaching insights",
       icon: Activity,
@@ -260,6 +289,14 @@ export function WorkSection({ onItemClick }: WorkSectionProps) {
         result:
           "Used by 200+ professional coaches, improved training efficiency by 60%, and helped players improve rankings by average of 15 positions.",
         technologies: ["Python", "OpenCV", "TensorFlow", "React", "Three.js"],
+        stats: [
+          { value: '200', unit: '+', label: 'Professional coaches using platform' },
+          { value: '60', unit: '%', label: 'Improvement in training efficiency' },
+          { value: '15', unit: '', label: 'Average ranking positions improved' },
+          { value: '50k', unit: '+', label: 'Matches analyzed' },
+          { value: '98', unit: '%', label: 'Shot detection accuracy' },
+          { value: '5x', unit: '', label: 'Faster performance analysis' },
+        ]
       },
       item: {
         name: "Vertex Sports",
@@ -271,7 +308,8 @@ export function WorkSection({ onItemClick }: WorkSectionProps) {
     {
       number: "04",
       title: "Flight Maintenance",
-      category: "Aircraft Inspection AI",
+      image:"/air.jpg",
+      category: "Aircraft Inspection AI Platform",
       description: "Automated inspection system reducing manual review time significantly",
       icon: Plane,
       color: "bg-slate-700",
@@ -291,6 +329,14 @@ export function WorkSection({ onItemClick }: WorkSectionProps) {
         result:
           "85% reduction in manual inspection time, 40% improvement in defect detection accuracy, and zero compliance violations.",
         technologies: ["Python", "TensorFlow", "React Native", "AWS", "PostgreSQL"],
+        stats: [
+          { value: '85', unit: '%', label: 'Reduction in inspection time' },
+          { value: '40', unit: '%', label: 'Better defect detection' },
+          { value: '0', unit: '', label: 'Compliance violations' },
+          { value: '1000', unit: '+', label: 'Aircraft inspected monthly' },
+          { value: '95', unit: '%', label: 'Defect classification accuracy' },
+          { value: '3x', unit: '', label: 'Faster maintenance scheduling' },
+        ]
       },
       item: {
         name: "Flight Maintenance",
@@ -302,6 +348,7 @@ export function WorkSection({ onItemClick }: WorkSectionProps) {
     {
       number: "05",
       title: "Connected Health",
+      image:"/real.jpg",
       category: "Real-time Vitals Monitoring",
       description: "Medical device data sync for blood pressure, glucose, temperature tracking",
       icon: Heart,
@@ -322,6 +369,14 @@ export function WorkSection({ onItemClick }: WorkSectionProps) {
         result:
           "Connected 50,000+ devices, 65% improvement in medication compliance, and early detection of health issues in 1000+ cases.",
         technologies: ["React Native", "Node.js", "MongoDB", "Python", "AWS IoT"],
+        stats: [
+          { value: '50k', unit: '+', label: 'Connected medical devices' },
+          { value: '65', unit: '%', label: 'Better medication compliance' },
+          { value: '1k', unit: '+', label: 'Early health issue detections' },
+          { value: '99.9', unit: '%', label: 'Data sync uptime' },
+          { value: '2min', unit: '', label: 'Average alert response time' },
+          { value: '85', unit: '%', label: 'Reduction in emergency visits' },
+        ]
       },
       item: {
         name: "Connected Health",
@@ -418,6 +473,7 @@ function ProjectCard({
   onClick,
 }: {
   project: {
+    image: string 
     number: string
     title: string
     category: string
@@ -435,14 +491,25 @@ function ProjectCard({
       className="group relative w-full text-left rounded-[28px] border border-white/30 bg-white/10 pl-4 pr-4 pt-4 pb-4 transition-all duration-300 hover:shadow-2xl"
     >
       <div className="overflow-hidden rounded-[24px]">
-        <div className="relative h-56 w-full rounded-[20px] overflow-hidden">
-          <div className="absolute inset-0 bg-indigo-700/90" />
-          <div className="absolute inset-0 bg-gradient-to-t from-indigo-900/70 via-indigo-800/30 to-transparent" />
-          <Icon className="absolute right-6 top-6 h-16 w-16 text-white/90" />
-          {/* <span className="absolute bottom-4 left-4 rounded-xl border border-white/40 bg-white/10 px-4 py-2 text-sm font-medium text-white backdrop-blur">
-            {project.category}
-          </span> */}
-        </div>
+       <div className="relative h-56 w-full rounded-[20px] overflow-hidden">
+  {/* Background Image */}
+  <Image
+    src={project?.image}
+    alt="Background"
+    fill
+    className="object-cover"
+    priority
+  />
+
+  {/* Color overlay */}
+  {/* <div className="absolute inset-0 bg-indigo-700/60" /> */}
+
+  {/* Gradient overlay */}
+  {/* <div className="absolute inset-0 bg-gradient-to-t from-indigo-900/70 via-indigo-800/30 to-transparent" /> */}
+
+  {/* Icon */}
+  {/* <Icon className="absolute right-6 top-6 h-16 w-16 text-white/90" /> */}
+</div>
 
         <div className="px-1 py-6">
           <h3 className="mb-5 text-3xl font-bold text-white">
@@ -524,6 +591,7 @@ function CaseStudyModal({
   onClose,
 }: {
   project: {
+    image: string | Blob | undefined
     title: string
     category: string
     description: string
@@ -536,6 +604,7 @@ function CaseStudyModal({
       approach: string[]
       result: string
       technologies: string[]
+      stats: Stat[]
     }
   }
   onClose: () => void
@@ -584,14 +653,26 @@ function CaseStudyModal({
         </div>
 
         {/* Hero Section */}
-        <div className="relative h-[50vh] bg-gradient-to-br from-teal-600/20 via-teal-700/10 to-transparent overflow-hidden">
-          <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1920&h=1080&fit=crop')] opacity-20 bg-cover bg-center" />
-          <div className="relative h-full max-w-7xl mx-auto px-6 md:px-12 flex flex-col justify-center">
-            <h1 className="text-5xl md:text-7xl font-bold text-white mb-4">{project.title}</h1>
-            <p className="text-xl md:text-2xl text-teal-300 mb-2">{project.category}</p>
-            <p className="text-lg text-gray-300 max-w-3xl">{project.description}</p>
-          </div>
-        </div>
+      <div className="relative h-[50vh] bg-gradient-to-br from-teal-600/20 via-teal-700/10 to-transparent overflow-hidden">
+  {/* Background image */}
+  <div
+    className="absolute inset-0 bg-cover bg-center opacity-20"
+    style={{ backgroundImage: `url(${project.image})` }}
+  />
+
+  <div className="relative h-full max-w-7xl mx-auto px-6 md:px-12 flex flex-col justify-center">
+    <h1 className="text-5xl md:text-7xl font-bold text-white mb-4">
+      {project.title}
+    </h1>
+    <p className="text-xl md:text-2xl text-teal-300 mb-2">
+      {project.category}
+    </p>
+    <p className="text-lg text-gray-300 max-w-3xl">
+      {project.description}
+    </p>
+  </div>
+</div>
+
 
         {/* Content */}
         <div className="max-w-7xl mx-auto px-6 md:px-12 py-16 space-y-20">
@@ -609,7 +690,7 @@ function CaseStudyModal({
             
             <div className="relative h-96 rounded-2xl overflow-hidden bg-gradient-to-br from-gray-800 to-gray-900">
               <img
-                src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1400&h=600&fit=crop"
+                src={project.image}
                 alt="Problem visualization"
                 className="w-full h-full object-cover opacity-60"
               />
@@ -648,26 +729,54 @@ function CaseStudyModal({
           </section>
 
           {/* Result */}
-          <section>
-            <h2 className="text-4xl font-bold text-white mb-6">Result</h2>
-            <div className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-pink-900/30 via-purple-900/30 to-blue-900/30 border border-pink-500/20 p-8 md:p-12">
-              <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1400&h=600&fit=crop')] opacity-10 bg-cover bg-center" />
+          <section className="max-w-6xl w-full">
+            <h2 className="text-4xl font-bold text-white mb-6">Results</h2>
+            <div className="relative rounded-2xl overflow-hidden bg-[#1a1a1f] border border-white/10 p-8 md:p-12">
               <div className="relative">
-                <div className="grid md:grid-cols-3 gap-8 mb-8">
-                  <div className="text-center">
-                    <div className="text-5xl md:text-6xl font-bold text-pink-400 mb-2">80<span className="text-3xl">%</span></div>
-                    <div className="text-gray-300">Automation of booking process</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-5xl md:text-6xl font-bold text-pink-400 mb-2">10k<span className="text-3xl">+</span></div>
-                    <div className="text-gray-300">Active service professionals</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-5xl md:text-6xl font-bold text-pink-400 mb-2">95<span className="text-3xl">%</span></div>
-                    <div className="text-gray-300">Customer satisfaction rate</div>
-                  </div>
+                {/* Top Row */}
+                <div className="grid md:grid-cols-3 gap-12 mb-12">
+                  {project.caseStudy.stats.slice(0, 3).map((stat, index) => (
+                    <div key={index} className="flex items-center gap-6 border-r border-white/10 last:border-r-0 pr-8 last:pr-0">
+                      <div className="flex items-baseline gap-1">
+                        <span className="text-6xl md:text-7xl font-bold text-[#ff1654]">
+                          {stat.value}
+                        </span>
+                        <span className="text-3xl md:text-4xl font-bold text-[#ff1654]">
+                          {stat.unit}
+                        </span>
+                      </div>
+                      <p className="text-white/80 text-lg leading-tight max-w-[160px]">
+                        {stat.label}
+                      </p>
+                    </div>
+                  ))}
                 </div>
-                <p className="text-lg text-gray-200 text-center">{project.caseStudy.result}</p>
+
+                {/* Divider */}
+                {project.caseStudy.stats.length > 3 && (
+                  <>
+                    <div className="h-px bg-white/10 mb-12" />
+                    
+                    {/* Bottom Row */}
+                    <div className="grid md:grid-cols-3 gap-12">
+                      {project.caseStudy.stats.slice(3).map((stat, index) => (
+                        <div key={index} className="flex items-center gap-6 border-r border-white/10 last:border-r-0 pr-8 last:pr-0">
+                          <div className="flex items-baseline gap-1">
+                            <span className="text-6xl md:text-7xl font-bold text-[#ff1654]">
+                              {stat.value}
+                            </span>
+                            <span className="text-3xl md:text-4xl font-bold text-[#ff1654]">
+                              {stat.unit}
+                            </span>
+                          </div>
+                          <p className="text-white/80 text-lg leading-tight max-w-[160px]">
+                            {stat.label}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  </>
+                )}
               </div>
             </div>
           </section>

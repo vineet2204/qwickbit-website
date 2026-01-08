@@ -34,29 +34,29 @@ interface FormData {
   name: string
   email: string
   phone: string
-  subject: string
+  // subject: string
   message: string
-  inquiryType: string
-  companyName: string
+  // inquiryType: string
+  // companyName: string
 }
 
 interface FormErrors {
   name?: string
   email?: string
   phone?: string
-  subject?: string
+  // subject?: string
   message?: string
-  inquiryType?: string
-  companyName?: string
+  // inquiryType?: string
+  // companyName?: string
 }
 
 interface CharCounts {
   name: number
   email: number
   phone: number
-  subject: number
+  // subject: number
   message: number
-  companyName: number
+  // companyName: number
 }
 
 // Character limit configuration
@@ -64,8 +64,8 @@ const CHAR_LIMITS = {
   name: 50,
   email: 100,
   phone: 20,
-  companyName: 100,
-  subject: 150,
+  // companyName: 100,
+  // subject: 150,
   message: 1000,
 }
 
@@ -74,10 +74,10 @@ export default function ContactSection() {
     name: "",
     email: "",
     phone: "",
-    subject: "",
+    // subject: "",
     message: "",
-    inquiryType: "",
-    companyName: "",
+    // inquiryType: "",
+    // companyName: "",
   })
   const [errors, setErrors] = useState<FormErrors>({})
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -91,9 +91,9 @@ export default function ContactSection() {
     name: 0,
     email: 0,
     phone: 0,
-    subject: 0,
+    // subject: 0,
     message: 0,
-    companyName: 0,
+    // companyName: 0,
   })
 
   useEffect(() => {
@@ -206,16 +206,16 @@ export default function ContactSection() {
     }
 
     // Inquiry type validation
-    if (!formData.inquiryType) {
-      newErrors.inquiryType = "Please select an inquiry type"
-    }
+    // if (!formData.inquiryType) {
+    //   newErrors.inquiryType = "Please select an inquiry type"
+    // }
 
     // Subject validation
-    if (!formData.subject.trim()) {
-      newErrors.subject = "Subject is required"
-    } else if (formData.subject.trim().length < 3) {
-      newErrors.subject = "Subject must be at least 3 characters"
-    }
+    // if (!formData.subject.trim()) {
+    //   newErrors.subject = "Subject is required"
+    // } else if (formData.subject.trim().length < 3) {
+    //   newErrors.subject = "Subject must be at least 3 characters"
+    // }
 
     // Message validation
     if (!formData.message.trim()) {
@@ -246,10 +246,10 @@ export default function ContactSection() {
           name: formData.name,
           email: formData.email,
           phone: formData.phone,
-          subject: formData.subject,
+          // subject: formData.subject,
           message: formData.message,
-          inquiryType: formData.inquiryType,
-          companyName: formData.companyName,
+          // inquiryType: formData.inquiryType,
+          // companyName: formData.companyName,
         }),
       })
 
@@ -260,19 +260,18 @@ export default function ContactSection() {
           name: "",
           email: "",
           phone: "",
-          subject: "",
+   
           message: "",
-          inquiryType: "",
-          companyName: "",
+      
         })
         setErrors({})
         setCharCounts({
           name: 0,
           email: 0,
           phone: 0,
-          subject: 0,
+         
           message: 0,
-          companyName: 0,
+         
         })
         setTimeout(() => setSubmitSuccess(false), 5000)
       } else {
@@ -389,12 +388,12 @@ export default function ContactSection() {
           <div className="flex mt-18 flex-col justify-start space-y-8 md:space-y-12">
             <div className="space-y-4">
               <h2 className="font-sans text-5xl font-light tracking-tight text-foreground md:text-6xl lg:text-7xl">
-                Ready to
+                Let’s Build
                 <br />
-                transform?
+                Something Great
               </h2>
               <p className="font-mono text-sm text-foreground/60 md:text-base">
-                / Let's build something intelligent together
+                / Have an idea or a challenge? Let’s talk.
               </p>
             </div>
 
@@ -411,13 +410,23 @@ export default function ContactSection() {
               </a>
 
               {/* Location */}
+            {/* Location & Global Reach */}
               <div className="transition-all duration-300">
                 <div className="mb-2 flex items-center gap-2">
                   <MapPin className="h-4 w-4 text-white" />
-                  <span className="font-mono text-xs uppercase tracking-wider text-white">Location</span>
+                  <span className="font-mono text-xs uppercase tracking-wider text-white">Headquarters</span>
                 </div>
-                <p className="text-xl text-foreground md:text-2xl lg:text-3xl">Global Operations</p>
+                <p className="text-md text-foreground md:text-xl lg:text-2xl">
+                  #721 A Sector 16th A Main Road<br />
+                  Yelahanka New Town<br />
+                  Bangalore 560064, India
+                </p>
+                <p className="mt-3 font-mono text-sm text-white/60">
+                  Operating globally • Serving clients worldwide
+                </p>
               </div>
+
+              
 
               {/* Social Media Icons */}
               <div className="flex flex-wrap gap-4">
@@ -502,7 +511,7 @@ export default function ContactSection() {
 
                 {/* Phone & Company in Grid */}
                 <div
-                  className={`grid gap-5 sm:grid-cols-2 transition-all duration-700 ${
+                  className={` transition-all duration-700 ${
                     isFormVisible ? "translate-x-0 opacity-100" : "translate-x-16 opacity-0"
                   }`}
                   style={{ transitionDelay: "200ms" }}
@@ -524,7 +533,7 @@ export default function ContactSection() {
                     {errors.phone && <p className="mt-1 text-xs text-red-500">{errors.phone}</p>}
                   </div>
 
-                  <div>
+                  {/* <div>
                     <div className="mb-2 flex items-center justify-between">
                       <label className="font-mono text-xs uppercase tracking-wider text-white">Company</label>
                       <span
@@ -541,11 +550,11 @@ export default function ContactSection() {
                       placeholder="Your company"
                     />
                     {errors.companyName && <p className="mt-1 text-xs text-red-500">{errors.companyName}</p>}
-                  </div>
+                  </div> */}
                 </div>
 
                 {/* Inquiry Type */}
-                <div
+                {/* <div
                   className={`transition-all duration-700 ${
                     isFormVisible ? "translate-x-0 opacity-100" : "translate-x-16 opacity-0"
                   }`}
@@ -587,10 +596,10 @@ export default function ContactSection() {
                     </select>
                   </div>
                   {errors.inquiryType && <p className="mt-1 text-xs text-red-500">{errors.inquiryType}</p>}
-                </div>
+                </div> */}
 
                 {/* Subject with Character Count */}
-                <div
+                {/* <div
                   className={`transition-all duration-700 ${
                     isFormVisible ? "translate-x-0 opacity-100" : "translate-x-16 opacity-0"
                   }`}
@@ -612,7 +621,7 @@ export default function ContactSection() {
                     placeholder="What's this about?"
                   />
                   {errors.subject && <p className="mt-1 text-xs text-red-500">{errors.subject}</p>}
-                </div>
+                </div> */}
 
                 {/* Message with Character Count */}
                 <div
