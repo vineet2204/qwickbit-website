@@ -37,7 +37,7 @@ const getDetailedContent = (name: string) => {
   }> = {
     'Web Development': {
       title: 'Web Development',
-      subtitle: 'Custom web applications built with modern frameworks',
+      subtitle: 'Professional implementation with best practices',
       overview: 'We create scalable, high-performance web applications that drive business growth. Our solutions combine cutting-edge technologies with best practices in UX design and security.',
       features: [
         'Responsive & Mobile-First Design',
@@ -362,11 +362,11 @@ export function DetailPage({ isOpen, onClose, item, type }: DetailPageProps) {
           {/* Header Bar */}
           <div className="sticky top-0 z-50 flex items-center justify-between px-6 py-4 border-b border-white/10 bg-black backdrop-blur-md">
             <div className="flex items-center gap-3">
-              <span className="px-3 py-1 text-xs font-medium text-white/80 bg-white/10 rounded-full uppercase tracking-wider">
+              <span className="px-3 py-1 text-xs  text-white/80 bg-white/10 rounded-full uppercase tracking-wider">
                 {type === 'service' ? 'Service' : 'Product'}
               </span>
               <span className="text-white/60">•</span>
-              <span className="text-white font-medium">{content.title}</span>
+              <span className="text-white ">{content.title}</span>
             </div>
             <button
               onClick={handleClose}
@@ -380,14 +380,14 @@ export function DetailPage({ isOpen, onClose, item, type }: DetailPageProps) {
           <div className="h-[calc(100%-65px)] overflow-y-auto px-6 md:px-12 py-8 space-y-12">
             {/* Hero Section - Centered */}
             <div className="text-center max-w-3xl mx-auto">
-              <div className="inline-flex p-4 rounded-2xl bg-gradient-to-br from-blue-500/20 to-orange-500/20 border border-white/10 mb-6">
-                <Icon className="w-12 h-12 text-white" />
+              <div className="inline-flex p-4 rounded-2xl bg-gradient-to-br from-blue-300/20 to-orange-300/20 border border-white/10 mb-6">
+                <Icon className="w-6 h-6 text-white" />
               </div>
-              <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+              <h1 className="text-4xl md:text-5xl  text-white mb-4">
                 {content.title}
               </h1>
               <p className="text-xl text-white/70 mb-6">
-                {content.subtitle}
+                 {content.subtitle}
               </p>
               <p className="text-white/60 leading-relaxed">
                 {content.overview}
@@ -410,7 +410,7 @@ export function DetailPage({ isOpen, onClose, item, type }: DetailPageProps) {
             <section>
               <div className="flex items-center gap-3 mb-6">
                 <Bolt className="w-6 h-6 text-yellow-400" />
-                <h2 className="text-2xl font-bold text-white">Key Features</h2>
+                <h2 className="text-2xl  text-white">Key Features</h2>
               </div>
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {content.features.map((feature, idx) => (
@@ -423,7 +423,7 @@ export function DetailPage({ isOpen, onClose, item, type }: DetailPageProps) {
                         <CheckCircle className="w-5 h-5 text-blue-400" />
                       </div>
                       <div>
-                        <h3 className="text-white font-medium mb-1">{feature}</h3>
+                        <h3 className="text-white  mb-1">{feature}</h3>
                         <p className="text-white/50 text-sm">Professional implementation with best practices.</p>
                       </div>
                     </div>
@@ -436,7 +436,7 @@ export function DetailPage({ isOpen, onClose, item, type }: DetailPageProps) {
             <section>
               <div className="flex items-center gap-3 mb-6">
                 <Security className="w-6 h-6 text-green-400" />
-                <h2 className="text-2xl font-bold text-white">Business Benefits</h2>
+                <h2 className="text-2xl  text-white">Business Benefits</h2>
               </div>
               <div className="grid md:grid-cols-2 gap-4">
                 {content.benefits.map((benefit, idx) => (
@@ -459,7 +459,7 @@ export function DetailPage({ isOpen, onClose, item, type }: DetailPageProps) {
                         }`} />
                       </div>
                       <div>
-                        <h3 className="text-white font-semibold text-lg">{benefit}</h3>
+                        <h3 className="text-white  text-lg">{benefit}</h3>
                         <p className="text-white/50 text-sm mt-1">Achieve measurable results with our proven approach.</p>
                       </div>
                     </div>
@@ -473,7 +473,7 @@ export function DetailPage({ isOpen, onClose, item, type }: DetailPageProps) {
               <div className="flex items-center justify-between mb-6">
                 <div className="flex items-center gap-3">
                   <Public className="w-6 h-6 text-blue-400" />
-                  <h2 className="text-2xl font-bold text-white">Technology Stack</h2>
+                  <h2 className="text-2xl  text-white">Technology Stack</h2>
                 </div>
                 <div className="flex gap-2">
                   <button 
@@ -507,7 +507,7 @@ export function DetailPage({ isOpen, onClose, item, type }: DetailPageProps) {
                       }`}>
                         <TechIcon className="w-8 h-8 text-white" />
                       </div>
-                      <span className="text-white/80 text-sm font-medium whitespace-nowrap">{tech}</span>
+                      <span className="text-white/80 text-sm  whitespace-nowrap">{tech}</span>
                     </div>
                   )
                 })}
@@ -518,7 +518,7 @@ export function DetailPage({ isOpen, onClose, item, type }: DetailPageProps) {
             <section>
               <div className="flex items-center gap-3 mb-6">
                 <People className="w-6 h-6 text-purple-400" />
-                <h2 className="text-2xl font-bold text-white">Industry Use Cases</h2>
+                <h2 className="text-2xl  text-white">Industry Use Cases</h2>
               </div>
               <div className="grid md:grid-cols-2 gap-4">
                 {content.useCases.map((useCase, idx) => (
@@ -527,7 +527,7 @@ export function DetailPage({ isOpen, onClose, item, type }: DetailPageProps) {
                     className="p-5 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition-colors"
                   >
                     <div className="flex items-start gap-4">
-                      <div className={`flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center font-bold text-white ${
+                      <div className={`flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center  text-white ${
                         idx === 0 ? 'bg-blue-500/30' : 
                         idx === 1 ? 'bg-purple-500/30' : 
                         idx === 2 ? 'bg-green-500/30' : 
@@ -536,7 +536,7 @@ export function DetailPage({ isOpen, onClose, item, type }: DetailPageProps) {
                         {idx + 1}
                       </div>
                       <div>
-                        <h3 className="text-white font-medium mb-1">{useCase}</h3>
+                        <h3 className="text-white  mb-1">{useCase}</h3>
                         <p className="text-white/50 text-sm">Perfect solution for streamlined operations and growth.</p>
                       </div>
                     </div>
@@ -546,24 +546,33 @@ export function DetailPage({ isOpen, onClose, item, type }: DetailPageProps) {
             </section>
 
             {/* CTA Section */}
-            <section className="pb-8">
-              <div className="p-12 md:p-16 rounded-2xl border border-white/10 relative overflow-hidden" style={{ background: 'linear-gradient(232.81deg, #2C60AB 25.76%, #AD7A3D 92.62%)' }}>
-                <div className="text-center max-w-3xl mx-auto relative z-10">
-                  <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
-                    Ready To Transform<br />Your Business?
-                  </h2>
-                  <p className="text-xl text-white/80 mb-10 leading-relaxed">
-                    Schedule a personalized demo to see how our {content.title} solution can drive your success.
-                  </p>
-                  <button
-                    onClick={handleClose}
-                    className="px-10 py-4 rounded-full bg-white text-slate-900 font-bold text-lg hover:bg-white/95 hover:scale-105 transition-all duration-300 shadow-lg"
-                  >
-                    Book A Demo
-                  </button>
-                </div>
-              </div>
-            </section>
+         <section className="pb-4">
+  <div
+    className="p-6 md:p-10 rounded-2xl border border-white/10 relative overflow-hidden"
+    style={{
+      background:
+        "linear-gradient(232.81deg, #2C60AB 25.76%, #AD7A3D 92.62%)",
+    }}
+  >
+    <div className="text-center max-w-2xl mx-auto relative z-10">
+      <h2 className="text-3xl md:text-4xl text-white mb-4 leading-tight">
+        Ready To Transform<br />Your Business?
+      </h2>
+
+      <p className="text-lg text-white/80 mb-6 leading-relaxed">
+        Schedule a personalized demo to see how our {content.title} solution can drive your success.
+      </p>
+
+      <button
+        onClick={handleClose}
+        className="px-8 py-3 rounded-full bg-white text-slate-900 text-base hover:bg-white/95 hover:scale-105 transition-all duration-300 shadow-lg"
+      >
+        Book A Demo
+      </button>
+    </div>
+  </div>
+</section>
+
           </div>
         </div>
       </div>

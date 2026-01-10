@@ -10,6 +10,7 @@ interface ProductSolutionItem {
   name: string
   description: string
   icon: any
+  category: string
 }
 
 interface WorkSectionProps {
@@ -71,29 +72,34 @@ type ProjectType = {
 
 export const caseStudiesData: ProductSolutionItem[] = [
   {
-    name: "Protect Me Well",
+    category: "Protect Me Well",
     description: "AI-powered platform that reduced customer support effort and improved decision-making.",
     icon: Shield,
+    name: "Insurance AI Advisory Platform",
   },
   {
-    name: "Local Tradies",
+    category: "Local Tradies",
     description: "Marketplace solution that streamlined service bookings and increased user engagement.",
     icon: Wrench,
+    name: "Service Booking Platform",
   },
   {
-    name: "Vertex Sports",
+    category: "Vertex Sports",
     description: "AI object tracking for player movement, shot analysis, and coaching insights",
     icon: Activity,
+    name: "Tennis Performance Analytics",
   },
   {
-    name: "Flight Maintenance",
+    category: "Flight Maintenance",
     description: "Automated inspection system reducing manual review time significantly",
     icon: Plane,
+    name: "Aircraft Inspection AI Platform",
   },
   {
-    name: "Connected Health",
+    category: "Connected Health",
     description: "Medical device data sync for blood pressure, glucose, temperature tracking",
     icon: Heart,
+    name: "Real-time Vitals Monitoring",
   },
 ]
 
@@ -103,8 +109,8 @@ export const setOpenCaseStudyCallback = (callback: (projectIndex: number) => voi
   openCaseStudyCallback = callback
 }
 
-export const openCaseStudyByName = (name: string) => {
-  const projectIndex = caseStudiesData.findIndex((study) => study.name === name)
+export const openCaseStudyByName = (category: string) => {
+  const projectIndex = caseStudiesData.findIndex((study) => study.category === category)
   if (projectIndex !== -1 && openCaseStudyCallback) {
     openCaseStudyCallback(projectIndex)
   }
@@ -184,208 +190,213 @@ export function WorkSection({ onItemClick }: WorkSectionProps) {
     })
   }, [])
 
-  const projects: ProjectType[] = [
-    {
-      number: "01",
-      title: "Protect Me Well",
+const projects: ProjectType[] = [
+  {
+    number: "01",
+    title: "Protect Me Well",
+    category: "Insurance AI Advisory Platform",
+    description: "AI-powered platform that reduced customer support effort and improved decision-making.",
+    icon: Shield,
+    image:"/insurance.avif",
+    color: "bg-blue-900",
+    caseStudy: {
+      background:
+        "A leading insurance company needed to modernize their customer experience and reduce operational costs.",
+      problem:
+        "High customer support queries, manual risk assessment processes, and slow premium calculations were affecting customer satisfaction and operational efficiency.",
+      solution:
+        "We developed an AI-powered advisory system that automates risk assessment and premium calculation while providing instant customer support through an intelligent chatbot.",
+      approach: [
+        "Implemented machine learning models for risk scoring",
+        "Integrated NLP-powered chatbot for customer queries",
+        "Built real-time policy recommendation engine",
+        "Created predictive analytics dashboard",
+      ],
+      result:
+        "70% reduction in customer support queries, 50% faster policy issuance, and improved customer satisfaction scores by 45%.",
+      technologies: ["React", "Python", "TensorFlow", "AWS", "Node.js"],
+      stats: [
+        { value: '70', unit: '%', label: 'Reduction in customer queries' },
+        { value: '50', unit: '%', label: 'Faster policy issuance' },
+        { value: '45', unit: '%', label: 'Customer satisfaction increase' },
+        { value: '30', unit: '%', label: 'Reduction in operational costs' },
+        { value: '2x', unit: '', label: 'Faster claim processing' },
+        { value: '90', unit: '%', label: 'Accuracy in risk assessment' },
+      ]
+    },
+    item: {
+      name: "Protect Me Well",
       category: "Insurance AI Advisory Platform",
-      description: "AI-powered platform that reduced customer support effort and improved decision-making.",
+      description:
+        "Smart premium calculation & risk assessment system powered by AI. Features automated risk scoring, real-time policy recommendations, and predictive analytics that reduced customer support queries by 70%. Includes intelligent chatbot for instant quotes and claim processing.",
       icon: Shield,
-      image:"/insurance.avif",
-      color: "bg-blue-900",
-      caseStudy: {
-        background:
-          "A leading insurance company needed to modernize their customer experience and reduce operational costs.",
-        problem:
-          "High customer support queries, manual risk assessment processes, and slow premium calculations were affecting customer satisfaction and operational efficiency.",
-        solution:
-          "We developed an AI-powered advisory system that automates risk assessment and premium calculation while providing instant customer support through an intelligent chatbot.",
-        approach: [
-          "Implemented machine learning models for risk scoring",
-          "Integrated NLP-powered chatbot for customer queries",
-          "Built real-time policy recommendation engine",
-          "Created predictive analytics dashboard",
-        ],
-        result:
-          "70% reduction in customer support queries, 50% faster policy issuance, and improved customer satisfaction scores by 45%.",
-        technologies: ["React", "Python", "TensorFlow", "AWS", "Node.js"],
-        stats: [
-          { value: '70', unit: '%', label: 'Reduction in customer queries' },
-          { value: '50', unit: '%', label: 'Faster policy issuance' },
-          { value: '45', unit: '%', label: 'Customer satisfaction increase' },
-          { value: '30', unit: '%', label: 'Reduction in operational costs' },
-          { value: '2x', unit: '', label: 'Faster claim processing' },
-          { value: '90', unit: '%', label: 'Accuracy in risk assessment' },
-        ]
-      },
-      item: {
-        name: "Protect Me Well",
-        description:
-          "Smart premium calculation & risk assessment system powered by AI. Features automated risk scoring, real-time policy recommendations, and predictive analytics that reduced customer support queries by 70%. Includes intelligent chatbot for instant quotes and claim processing.",
-        icon: Shield,
-      },
     },
-    {
-      number: "02",
-      image:"/case.png",
-      title: "Local Tradies",
+  },
+  {
+    number: "02",
+    image:"/case.png",
+    title: "Local Tradies",
+    category: "Service Booking Platform",
+    description: "Marketplace solution that streamlined service bookings and increased user engagement.",
+    icon: Wrench,
+    color: "bg-amber-700",
+    caseStudy: {
+      background:
+        "Local service professionals struggled to manage bookings and customers found it difficult to find reliable tradies.",
+      problem:
+        "Manual booking processes, lack of transparency in pricing, difficulty in finding qualified professionals, and payment disputes.",
+      solution:
+        "Built an AI-powered marketplace that connects customers with verified service professionals through smart matching and automated workflows.",
+      approach: [
+        "Developed intelligent matching algorithms",
+        "Automated booking and scheduling workflows",
+        "Integrated secure payment processing",
+        "Built review and rating system",
+      ],
+      result:
+        "80% automation of booking process, 10,000+ active service professionals, and 95% customer satisfaction rate.",
+      technologies: ["Next.js", "MongoDB", "Stripe", "Google Maps API", "Node.js"],
+      stats: [
+        { value: '80', unit: '%', label: 'Automation of booking process' },
+        { value: '10k', unit: '+', label: 'Active service professionals' },
+        { value: '95', unit: '%', label: 'Customer satisfaction rate' },
+        { value: '50k', unit: '+', label: 'Bookings completed' },
+        { value: '4.8', unit: '/5', label: 'Average service rating' },
+        { value: '24', unit: 'hrs', label: 'Average response time' },
+      ]
+    },
+    item: {
+      name: "Local Tradies",
       category: "Service Booking Platform",
-      description: "Marketplace solution that streamlined service bookings and increased user engagement.",
+      description:
+        "AI-powered marketplace connecting customers with local service professionals. Features smart matching algorithms, automated booking workflows, real-time availability tracking, and intelligent price estimation. The platform automates 80% of the booking process with integrated payment processing and review systems.",
       icon: Wrench,
-      color: "bg-amber-700",
-      caseStudy: {
-        background:
-          "Local service professionals struggled to manage bookings and customers found it difficult to find reliable tradies.",
-        problem:
-          "Manual booking processes, lack of transparency in pricing, difficulty in finding qualified professionals, and payment disputes.",
-        solution:
-          "Built an AI-powered marketplace that connects customers with verified service professionals through smart matching and automated workflows.",
-        approach: [
-          "Developed intelligent matching algorithms",
-          "Automated booking and scheduling workflows",
-          "Integrated secure payment processing",
-          "Built review and rating system",
-        ],
-        result:
-          "80% automation of booking process, 10,000+ active service professionals, and 95% customer satisfaction rate.",
-        technologies: ["Next.js", "MongoDB", "Stripe", "Google Maps API", "Node.js"],
-        stats: [
-          { value: '80', unit: '%', label: 'Automation of booking process' },
-          { value: '10k', unit: '+', label: 'Active service professionals' },
-          { value: '95', unit: '%', label: 'Customer satisfaction rate' },
-          { value: '50k', unit: '+', label: 'Bookings completed' },
-          { value: '4.8', unit: '/5', label: 'Average service rating' },
-          { value: '24', unit: 'hrs', label: 'Average response time' },
-        ]
-      },
-      item: {
-        name: "Local Tradies",
-        description:
-          "AI-powered marketplace connecting customers with local service professionals. Features smart matching algorithms, automated booking workflows, real-time availability tracking, and intelligent price estimation. The platform automates 80% of the booking process with integrated payment processing and review systems.",
-        icon: Wrench,
-      },
     },
-    {
-      number: "03",
-      title: "Vertex Sports",
-      image:"/tennis.png",
+  },
+  {
+    number: "03",
+    title: "Vertex Sports",
+    image:"/tennis.png",
+    category: "Tennis Performance Analytics",
+    description: "AI object tracking for player movement, shot analysis, and coaching insights",
+    icon: Activity,
+    color: "bg-blue-600",
+    caseStudy: {
+      background:
+        "Professional tennis coaches needed data-driven insights to improve player performance and training effectiveness.",
+      problem:
+        "Lack of objective performance metrics, difficulty tracking improvement over time, and limited tactical analysis capabilities.",
+      solution:
+        "Created an advanced analytics platform using computer vision to track player movement, shot accuracy, and tactical patterns in real-time.",
+      approach: [
+        "Implemented computer vision for player tracking",
+        "Built shot trajectory analysis system",
+        "Created performance heatmaps and visualizations",
+        "Developed personalized coaching recommendations",
+      ],
+      result:
+        "Used by 200+ professional coaches, improved training efficiency by 60%, and helped players improve rankings by average of 15 positions.",
+      technologies: ["Python", "OpenCV", "TensorFlow", "React", "Three.js"],
+      stats: [
+        { value: '200', unit: '+', label: 'Professional coaches using platform' },
+        { value: '60', unit: '%', label: 'Improvement in training efficiency' },
+        { value: '15', unit: '', label: 'Average ranking positions improved' },
+        { value: '50k', unit: '+', label: 'Matches analyzed' },
+        { value: '98', unit: '%', label: 'Shot detection accuracy' },
+        { value: '5x', unit: '', label: 'Faster performance analysis' },
+      ]
+    },
+    item: {
+      name: "Vertex Sports",
       category: "Tennis Performance Analytics",
-      description: "AI object tracking for player movement, shot analysis, and coaching insights",
+      description:
+        "Advanced tennis performance analytics platform using computer vision and AI. Tracks player movement, shot accuracy, speed metrics, and tactical patterns. Provides actionable coaching insights with heatmaps, trajectory analysis, and personalized improvement recommendations for professional and amateur players.",
       icon: Activity,
-      color: "bg-blue-600",
-      caseStudy: {
-        background:
-          "Professional tennis coaches needed data-driven insights to improve player performance and training effectiveness.",
-        problem:
-          "Lack of objective performance metrics, difficulty tracking improvement over time, and limited tactical analysis capabilities.",
-        solution:
-          "Created an advanced analytics platform using computer vision to track player movement, shot accuracy, and tactical patterns in real-time.",
-        approach: [
-          "Implemented computer vision for player tracking",
-          "Built shot trajectory analysis system",
-          "Created performance heatmaps and visualizations",
-          "Developed personalized coaching recommendations",
-        ],
-        result:
-          "Used by 200+ professional coaches, improved training efficiency by 60%, and helped players improve rankings by average of 15 positions.",
-        technologies: ["Python", "OpenCV", "TensorFlow", "React", "Three.js"],
-        stats: [
-          { value: '200', unit: '+', label: 'Professional coaches using platform' },
-          { value: '60', unit: '%', label: 'Improvement in training efficiency' },
-          { value: '15', unit: '', label: 'Average ranking positions improved' },
-          { value: '50k', unit: '+', label: 'Matches analyzed' },
-          { value: '98', unit: '%', label: 'Shot detection accuracy' },
-          { value: '5x', unit: '', label: 'Faster performance analysis' },
-        ]
-      },
-      item: {
-        name: "Vertex Sports",
-        description:
-          "Advanced tennis performance analytics platform using computer vision and AI. Tracks player movement, shot accuracy, speed metrics, and tactical patterns. Provides actionable coaching insights with heatmaps, trajectory analysis, and personalized improvement recommendations for professional and amateur players.",
-        icon: Activity,
-      },
     },
-    {
-      number: "04",
-      title: "Flight Maintenance",
-      image:"/air.jpg",
+  },
+  {
+    number: "04",
+    title: "Flight Maintenance",
+    image:"/air.jpg",
+    category: "Aircraft Inspection AI Platform",
+    description: "Automated inspection system reducing manual review time significantly",
+    icon: Plane,
+    color: "bg-slate-700",
+    caseStudy: {
+      background:
+        "Aircraft maintenance teams spent excessive time on manual inspections, risking safety and increasing operational costs.",
+      problem:
+        "Time-consuming manual inspections, inconsistent defect detection, complex compliance tracking, and delayed maintenance scheduling.",
+      solution:
+        "Developed an AI-powered inspection system using computer vision for automated defect detection and predictive maintenance scheduling.",
+      approach: [
+        "Built computer vision models for defect detection",
+        "Implemented predictive maintenance algorithms",
+        "Created digital inspection reporting system",
+        "Integrated compliance tracking and alerts",
+      ],
+      result:
+        "85% reduction in manual inspection time, 40% improvement in defect detection accuracy, and zero compliance violations.",
+      technologies: ["Python", "TensorFlow", "React Native", "AWS", "PostgreSQL"],
+      stats: [
+        { value: '85', unit: '%', label: 'Reduction in inspection time' },
+        { value: '40', unit: '%', label: 'Better defect detection' },
+        { value: '0', unit: '', label: 'Compliance violations' },
+        { value: '1000', unit: '+', label: 'Aircraft inspected monthly' },
+        { value: '95', unit: '%', label: 'Defect classification accuracy' },
+        { value: '3x', unit: '', label: 'Faster maintenance scheduling' },
+      ]
+    },
+    item: {
+      name: "Flight Maintenance",
       category: "Aircraft Inspection AI Platform",
-      description: "Automated inspection system reducing manual review time significantly",
+      description:
+        "AI-powered aircraft inspection and maintenance system using computer vision for automated defect detection. Features predictive maintenance scheduling, compliance tracking, digital inspection reports, and real-time anomaly detection that significantly reduces manual review time and improves safety protocols.",
       icon: Plane,
-      color: "bg-slate-700",
-      caseStudy: {
-        background:
-          "Aircraft maintenance teams spent excessive time on manual inspections, risking safety and increasing operational costs.",
-        problem:
-          "Time-consuming manual inspections, inconsistent defect detection, complex compliance tracking, and delayed maintenance scheduling.",
-        solution:
-          "Developed an AI-powered inspection system using computer vision for automated defect detection and predictive maintenance scheduling.",
-        approach: [
-          "Built computer vision models for defect detection",
-          "Implemented predictive maintenance algorithms",
-          "Created digital inspection reporting system",
-          "Integrated compliance tracking and alerts",
-        ],
-        result:
-          "85% reduction in manual inspection time, 40% improvement in defect detection accuracy, and zero compliance violations.",
-        technologies: ["Python", "TensorFlow", "React Native", "AWS", "PostgreSQL"],
-        stats: [
-          { value: '85', unit: '%', label: 'Reduction in inspection time' },
-          { value: '40', unit: '%', label: 'Better defect detection' },
-          { value: '0', unit: '', label: 'Compliance violations' },
-          { value: '1000', unit: '+', label: 'Aircraft inspected monthly' },
-          { value: '95', unit: '%', label: 'Defect classification accuracy' },
-          { value: '3x', unit: '', label: 'Faster maintenance scheduling' },
-        ]
-      },
-      item: {
-        name: "Flight Maintenance",
-        description:
-          "AI-powered aircraft inspection and maintenance system using computer vision for automated defect detection. Features predictive maintenance scheduling, compliance tracking, digital inspection reports, and real-time anomaly detection that significantly reduces manual review time and improves safety protocols.",
-        icon: Plane,
-      },
     },
-    {
-      number: "05",
-      title: "Connected Health",
-      image:"/real.jpg",
+  },
+  {
+    number: "05",
+    title: "Connected Health",
+    image:"/real.jpg",
+    category: "Real-time Vitals Monitoring",
+    description: "Medical device data sync for blood pressure, glucose, temperature tracking",
+    icon: Heart,
+    color: "bg-red-700",
+    caseStudy: {
+      background:
+        "Patients and healthcare providers needed a unified platform to monitor health data from multiple medical devices.",
+      problem:
+        "Fragmented health data across devices, delayed response to health anomalies, medication non-compliance, and poor family engagement.",
+      solution:
+        "Built a comprehensive health monitoring platform that integrates multiple medical devices into a unified dashboard with AI-powered insights.",
+      approach: [
+        "Integrated multiple medical device APIs",
+        "Developed AI anomaly detection system",
+        "Built medication reminder and tracking",
+        "Created family member and provider portals",
+      ],
+      result:
+        "Connected 50,000+ devices, 65% improvement in medication compliance, and early detection of health issues in 1000+ cases.",
+      technologies: ["React Native", "Node.js", "MongoDB", "Python", "AWS IoT"],
+      stats: [
+        { value: '50k', unit: '+', label: 'Connected medical devices' },
+        { value: '65', unit: '%', label: 'Better medication compliance' },
+        { value: '1k', unit: '+', label: 'Early health issue detections' },
+        { value: '99.9', unit: '%', label: 'Data sync uptime' },
+        { value: '2min', unit: '', label: 'Average alert response time' },
+        { value: '85', unit: '%', label: 'Reduction in emergency visits' },
+      ]
+    },
+    item: {
+      name: "Connected Health",
       category: "Real-time Vitals Monitoring",
-      description: "Medical device data sync for blood pressure, glucose, temperature tracking",
+      description:
+        "Real-time health monitoring platform integrating multiple medical devices. Syncs blood pressure monitors, glucose meters, thermometers, and wearables into unified dashboard. Features AI-powered anomaly detection, trend analysis, medication reminders, and instant alerts for healthcare providers and family members.",
       icon: Heart,
-      color: "bg-red-700",
-      caseStudy: {
-        background:
-          "Patients and healthcare providers needed a unified platform to monitor health data from multiple medical devices.",
-        problem:
-          "Fragmented health data across devices, delayed response to health anomalies, medication non-compliance, and poor family engagement.",
-        solution:
-          "Built a comprehensive health monitoring platform that integrates multiple medical devices into a unified dashboard with AI-powered insights.",
-        approach: [
-          "Integrated multiple medical device APIs",
-          "Developed AI anomaly detection system",
-          "Built medication reminder and tracking",
-          "Created family member and provider portals",
-        ],
-        result:
-          "Connected 50,000+ devices, 65% improvement in medication compliance, and early detection of health issues in 1000+ cases.",
-        technologies: ["React Native", "Node.js", "MongoDB", "Python", "AWS IoT"],
-        stats: [
-          { value: '50k', unit: '+', label: 'Connected medical devices' },
-          { value: '65', unit: '%', label: 'Better medication compliance' },
-          { value: '1k', unit: '+', label: 'Early health issue detections' },
-          { value: '99.9', unit: '%', label: 'Data sync uptime' },
-          { value: '2min', unit: '', label: 'Average alert response time' },
-          { value: '85', unit: '%', label: 'Reduction in emergency visits' },
-        ]
-      },
-      item: {
-        name: "Connected Health",
-        description:
-          "Real-time health monitoring platform integrating multiple medical devices. Syncs blood pressure monitors, glucose meters, thermometers, and wearables into unified dashboard. Features AI-powered anomaly detection, trend analysis, medication reminders, and instant alerts for healthcare providers and family members.",
-        icon: Heart,
-      },
     },
-  ]
+  },
+]
 
   const handleProjectClick = (index: number) => {
     setSelectedProject(index)
@@ -413,7 +424,7 @@ export function WorkSection({ onItemClick }: WorkSectionProps) {
             <h2 className="mb-2 font-sans text-5xl font-light tracking-tight text-foreground md:text-6xl lg:text-7xl">
               Featured Case Studies
             </h2>
-            <p className="font-mono text-sm text-foreground/60 md:text-base">/ Recent explorations</p>
+            {/* <p className="font-mono text-sm text-foreground/60 md:text-base">/ Recent explorations</p> */}
           </div>
 
           <div className="grid grid-cols-1 -mt-6 gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -512,7 +523,7 @@ function ProjectCard({
 </div>
 
         <div className="px-1 py-6">
-          <h3 className="mb-5 text-3xl font-bold text-white">
+          <h3 className="mb-5 text-2xl font-bold text-white">
             {project.category}
           </h3>
           <p className="mb-6 text-base leading-relaxed text-white/80">
@@ -548,24 +559,26 @@ function FirestoreProjectCard({
       <div 
         className="relative h-48 w-full flex items-end overflow-hidden"
         style={{
-          background: `linear-gradient(to bottom, rgba(99, 102, 241, 0.3), rgba(99, 102, 241, 0.8)), url(${project.photoURL || defaultImage})`,
+          background: ` url(${project.photoURL || defaultImage})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}
       >
-        <div className="absolute inset-0 bg-gradient-to-t from-indigo-900/90 via-indigo-900/50 to-transparent" />
-        <h3 className="relative z-10 p-6 text-2xl font-bold text-white">
-          {truncate(project.name || project.title || '', 40)}
-        </h3>
+        {/* <div className="absolute inset-0 bg-gradient-to-t from-indigo-900/90 via-indigo-900/50 to-transparent" /> */}
+      
       </div>
 
-      <div className="flex flex-col gap-3 p-6">
+      <h3 className="relative z-10 pt-4 pl-6 text-2xl font-bold text-white">
+          {truncate(project.name || project.title || '', 40)}
+        </h3>
+
+      <div className="flex flex-col gap-3 pl-6 pb-6 pr-6 pt-2">
         <p className="text-sm leading-relaxed text-foreground/70">
           {truncate(project.description, 100)}
         </p>
 
         {tags.length > 0 && (
-          <div className="flex flex-wrap gap-2 mt-2">
+          <div className="flex flex-wrap -ml-1 gap-2 mt-2">
             {tags.map((tag, i) => (
               <span
                 key={i}
@@ -577,7 +590,7 @@ function FirestoreProjectCard({
           </div>
         )}
 
-        <div className="mt-2 flex items-center gap-2 text-white transition-colors group-hover:text-gray-100">
+        <div className="mt-2 flex pl-1 items-center gap-2 text-white transition-colors group-hover:text-gray-100">
           <span className="text-sm font-medium">View Project</span>
           <ExternalLink className="h-4 w-4 transition-transform group-hover:translate-x-1" />
         </div>

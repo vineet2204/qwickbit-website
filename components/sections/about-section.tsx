@@ -262,39 +262,31 @@ export default function AboutSection({
             </div>
 
             {/* Right side - Stats Cards */}
-            <div className="flex flex-col justify-center space-y-6 md:space-y-10">
-              {[
-                { value: "50+", label: "Clients", sublabel: "Worldwide partnerships", direction: "right" },
-                { value: "200+", label: "Projects", sublabel: "Delivered successfully", direction: "left" },
-                { value: "10+", label: "Years", sublabel: "In innovation", direction: "right" },
-              ].map((stat, i) => {
-                const getRevealClass = () => {
-                  if (!isVisible) {
-                    return stat.direction === "left" ? "-translate-x-16 opacity-0" : "translate-x-16 opacity-0"
-                  }
-                  return "translate-x-0 opacity-100"
-                }
+           <div className="relative flex justify-center md:justify-end">
+  <div className="relative w-full max-w-2xl lg:max-w-3xl">
+    <div className="overflow-hidden rounded-3xl border border-white/20 shadow-2xl">
+      <img
+        src="https://images.unsplash.com/photo-1553877522-43269d4ea984"
+        alt="Digital innovation team"
+        className="h-[360px] w-full object-cover sm:h-[420px] md:h-[480px] lg:h-[520px]"
+      />
 
-                return (
-                  <div
-                    key={i}
-                    className={`group relative flex items-center gap-6 rounded-2xl p-6 transition-all duration-700 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5 md:gap-8 ${getRevealClass()}`}
-                    style={{
-                      transitionDelay: `${300 + i * 150}ms`,
-                    }}
-                  >
-                    <div className="flex-1">
-                      <div className="text-4xl font-bold text-foreground md:text-5xl lg:text-6xl">{stat.value}</div>
-                      <div className="mt-1 font-sans text-lg font-semibold text-foreground md:text-xl">
-                        {stat.label}
-                      </div>
-                      <div className="font-mono text-xs text-foreground/60">{stat.sublabel}</div>
-                    </div>
-                    <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary/0 to-primary/5 opacity-0 transition-opacity group-hover:opacity-100" />
-                  </div>
-                )
-              })}
-            </div>
+      {/* Gradient overlay */}
+      <div className="absolute inset-0 bg-gradient-to-tr from-black/40 via-black/10 rounded-3xl to-transparent" />
+
+      {/* Caption */}
+      <div className="absolute bottom-6 left-6 right-6">
+        <p className="text-sm md:text-base text-white/90 font-medium">
+          Building digital products with passion & precision
+        </p>
+      </div>
+    </div>
+
+    {/* Soft glow */}
+    <div className="absolute -inset-4 -z-10 rounded-3xl bg-white/10 blur-3xl" />
+  </div>
+</div>
+
           </div>
 
           <div

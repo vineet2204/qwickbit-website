@@ -11,6 +11,7 @@ import ContactSection from "@/components/sections/contact-section"
 import AboutSection from "@/components/sections/about-section"
 import GlassmorphismNavigationHeader from "@/components/navigation-header"
 import { ServicesSection } from "@/components/sections/services-section"
+import { X, Mail, MapPin, Phone } from "lucide-react"
 
 // Define the item type
 interface ProductSolutionItem {
@@ -221,6 +222,244 @@ function KeypadComponent() {
   )
 }
 
+// Demo Form Popup Component - FIXED CENTERING
+interface DemoFormPopupProps {
+  isOpen: boolean
+  onClose: () => void
+}
+
+function DemoFormPopup({ isOpen, onClose }: DemoFormPopupProps) {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    message: "",
+  })
+
+  const [errors, setErrors] = useState<Record<string, string>>({})
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitSuccess, setSubmitSuccess] = useState(false)
+  const [submitError, setSubmitError] = useState(false)
+
+  const modalRef = useRef<HTMLDivElement>(null)
+
+  // Close modal on escape key
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && isOpen) {
+        onClose()
+      }
+    }
+
+    document.addEventListener("keydown", handleEscape)
+    return () => document.removeEventListener("keydown", handleEscape)
+  }, [isOpen, onClose])
+
+  // Prevent body scroll when modal is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden"
+    } else {
+      document.body.style.overflow = "unset"
+    }
+    return () => {
+      document.body.style.overflow = "unset"
+    }
+  }, [isOpen])
+
+  const validateForm = () => {
+    const newErrors: Record<string, string> = {}
+
+    if (!formData.name.trim()) {
+      newErrors.name = "Name is required"
+    }
+
+    if (!formData.email.trim()) {
+      newErrors.email = "Email is required"
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = "Please enter a valid email"
+    }
+
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    
+    if (!validateForm()) {
+      return
+    }
+
+    setIsSubmitting(true)
+
+    try {
+      const response = await fetch("https://formspree.io/f/xzznngvp", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ...formData,
+          formType: "demo-request",
+          source: "book-demo-popup"
+        }),
+      })
+
+      if (response.ok) {
+        setSubmitSuccess(true)
+        setFormData({
+          name: "",
+          email: "",
+          phone: "",
+          message: "",
+        })
+        setTimeout(() => {
+          setSubmitSuccess(false)
+          onClose()
+        }, 2000)
+      } else {
+        throw new Error("Submission failed")
+      }
+    } catch (error) {
+      setSubmitError(true)
+      setTimeout(() => setSubmitError(false), 3000)
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
+
+  const handleInputChange = (field: string, value: string) => {
+    setFormData(prev => ({ ...prev, [field]: value }))
+    if (errors[field]) {
+      setErrors(prev => ({ ...prev, [field]: "" }))
+    }
+  }
+
+  if (!isOpen) return null
+
+  return (
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4">
+      {/* Black background overlay */}
+      <div 
+        className="absolute inset-0 bg-black/95 backdrop-blur-sm"
+        onClick={onClose}
+      />
+      
+      {/* Modal - CENTERED */}
+      <div
+        ref={modalRef}
+        className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-black border border-white/20 rounded-2xl shadow-2xl"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Close button */}
+        <button
+          onClick={onClose}
+          className="absolute right-4 top-4 z-10 p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
+          aria-label="Close"
+        >
+          <X className="w-5 h-5 text-white" />
+        </button>
+
+        {/* Single Column Form */}
+        <div className="p-8 md:p-12">
+          <div className="mb-8">
+            <h2 className="text-3xl md:text-4xl font-light text-white mb-3">
+              Book a Demo
+            </h2>
+            <p className="text-white/70 font-mono text-sm">
+              / Schedule a personalized demo with our team
+            </p>
+          </div>
+
+          <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Name */}
+            <div>
+              <label className="block font-mono text-xs uppercase tracking-wider text-white/80 mb-2">
+                Name <span className="text-red-500">*</span>
+              </label>
+              <input
+                type="text"
+                value={formData.name}
+                onChange={(e) => handleInputChange("name", e.target.value)}
+                className={`w-full rounded-lg border ${errors.name ? "border-red-500" : "border-white/20"} bg-white/5 px-4 py-3 text-white placeholder:text-white/50 focus:border-white/50 focus:outline-none focus:ring-2 focus:ring-white/20`}
+                placeholder="Your full name"
+              />
+              {errors.name && <p className="mt-1 text-xs text-red-500">{errors.name}</p>}
+            </div>
+
+            {/* Email */}
+            <div>
+              <label className="block font-mono text-xs uppercase tracking-wider text-white/80 mb-2">
+                Email <span className="text-red-500">*</span>
+              </label>
+              <input
+                type="email"
+                value={formData.email}
+                onChange={(e) => handleInputChange("email", e.target.value)}
+                className={`w-full rounded-lg border ${errors.email ? "border-red-500" : "border-white/20"} bg-white/5 px-4 py-3 text-white placeholder:text-white/50 focus:border-white/50 focus:outline-none focus:ring-2 focus:ring-white/20`}
+                placeholder="your@email.com"
+              />
+              {errors.email && <p className="mt-1 text-xs text-red-500">{errors.email}</p>}
+            </div>
+
+            {/* Phone */}
+            <div>
+              <label className="block font-mono text-xs uppercase tracking-wider text-white/80 mb-2">
+                Phone
+              </label>
+              <input
+                type="tel"
+                value={formData.phone}
+                onChange={(e) => handleInputChange("phone", e.target.value)}
+                className="w-full rounded-lg border border-white/20 bg-white/5 px-4 py-3 text-white placeholder:text-white/50 focus:border-white/50 focus:outline-none focus:ring-2 focus:ring-white/20"
+                placeholder="+1 (555) 000-0000"
+              />
+            </div>
+
+            {/* Message */}
+            <div>
+              <label className="block font-mono text-xs uppercase tracking-wider text-white/80 mb-2">
+                Message
+              </label>
+              <textarea
+                rows={4}
+                value={formData.message}
+                onChange={(e) => handleInputChange("message", e.target.value)}
+                className="w-full rounded-lg border border-white/20 bg-white/5 px-4 py-3 text-white placeholder:text-white/50 focus:border-white/50 focus:outline-none focus:ring-2 focus:ring-white/20 resize-none"
+                placeholder="Tell us about your project or specific requirements..."
+              />
+            </div>
+
+            {/* Submit Button */}
+            <div className="pt-4">
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="w-full bg-white text-black hover:bg-white/90 transition-colors rounded-full px-8 py-4 font-mono font-semibold text-sm uppercase tracking-wider disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {isSubmitting ? "Scheduling..." : "Schedule Demo"}
+              </button>
+              
+              {submitSuccess && (
+                <p className="mt-4 text-center font-mono text-sm text-green-500">
+                  ✓ Demo request sent! We'll contact you shortly.
+                </p>
+              )}
+              
+              {submitError && (
+                <p className="mt-4 text-center font-mono text-sm text-red-500">
+                  ✕ Something went wrong. Please try again.
+                </p>
+              )}
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 // Main Home Component
 export default function Home() {
   const scrollContainerRef = useRef<HTMLDivElement>(null)
@@ -233,15 +472,14 @@ export default function Home() {
   const [selectedItem, setSelectedItem] = useState<ProductSolutionItem | null>(null)
   const [selectedType, setSelectedType] = useState<"service" | "product">("product")
 
+  // Demo Form Popup State
+  const [showDemoForm, setShowDemoForm] = useState(false)
+
   // Handler for opening detail pages
   const handleItemClick = (item: ProductSolutionItem, type: "service" | "product") => {
     console.log("Opening detail page for:", item.name, type)
-
-    // Set the new item and type
     setSelectedItem(item)
     setSelectedType(type)
-
-    // Open detail page
     setDetailPageOpen(true)
   }
 
@@ -249,10 +487,14 @@ export default function Home() {
   const handleCloseDetailPage = () => {
     console.log("Closing detail page")
     setDetailPageOpen(false)
-    // Clear selected item after animation
     setTimeout(() => {
       setSelectedItem(null)
     }, 300)
+  }
+
+  // Handler for opening demo form
+  const handleBookDemoClick = () => {
+    setShowDemoForm(true)
   }
 
   useEffect(() => {
@@ -360,7 +602,7 @@ export default function Home() {
         <section className="flex min-h-screen w-screen shrink-0 snap-start px-6 pb-16 pt-24 md:px-12 md:pb-24">
           <div className="flex w-full items-center gap-8 lg:gap-12">
             {/* Left Side - Hero Content */}
-            <div className="flex-1 flex flex-col justify-end  mt-2">
+            <div className="flex-1 flex flex-col justify-end mt-2">
               <div className="max-w-3xl">
                 <div className="mb-4 inline-block animate-in fade-in slide-in-from-bottom-4 rounded-full border border-foreground/20 bg-foreground/15 px-4 py-1.5 backdrop-blur-md duration-700">
                   <p className="font-mono text-xs text-foreground/90">Empowering Businesses with Intelligent Software & AI-Driven Solutions</p>
@@ -374,11 +616,12 @@ export default function Home() {
                 </h1>
                 <p className="mb-8 max-w-xl animate-in fade-in slide-in-from-bottom-4 text-base leading-relaxed text-foreground/90 duration-1000 delay-200 md:text-lg">
                   <span className="text-pretty">
- Build Smarter Digital Products with AI, Cloud, Web & Mobile Solutions
- Transform ideas into scalable technology solutions that deliver value.                  </span>
+                    Build Smarter Digital Products with AI, Cloud, Web & Mobile Solutions
+                    Transform ideas into scalable technology solutions that deliver value.
+                  </span>
                 </p>
                 <div className="flex animate-in fade-in duration-1000 delay-300 flex-col gap-4 duration-1000 delay-300 sm:flex-row sm:items-center">
-                  <MagneticButton size="lg" variant="primary" onClick={() => scrollToSection(4)}>
+                  <MagneticButton size="lg" variant="primary" onClick={handleBookDemoClick}>
                     Book a Demo
                   </MagneticButton>
                   <MagneticButton size="lg" variant="secondary" onClick={() => scrollToSection(1)}>
@@ -404,7 +647,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Work Section - NOW WITH onItemClick PROP */}
+        {/* Work Section */}
         <WorkSection onItemClick={handleItemClick} />
 
         {/* Services Section */}
@@ -432,6 +675,12 @@ export default function Home() {
           type={selectedType}
         />
       )}
+
+      {/* Demo Form Popup - NOW CENTERED */}
+      <DemoFormPopup
+        isOpen={showDemoForm}
+        onClose={() => setShowDemoForm(false)}
+      />
 
       <style jsx global>{`
         div::-webkit-scrollbar {

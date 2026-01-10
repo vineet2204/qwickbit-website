@@ -404,7 +404,7 @@ export default function ContactSection() {
                   <Mail className="h-4 w-4 text-white" />
                   <span className="font-mono text-xs uppercase tracking-wider text-white">Email</span>
                 </div>
-                <p className="text-xl text-foreground transition-colors group-hover:text-white md:text-2xl lg:text-3xl">
+                <p className="text-xl text-foreground transition-colors group-hover:text-white md:text-md lg:text-xl">
                   contact@qwickbit.com
                 </p>
               </a>
@@ -416,7 +416,7 @@ export default function ContactSection() {
                   <MapPin className="h-4 w-4 text-white" />
                   <span className="font-mono text-xs uppercase tracking-wider text-white">Headquarters</span>
                 </div>
-                <p className="text-md text-foreground md:text-xl lg:text-2xl">
+                <p className="text-md text-foreground md:text-md lg:text-xl">
                   #721 A Sector 16th A Main Road<br />
                   Yelahanka New Town<br />
                   Bangalore 560064, India
