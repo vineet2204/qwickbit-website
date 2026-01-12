@@ -506,7 +506,7 @@ export default function ContactSection() {
                     className={`w-full rounded-lg border ${errors.email ? "border-red-500" : "border-foreground/20"} bg-transparent px-4 py-3 text-sm text-foreground placeholder:text-white focus:border-foreground/50 focus:outline-none focus:ring-2 focus:ring-foreground/10 md:text-base`}
                     placeholder="your@email.com"
                   />
-                  {errors.email && <p className="mt-1 text-xs text-red-500">{errors.email}</p>}
+                  {errors.email && <p className="mt-1 text-xs text-white">{errors.email}</p>}
                 </div>
 
                 {/* Phone & Company in Grid */}

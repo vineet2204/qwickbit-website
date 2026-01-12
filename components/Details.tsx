@@ -377,7 +377,7 @@ export function DetailPage({ isOpen, onClose, item, type }: DetailPageProps) {
           </div>
 
           {/* Scrollable Content */}
-          <div className="h-[calc(100%-65px)] overflow-y-auto px-6 md:px-12 py-8 space-y-12">
+          <div className="h-[calc(100%-65px)] overflow-y-auto px-6 md:px-12 py-8 space-y-20">
             {/* Hero Section - Centered */}
             <div className="text-center max-w-3xl mx-auto">
               <div className="inline-flex p-4 rounded-2xl bg-gradient-to-br from-blue-300/20 to-orange-300/20 border border-white/10 mb-6">
@@ -386,8 +386,8 @@ export function DetailPage({ isOpen, onClose, item, type }: DetailPageProps) {
               <h1 className="text-4xl md:text-5xl  text-white mb-4">
                 {content.title}
               </h1>
-              <p className="text-xl text-white/70 mb-6">
-                 {content.subtitle}
+              <p className="font-mono text-sm text-foreground/60 md:text-base mb-6">
+                 / {content.subtitle}
               </p>
               <p className="text-white/60 leading-relaxed">
                 {content.overview}
@@ -395,7 +395,7 @@ export function DetailPage({ isOpen, onClose, item, type }: DetailPageProps) {
             </div>
 
             {/* Featured Image */}
-            <div className="max-w-4xl mx-auto">
+            <div className="max-w-4xl md:-mt-8 mx-auto">
               <div className="relative aspect-video rounded-2xl overflow-hidden border border-white/10">
                 <img
                   src={content.image}
@@ -407,7 +407,7 @@ export function DetailPage({ isOpen, onClose, item, type }: DetailPageProps) {
             </div>
 
             {/* Key Features */}
-            <section>
+            <section className=''>
               <div className="flex items-center gap-3 mb-6">
                 <Bolt className="w-6 h-6 text-yellow-400" />
                 <h2 className="text-2xl  text-white">Key Features</h2>
@@ -560,7 +560,7 @@ export function DetailPage({ isOpen, onClose, item, type }: DetailPageProps) {
       </h2>
 
       <p className="text-lg text-white/80 mb-6 leading-relaxed">
-        Schedule a personalized demo to see how our {content.title} solution can drive your success.
+        Schedule a personalized demo to see how our {content.title} <br /> solution can drive your success.
       </p>
 
       <button

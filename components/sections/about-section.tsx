@@ -3,11 +3,20 @@
 import type React from "react"
 
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
-import { ArrowRight, Sparkles, TrendingUp, Users, Code, Lightbulb, Target, Zap, Shield, Globe, Cpu, Database, Cloud, Server } from "lucide-react"
+import { Sparkles, TrendingUp, Users, Lightbulb, Zap, Shield, Globe, Cpu, Database, Cloud, Server, CodeIcon } from "lucide-react"
 import { useReveal } from "@/hooks/use-reveal"
 import { useEffect, useRef } from "react"
 import TrustedClients from "../TrustedClientsSection"
 import { MagneticButton } from "../magnetic-button"
+import { 
+  GpsFixed,
+  ArrowForward,
+  Description,
+  GridOn,
+  Palette,
+  Terminal,
+  Rocket
+} from '@mui/icons-material';
 
 interface Review {
   id: string
@@ -110,7 +119,7 @@ export default function AboutSection({
     },
     {
       id: "3",
-      icon: Code,
+      icon: CodeIcon,
       title: "Custom Software Development",
       description: "Tailored software solutions built to address your unique business challenges and drive growth.",
       features: ["Web Applications", "Mobile Apps", "Enterprise Software", "API Integration"],
@@ -130,25 +139,25 @@ export default function AboutSection({
   const processSteps = [
     {
       name: "Requirement gathering",
-      icon: "📋",
+      icon: <Description sx={{ fontSize: 48, color: 'white' }} />,
     },
     {
       name: "Wire Framing & Prototyping",
-      icon: "📐",
+      icon: <GridOn sx={{ fontSize: 48, color: 'white' }} />,
     },
     {
       name: "UI/UX Designing",
-      icon: "💻",
+      icon: <Palette sx={{ fontSize: 48, color: 'white' }} />,
     },
     {
       name: "Development Process",
-      icon: "⚙️",
+      icon: <Terminal sx={{ fontSize: 48, color: 'white' }} />,
     },
     {
       name: "Launch & Improvise",
-      icon: "🚀",
+      icon: <Rocket sx={{ fontSize: 48, color: 'white' }} />,
     },
-  ]
+  ];
 
   const techStack = [
     {
@@ -223,7 +232,7 @@ export default function AboutSection({
               >
                 <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 mb-6 mt-20 md:mt-0">
                   <Sparkles className="w-4 h-4 text-white" />
-                  <span className="text-sm font-medium text-white">Why Choose Us</span>
+                  <span className="text-sm font-medium text-white">Who We Are</span>
                 </div>
 
                 <h2 className="mb-2 font-sans text-5xl font-light tracking-tight text-foreground md:text-6xl lg:text-7xl">
@@ -262,31 +271,30 @@ export default function AboutSection({
             </div>
 
             {/* Right side - Stats Cards */}
-           <div className="relative flex justify-center md:justify-end">
-  <div className="relative w-full max-w-2xl lg:max-w-3xl">
-    <div className="overflow-hidden rounded-3xl border border-white/20 shadow-2xl">
-      <img
-        src="https://images.unsplash.com/photo-1553877522-43269d4ea984"
-        alt="Digital innovation team"
-        className="h-[360px] w-full object-cover sm:h-[420px] md:h-[480px] lg:h-[520px]"
-      />
+            <div className="relative flex justify-center md:justify-end">
+              <div className="relative w-full max-w-2xl lg:max-w-3xl">
+                <div className="overflow-hidden rounded-3xl border border-white/20 shadow-2xl">
+                  <img
+                    src="https://images.unsplash.com/photo-1553877522-43269d4ea984"
+                    alt="Digital innovation team"
+                    className="h-[360px] w-full object-cover sm:h-[420px] md:h-[480px] lg:h-[520px]"
+                  />
 
-      {/* Gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-tr from-black/40 via-black/10 rounded-3xl to-transparent" />
+                  {/* Gradient overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-tr from-black/40 via-black/10 rounded-3xl to-transparent" />
 
-      {/* Caption */}
-      <div className="absolute bottom-6 left-6 right-6">
-        <p className="text-sm md:text-base text-white/90 font-medium">
-          Building digital products with passion & precision
-        </p>
-      </div>
-    </div>
+                  {/* Caption */}
+                  <div className="absolute bottom-6 left-6 right-6">
+                    <p className="text-sm md:text-base text-white/90 font-medium">
+                      Building digital products with passion & precision
+                    </p>
+                  </div>
+                </div>
 
-    {/* Soft glow */}
-    <div className="absolute -inset-4 -z-10 rounded-3xl bg-white/10 blur-3xl" />
-  </div>
-</div>
-
+                {/* Soft glow */}
+                <div className="absolute -inset-4 -z-10 rounded-3xl bg-white/10 blur-3xl" />
+              </div>
+            </div>
           </div>
 
           <div
@@ -297,7 +305,7 @@ export default function AboutSection({
           >
             <MagneticButton onClick={() => scrollToSection?.(4)}>
               <span className="relative z-10 flex items-center">
-                Start a Project <ArrowRight className="w-4 h-4 ml-1" />
+                Start a Project <ArrowForward className="w-4 h-4 ml-1" />
               </span>
             </MagneticButton>
 
@@ -310,7 +318,7 @@ export default function AboutSection({
 
       <div className="w-full bg-transparent">
         {/* About Qwickbit Section */}
-        <section className="w-full mt-56 md:mt-0 px-4 py-20 md:px-12 md:py-32 lg:px-16">
+        <section className="w-full mt-56 md:-mt-20 px-4 py-20 md:px-12 md:py-32 lg:px-16">
           <div className="mx-auto max-w-7xl">
             <div className="mb-16">
               <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 mb-6">
@@ -331,7 +339,7 @@ export default function AboutSection({
 
             <div className="grid gap-8 md:grid-cols-2 mb-16">
               <div className="rounded-2xl border border-primary/20 bg-gradient-to-br from-primary/5 to-transparent p-8">
-                <Target className="w-12 h-12 text-white mb-4" />
+                <GpsFixed className="w-12 h-12 text-white mb-4" />
                 <h3 className="font-sans text-2xl font-bold text-foreground mb-4">Our Mission</h3>
                 <p className="text-foreground/80 leading-relaxed">
                   To help businesses grow through smart technology and reliable digital solutions.
@@ -349,12 +357,12 @@ export default function AboutSection({
             </div>
 
             {/* Technology Stack Section */}
-            <div className="mt-16 mb-20">
+            <div className="mt-32 mb-20">
               <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 mb-6">
                 <Cpu className="w-4 h-4 text-white" />
                 <span className="text-sm font-medium text-white">Technology Stack</span>
               </div>
-              <h3 className="font-sans text-3xl font-bold text-foreground mb-4">
+              <h3 className="mb-2 font-sans text-5xl font-light tracking-tight text-foreground md:text-6xl lg:text-7xl">
                 Modern, Industry-Proven Technologies
               </h3>
               <p className="text-lg text-foreground/70 mb-8 max-w-3xl">
@@ -403,7 +411,7 @@ export default function AboutSection({
           <div className="mx-auto max-w-7xl">
             <div className="mb-16">
               <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 mb-6">
-                <Code className="w-4 h-4 text-white" />
+                <CodeIcon className="w-4 h-4 text-white" />
                 <span className="text-sm font-medium text-white">What We Offer</span>
               </div>
               <h2 className="mb-2 font-sans text-5xl font-light tracking-tight text-foreground md:text-6xl lg:text-7xl">
@@ -420,7 +428,7 @@ export default function AboutSection({
                 return (
                   <Card
                     key={service.id}
-                    className="group overflow-hidden border border-primary/20 shadow-lg transition-all hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-1 "
+                    className="group md:-mt-4 overflow-hidden border border-primary/20 shadow-lg transition-all hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-1 "
                   >
                     <CardHeader className="pb-4">
                       <div className="flex flex-col items-start gap-4">
@@ -452,14 +460,12 @@ export default function AboutSection({
           </div>
         </section>
 
-        {/* Clients & Reviews Section */}
-
         {/* Process Model Section */}
-        <section className="w-full md:-mt-20 px-4 py-20 md:px-12 md:py-32 lg:px-16">
+        <section className="w-full md:-mt-28 px-4 py-20 md:px-12 md:py-32 lg:px-16">
           <div className="mx-auto max-w-7xl">
             <div className="mb-16">
               <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 mb-6">
-                <Target className="w-4 h-4 text-white" />
+                <GpsFixed className="w-4 h-4 text-white" />
                 <span className="text-sm font-medium text-white">Our Approach</span>
               </div>
               <h2 className="mb-2 font-sans text-5xl font-light tracking-tight text-foreground md:text-6xl lg:text-7xl mb-6">
@@ -512,7 +518,7 @@ export default function AboutSection({
 
                     {/* Icon Circle */}
                     <div className="bg-gradient-to-br from-primary/20 to-primary/5 w-28 h-28 rounded-full flex items-center justify-center border border-primary/30 hover:border-primary/50 transition-all hover:scale-110 group">
-                      <div className="text-5xl group-hover:scale-110 transition-transform">{step.icon}</div>
+                      <div className="group-hover:scale-110 transition-transform">{step.icon}</div>
                     </div>
 
                     {/* Mobile Progress Line */}
@@ -544,10 +550,10 @@ export default function AboutSection({
             <TrustedClients />
 
             {/* CTA Button */}
-            <div className="flex justify-center mt-16">
+            <div className="flex justify-center mt-16 md:mt-6">
               <MagneticButton onClick={() => scrollToSection?.(4)}>
                 <span className="relative z-10 flex items-center">
-                  Let's Start Your Project <ArrowRight className="w-5 h-5 ml-2" />
+                  Let's Start Your Project <ArrowForward className="w-5 h-5 ml-2" />
                 </span>
               </MagneticButton>
             </div>

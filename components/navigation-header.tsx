@@ -128,7 +128,7 @@ const productsSolutionsMenu: ProductsSolutionsMenuItem[] = [
         icon: Eye,
       },
       {
-        name: "NLP Solutions",
+        name: "NLP Solutions for life ",
         description: "Text analysis, sentiment analysis, and language processing.",
         icon: Brain,
       },
@@ -138,7 +138,7 @@ const productsSolutionsMenu: ProductsSolutionsMenuItem[] = [
         description: "Intelligent process automation and workflow optimization.",
         icon: Zap,
       },
-      { name: "Cloud AI Services", description: "Scalable AI solutions on cloud platforms.", icon: Cloud },
+      { name: "Cloud AI Services", description: "Scalable AI solutions on cloud platforms for robust systems.", icon: Cloud },
       { name: "AI Security", description: "Threat detection and prevention using AI algorithms.", icon: Shield },
     ],
   },
@@ -179,12 +179,12 @@ const servicesMenu: ServicesMenuItem[] = [
     items: [
       {
         name: "Customize Solutions",
-        description: "Tailored software solutions designed for your unique requirements.",
+        description: "Tailored software solutions designed for your  requirements.",
         icon: Zap,
       },
-      { name: "IT Solutions", description: "Comprehensive IT infrastructure and consulting services.", icon: Cloud },
+      { name: "IT Solutions & services", description: "Comprehensive IT infrastructure and consulting services.", icon: Cloud },
       {
-        name: "Testing and QA",
+        name: "Testing and Quality Analysis",
         description: "Rigorous quality assurance and testing for flawless software.",
         icon: Shield,
       },
@@ -195,7 +195,7 @@ const servicesMenu: ServicesMenuItem[] = [
     items: [
       {
         name: "React",
-        description: "Build interactive user interfaces with component-based architecture.",
+        description: "Build interactive user interfaces with architecture.",
         icon: Code,
       },
       { name: "Next.js", description: "Production-ready React framework with SSR and static generation.", icon: Globe },
@@ -205,13 +205,13 @@ const servicesMenu: ServicesMenuItem[] = [
       { name: "PostgreSQL", description: "Advanced open-source relational database management system.", icon: Shield },
       { name: "MongoDB", description: "NoSQL database for flexible, scalable data storage.", icon: Cloud },
       { name: "GraphQL", description: "Modern API query language for efficient data fetching.", icon: Link },
-      { name: "Docker", description: "Containerization platform for consistent deployment environments.", icon: Cpu },
+      { name: "Docker", description: "Containerization platform for consistent deployment.", icon: Cpu },
       { name: "AWS", description: "Cloud computing services for scalable infrastructure.", icon: Cloud },
       { name: "Firebase", description: "Backend-as-a-Service platform for rapid app development.", icon: Zap },
       { name: "Tailwind CSS", description: "Utility-first CSS framework for rapid UI development.", icon: Eye },
       { name: "Vue.js", description: "Progressive JavaScript framework for building user interfaces.", icon: Code },
       { name: "Angular", description: "Enterprise-grade framework for building web applications.", icon: Globe },
-      { name: "Redis", description: "In-memory data structure store for caching and real-time apps.", icon: Zap },
+      { name: "Redis", description: "In-memory data structure store for caching.", icon: Zap },
     ],
   },
 ]

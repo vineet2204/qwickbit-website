@@ -93,33 +93,35 @@ export default function TrustedClients() {
         <div className="relative">
           {/* Gradient overlays for fade effect */}
           <div className="absolute left-0 top-0 bottom-0 w-24 z-10 pointer-events-none" />
-          <div className="absolute right-0 top-0 bottom-0 w-24  z-10 pointer-events-none" />
+          <div className="absolute right-0 top-0 bottom-0 w-24 z-10 pointer-events-none" />
 
           <div className="slider-container">
             <div className="slider-track group">
               {duplicatedClients.map((client, index) => (
-                <a
+                <div
                   key={`${client.name}-${index}`}
-                  href={client.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="slider-item flex-shrink-0 w-48 h-32 mx-4 relative rounded-xl overflow-hidden border border-gray-700  hover:border-blue-500 transition-all duration-300 hover:shadow-lg hover:scale-105"
+                  className="slider-item flex flex-col items-center flex-shrink-0 mx-4"
                 >
-                  <div className="absolute inset-0 flex items-center justify-center p-6">
-                    <div className="relative w-full h-full">
-                      <img
-                        src={client.photoURL || "/placeholder.svg"}
-                        alt={client.name}
-                        className="w-full h-full object-contain transition-all duration-300"
-                      />
+                  <a
+                    href={client.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-white w-48 h-32 relative rounded-xl overflow-hidden border border-gray-700 hover:border-blue-500 transition-all duration-300 hover:shadow-lg hover:scale-105"
+                  >
+                    <div className="absolute inset-0 flex items-center justify-center p-6">
+                      <div className="relative w-full h-full">
+                        <img
+                          src={client.photoURL || "/placeholder.svg"}
+                          alt={client.name}
+                          className="w-full h-full object-contain transition-all duration-300"
+                        />
+                      </div>
                     </div>
-                  </div>
-                  <div className="absolute bottom-0 mt-10 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-3">
-                    <p className="text-white text-base font-medium text-center truncate">
-                      {client.name}
-                    </p>
-                  </div>
-                </a>
+                  </a>
+                  <p className="text-white text-base uppercase font-bold text-center mt-3 truncate w-48">
+                    {client.name}
+                  </p>
+                </div>
               ))}
             </div>
           </div>

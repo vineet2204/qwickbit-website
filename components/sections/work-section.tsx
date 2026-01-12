@@ -523,7 +523,7 @@ function ProjectCard({
 </div>
 
         <div className="px-1 py-6">
-          <h3 className="mb-5 text-2xl font-bold text-white">
+          <h3 className="mb-2 text-2xl font-bold text-white">
             {project.category}
           </h3>
           <p className="mb-6 text-base leading-relaxed text-white/80">
@@ -554,45 +554,48 @@ function FirestoreProjectCard({
   return (
     <button
       onClick={onClick}
-      className="group flex flex-col overflow-hidden rounded-2xl border border-foreground/10 bg-white/5 backdrop-blur-sm transition-all duration-300 hover:border-foreground/20 hover:shadow-xl text-left"
+      className="group relative w-full text-left rounded-[28px] border border-white/30 bg-white/10 pl-4 pr-4 pt-4 pb-4 transition-all duration-300 hover:shadow-2xl h-full"
     >
-      <div 
-        className="relative h-48 w-full flex items-end overflow-hidden"
-        style={{
-          background: ` url(${project.photoURL || defaultImage})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }}
-      >
-        {/* <div className="absolute inset-0 bg-gradient-to-t from-indigo-900/90 via-indigo-900/50 to-transparent" /> */}
-      
-      </div>
+      <div className="overflow-hidden rounded-[24px] flex flex-col h-full">
+        <div className="relative h-56 w-full rounded-[20px] overflow-hidden flex-shrink-0">
+          <Image
+            src={project.photoURL || defaultImage}
+            alt={project.name || project.title || 'Project'}
+            fill
+            className="object-cover"
+            priority
+          />
+        </div>
 
-      <h3 className="relative z-10 pt-4 pl-6 text-2xl font-bold text-white">
-          {truncate(project.name || project.title || '', 40)}
-        </h3>
+        <div className="px-1 py-6 flex flex-col flex-grow">
+          <h3 className="mb-2 text-2xl font-bold text-white line-clamp-2 min-h-[3.5rem]">
+            {project.name || project.title || ''}
+          </h3>
+          <p className="mb-4 text-base leading-relaxed text-white/80 line-clamp-2 min-h-[3rem] flex-grow">
+            {project.description}
+          </p>
 
-      <div className="flex flex-col gap-3 pl-6 pb-6 pr-6 pt-2">
-        <p className="text-sm leading-relaxed text-foreground/70">
-          {truncate(project.description, 100)}
-        </p>
+          <div className="mt-auto">
+            {tags.length > 0 && (
+              <div className="flex flex-wrap gap-2 mb-4 min-h-[2rem]">
+                {tags.slice(0, 3).map((tag, i) => (
+                  <span
+                    key={i}
+                    className="rounded-full bg-white/10 mt-3 px-3 py-1 text-xs font-medium uppercase text-white/90"
+                  >
+                    {tag.trim()}
+                  </span>
+                ))}
+              </div>
+            )}
 
-        {tags.length > 0 && (
-          <div className="flex flex-wrap -ml-1 gap-2 mt-2">
-            {tags.map((tag, i) => (
-              <span
-                key={i}
-                className="rounded-full bg-indigo-500/20 px-3 py-1 text-xs font-medium uppercase text-white"
-              >
-                {tag.trim()}
+            <div className="flex items-center gap-2 font-medium text-white underline underline-offset-4">
+              View Project
+              <span className="transition-transform group-hover:translate-x-1">
+                <MdArrowRightAlt />
               </span>
-            ))}
+            </div>
           </div>
-        )}
-
-        <div className="mt-2 flex pl-1 items-center gap-2 text-white transition-colors group-hover:text-gray-100">
-          <span className="text-sm font-medium">View Project</span>
-          <ExternalLink className="h-4 w-4 transition-transform group-hover:translate-x-1" />
         </div>
       </div>
     </button>
@@ -657,10 +660,10 @@ function CaseStudyModal({
             </div>
             <button
               onClick={onClose}
-              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 transition-colors text-white"
+              className="flex items-center gap-2 px-2 py-2 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 transition-colors text-white"
             >
               <X className="h-5 w-5" />
-              <span className="hidden sm:inline">Close</span>
+              {/* <span className="hidden sm:inline">Close</span> */}
             </button>
           </div>
         </div>
@@ -693,7 +696,7 @@ function CaseStudyModal({
           {/* Customer Background */}
           <section>
             <h2 className="text-4xl font-bold text-white mb-6">Customer Background</h2>
-            <p className="text-lg text-gray-300 leading-relaxed mb-8">{project.caseStudy.background}</p>
+            <p className="text-lg text-gray-300 leading-relaxed ">{project.caseStudy.background}</p>
           </section>
 
           {/* The Problem */}

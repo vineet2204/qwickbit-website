@@ -4,6 +4,7 @@
 import { PolicyLayout } from "@/components/policy-layout"
 import { useState, useEffect, JSX } from "react"
 import { $firestoreUrl } from '@/components/http'
+import { Search } from "lucide-react"
 
 // Types
 interface FirestoreField {
@@ -100,7 +101,7 @@ function getSlugName(blog: Blog): string {
 
 // Pretty date formatter
 function prettyDate(dateString: string): string {
-  const months = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec']
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
   const date = new Date(dateString)
   const dayOfMonth = date.getDate()
   const day = dayOfMonth % 10
@@ -139,16 +140,13 @@ function Appear({
 }
 
 // BlogCard Component
-function BlogCard({ blog, vertical = false, delay = 0 }: BlogCardProps) {
-  const defaultImage = `https://picsum.photos/seed/picsum/300/200`
+function BlogCard({ blog, delay = 0 }: BlogCardProps) {
+  const defaultImage = `https://picsum.photos/seed/${blog.title}/400/300`
   
   return (
     <Appear
       delay={delay}
-      className={`flex ${vertical ? 'md:flex-col' : 'md:h-32'} border rounded-lg md:bg-indigo-500 shadow-md
-        cursor-pointer hover:translate-x-2 hover:-translate-y-2 
-        transition-transform hover:shadow-lg overflow-hidden
-        h-36 md:h-auto`}
+      className="flex flex-col bg-zinc-800 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 cursor-pointer"
       onClick={() => {
         const link = blog.link
         const pageLink = (blog.content && `blogs/${getSlugName(blog)}`) || link || '/blogs'
@@ -156,40 +154,65 @@ function BlogCard({ blog, vertical = false, delay = 0 }: BlogCardProps) {
           window.location.href = pageLink
         }
       }}
-      style={{
-        background: `linear-gradient(to bottom, #7430e1, #7430e177), url(${blog.photoURL || defaultImage})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-      }}
     >
-      <img
-        src={blog.photoURL || defaultImage}
-        alt="blog image"
-        className={`${vertical ? 'md:w-full md:h-44 w-32 h-36 hidden md:block' : 'md:h-full'} object-cover bg-white`}
-      />
-      <div className={`relative flex flex-col flex-grow p-2 pb-8
-        md:bg-gradient-to-t from-indigo-500 to-middle`}
-      >
-        <p className={`text-md text-left mt-2 px-3 font-medium mb-3 text-white ${vertical ? '' : 'mt-auto'}`}>
-          {truncate(blog.title, 36)}
-        </p>
-        <p className="text-sm text-white opacity-80 mb-auto px-3">
-          {truncate(blog.description, 60)}
+      {/* Image Container */}
+      <div className="w-full h-64 bg-zinc-700 overflow-hidden">
+        <img
+          src={blog.photoURL || defaultImage}
+          alt={blog.title}
+          className="w-full h-full object-cover"
+        />
+      </div>
+
+      {/* Content Container */}
+      <div className="pr-6 pb-10 flex bg-black flex-col flex-grow">
+        {/* Date */}
+        <p className="text-xs text-zinc-500  mt-3">
+          {prettyDate(blog.date)}
         </p>
 
-        <div className="flex space-x-1  -mt-6 items-center px-3">
-          {(blog.tags || '').split(',').filter(Boolean).map(p => (
-            <div
-              className="rounded-3xl  text-xs font-medium uppercase
-                text-black px-3 p-1 bg-white bg-opacity-20 scale-90"
-              key={p}
-            >
-              {p}
-            </div>
-          ))}
-          <p className="text-white opacity-75 flex-grow text-right text-xs">
-            {prettyDate(blog.date)}
-          </p>
+        {/* Title */}
+        <p className="text-xl font-semibold -mt-4 text-white ">
+          {truncate(blog.title, 50)}
+        </p>
+
+        {/* Description */}
+        {/* <p className="text-sm text-zinc-400 mb-3 flex-grow">
+          {truncate(blog.description, 100)}
+        </p> */}
+
+        {/* Tags */}
+        {blog.tags && (
+          <div className="flex flex-wrap gap-2 mb-4">
+            {blog.tags.split(',').filter(Boolean).slice(0, 3).map((tag, i) => (
+              <span
+                key={i}
+                className="px-3 py-1 text-xs font-medium uppercase bg-zinc-700 text-zinc-300 rounded-full"
+              >
+                {tag.trim()}
+              </span>
+            ))}
+          </div>
+        )}
+
+        {/* Read More Link */}
+        <div className="flex items-center text-white group">
+          <span className="text-sm font-medium border-b-2 border-white pb-1">
+            Read More
+          </span>
+          <svg 
+            className="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform" 
+            fill="none" 
+            stroke="currentColor" 
+            viewBox="0 0 24 24"
+          >
+            <path 
+              strokeLinecap="round" 
+              strokeLinejoin="round" 
+              strokeWidth={2} 
+              d="M17 8l4 4m0 0l-4 4m4-4H3" 
+            />
+          </svg>
         </div>
       </div>
     </Appear>
@@ -238,7 +261,7 @@ export default function BlogsPage() {
   // Extract all unique tags from blogs
   let allTags: string[] = []
   blogs.forEach(blog => {
-    const newTags = blog.tags?.split(',') || []
+    const newTags = blog.tags?.split(',').map(t => t.trim()) || []
     allTags.push(...newTags.filter(t => !allTags.includes(t) && !!t))
   })
   allTags = allTags.sort()
@@ -246,7 +269,10 @@ export default function BlogsPage() {
   // Filter blogs based on search and tags
   const noFilter = !tags.length
   const filteredBlogs = blogs
-    .filter(blog => noFilter || blog.tags?.split(',').some(t => tags.includes(t)))
+    .filter(blog => {
+      const blogTags = blog.tags?.split(',').map(t => t.trim()) || []
+      return noFilter || blogTags.some(t => tags.includes(t))
+    })
     .filter(blog => 
       (blog.title || blog.name || '').toLowerCase().includes(filter.toLowerCase())
     )
@@ -265,37 +291,47 @@ export default function BlogsPage() {
     <PolicyLayout title="Our Blog">
       <div className="space-y-8">
         
-        {/* Header Section */}
-        <section className="text-center mb-12">
-          <h1 className="text-5xl md:text-6xl font-bold text-gray-800 mb-4">
-            Qwickbit <span className="text-indigo-500">Blog</span>
-          </h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Insights, tutorials, and updates from our team. Stay informed about the latest in web development, 
-            mobile apps, and technology trends.
-          </p>
-        </section>
-
-        {/* Search Bar */}
-        <section className="mb-8">
-          <div className="max-w-2xl mx-auto">
-            <input
-              type="text"
-              value={filter}
-              onChange={(e) => setFilter(e.target.value)}
-              className="w-full p-4 pl-6 rounded-lg shadow-md border-2 border-gray-200 
-                focus:outline-none focus:border-indigo-400 focus:placeholder-indigo-400
-                transition-colors"
-              placeholder="Search blogs by title..."
-            />
+        {/* Hero Section with Search */}
+        <section className="bg-black text-white py-20 md:-mt-28 px-6 rounded-2xl">
+          <div className="max-w-4xl mx-auto text-center">
+            <h1 className="text-5xl md:text-6xl font-bold mb-6">
+              Our Blog
+            </h1>
+            <p className="text-lg text-gray-400 mb-10 max-w-3xl mx-auto">
+              Insights, tutorials, and updates from our team. Stay informed about the latest in web development, 
+              mobile apps, and technology trends.
+            </p>
+            
+            {/* Search Bar */}
+            <div className="flex items-center gap-3 max-w-2xl mx-auto">
+              <div className="relative flex-1">
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
+                <input
+                  type="text"
+                  value={filter}
+                  onChange={(e) => setFilter(e.target.value)}
+                  className="w-full py-4 pl-12 pr-6 rounded-full bg-gray-800/50 border border-gray-700
+                    text-white placeholder-gray-500
+                    focus:outline-none focus:border-gray-600 focus:bg-gray-800
+                    transition-all"
+                  placeholder="Search"
+                />
+              </div>
+              <button 
+                className="px-8 py-4 bg-white text-gray-900 font-medium rounded-full
+                  hover:bg-gray-100 transition-all hover:scale-105 active:scale-95"
+              >
+                Search
+              </button>
+            </div>
           </div>
         </section>
 
         {/* Tag Filter */}
         {allTags.length > 0 && (
-          <section className="mb-12">
+          <section className="mb-12 -mt-18">
             <div className="flex flex-col md:flex-row items-center justify-center md:justify-start space-y-4 md:space-y-0">
-              <p className="mr-4 font-medium text-gray-700">Filter by tags:</p>
+              <p className="mr-4 font-medium text-center justify-center items-center mt-4 text-gray-700">Filter by tags:</p>
               <div className="flex flex-wrap gap-2 justify-center md:justify-start">
                 {allTags.map((tag, i) => {
                   const isActive = tags.includes(tag)
@@ -314,7 +350,7 @@ export default function BlogsPage() {
                         transition-all hover:scale-105 active:scale-95
                         ${isActive 
                           ? 'bg-indigo-500 text-white' 
-                          : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                          : 'bg-black text-white border border-white hover:text-black hover:bg-gray-200'
                         }
                       `}
                     >
@@ -359,11 +395,6 @@ export default function BlogsPage() {
             </div>
           )}
         </section>
-
-      
-
-        {/* CTA Section */}
-  
 
       </div>
     </PolicyLayout>

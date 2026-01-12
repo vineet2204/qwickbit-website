@@ -4,6 +4,7 @@
 import { PolicyLayout } from "@/components/policy-layout"
 import { useState, useEffect, JSX } from "react"
 import { $firestoreUrl } from '@/components/http'
+import { Search } from "lucide-react"
 
 // Types
 interface FirestoreField {
@@ -118,16 +119,13 @@ function Appear({
 }
 
 // ProjectCard Component
-function ProjectCard({ project, vertical = false, delay = 0 }: ProjectCardProps) {
+function ProjectCard({ project, delay = 0 }: ProjectCardProps) {
   const defaultImage = `https://picsum.photos/seed/${project.name}/400/300`
   
   return (
     <Appear
       delay={delay}
-      className={`flex ${vertical ? 'md:flex-col' : 'md:h-40'} border rounded-lg md:bg-indigo-500 shadow-md
-        cursor-pointer hover:translate-x-2 hover:-translate-y-2 
-        transition-transform hover:shadow-lg overflow-hidden
-        h-40 md:h-auto`}
+      className="flex flex-col bg-zinc-800 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 cursor-pointer"
       onClick={() => {
         const link = project.link
         const pageLink = link || `/projects/${getSlugName(project)}`
@@ -135,37 +133,49 @@ function ProjectCard({ project, vertical = false, delay = 0 }: ProjectCardProps)
           window.location.href = pageLink
         }
       }}
-      style={{
-        background: `linear-gradient(to bottom, #7430e1, #7430e177), url(${project.photoURL || defaultImage})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-      }}
     >
-      <img
-        src={project.photoURL || defaultImage}
-        alt={project.name}
-        className={`${vertical ? 'md:w-full md:h-52 w-36 h-40 hidden md:block' : 'md:h-full w-36'} object-cover bg-white`}
-      />
-      <div className={`relative flex flex-col flex-grow p-3 pb-4
-        md:bg-gradient-to-t from-indigo-500 to-middle`}
-      >
-        <p className={`text-lg text-left mt-2 px-3 font-bold mb-2 text-white ${vertical ? '' : 'mt-auto'}`}>
-          {truncate(project.name || project.title || '', 40)}
-        </p>
-        <p className="text-sm text-white opacity-80 mb-auto px-3">
-          {truncate(project.description, vertical ? 80 : 60)}
+      {/* Image Container */}
+      <div className="w-full h-64 bg-zinc-700 overflow-hidden">
+        <img
+          src={project.photoURL || defaultImage}
+          alt={project.name}
+          className="w-full h-full object-cover"
+        />
+      </div>
+
+      {/* Content Container */}
+      <div className=" pr-6 pb-10 flex bg-black flex-col flex-grow">
+        {/* Date */}
+       
+
+        {/* Title */}
+        <h3 className="text-xl font-semibold text-white mb-3">
+          {truncate(project.name || project.title || '', 50)}
+        </h3>
+
+        {/* Description */}
+        <p className="text-sm text-zinc-400 mb-6 flex-grow">
+          {truncate(project.description, 100)}
         </p>
 
-        <div className="flex space-x-1   items-center -mt-3 px-3 flex-wrap">
-          {(project.platforms || project.tags || '').split(',').filter(Boolean).map(p => (
-            <div
-              className="rounded-3xl text-xs font-medium uppercase
-                text-black px-3 py-1 mb-1 bg-white bg-opacity-20 scale-90"
-              key={p}
-            >
-              {p.trim()}
-            </div>
-          ))}
+        {/* Read More Link */}
+        <div className="flex items-center text-white group">
+          <span className="text-sm font-medium border-b-2 border-white pb-1">
+            Read More
+          </span>
+          <svg 
+            className="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform" 
+            fill="none" 
+            stroke="currentColor" 
+            viewBox="0 0 24 24"
+          >
+            <path 
+              strokeLinecap="round" 
+              strokeLinejoin="round" 
+              strokeWidth={2} 
+              d="M17 8l4 4m0 0l-4 4m4-4H3" 
+            />
+          </svg>
         </div>
       </div>
     </Appear>
@@ -244,37 +254,47 @@ export default function ProjectsPage() {
     <PolicyLayout title="Our Projects">
       <div className="space-y-8">
         
-        {/* Header Section */}
-        <section className="text-center mb-12">
-          <h1 className="text-5xl md:text-6xl font-bold text-gray-800 mb-4">
-            Our <span className="text-indigo-500">Projects</span>
-          </h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            A showcase of innovative solutions we've built for our clients. From web applications 
-            to mobile apps, explore our portfolio of successful projects.
-          </p>
-        </section>
-
-        {/* Search Bar */}
-        <section className="mb-8">
-          <div className="max-w-2xl mx-auto">
-            <input
-              type="text"
-              value={filter}
-              onChange={(e) => setFilter(e.target.value)}
-              className="w-full p-4 pl-6 rounded-lg shadow-md border-2 border-gray-200 
-                focus:outline-none focus:border-indigo-400 focus:placeholder-indigo-400
-                transition-colors"
-              placeholder="Search projects by name..."
-            />
+     {/* Hero Section with Search */}
+        <section className="bg-black text-white py-20 md:-mt-28 px-6 rounded-2xl">
+          <div className="max-w-4xl mx-auto text-center">
+            <h1 className="text-5xl md:text-6xl font-bold mb-6">
+              Our Projects
+            </h1>
+            <p className="text-lg text-gray-400 mb-10 max-w-3xl mx-auto">
+              A showcase of innovative solutions we've built for our clients. From web applications 
+              to mobile apps, explore our portfolio of successful projects.
+            </p>
+            
+            {/* Search Bar */}
+            <div className="flex items-center gap-3 max-w-2xl mx-auto">
+              <div className="relative flex-1">
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
+                <input
+                  type="text"
+                  value={filter}
+                  onChange={(e) => setFilter(e.target.value)}
+                  className="w-full py-4 pl-12 pr-6 rounded-full bg-gray-800/50 border border-gray-700
+                    text-white placeholder-gray-500
+                    focus:outline-none focus:border-gray-600 focus:bg-gray-800
+                    transition-all"
+                  placeholder="Search"
+                />
+              </div>
+              <button 
+                className="px-8 py-4 bg-white text-gray-900 font-medium rounded-full
+                  hover:bg-gray-100 transition-all hover:scale-105 active:scale-95"
+              >
+                Search
+              </button>
+            </div>
           </div>
         </section>
 
         {/* Tag Filter */}
         {allTags.length > 0 && (
-          <section className="mb-12">
+          <section className="mb-12 -mt-18">
             <div className="flex flex-col md:flex-row items-center justify-center md:justify-start space-y-4 md:space-y-0">
-              <p className="mr-4 font-medium text-gray-700">Filter by platform:</p>
+              <p className="mr-4 font-medium text-center justify-center items-center mt-4 text-gray-700">Filter by platform:</p>
               <div className="flex flex-wrap gap-2 justify-center md:justify-start">
                 {allTags.map((tag, i) => {
                   const isActive = tags.includes(tag)
@@ -293,7 +313,7 @@ export default function ProjectsPage() {
                         transition-all hover:scale-105 active:scale-95
                         ${isActive 
                           ? 'bg-indigo-500 text-white' 
-                          : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                          : 'bg-black text-white border border-white hover:text-black hover:bg-gray-200'
                         }
                       `}
                     >
