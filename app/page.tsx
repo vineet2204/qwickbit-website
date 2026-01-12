@@ -342,7 +342,7 @@ function DemoFormPopup({ isOpen, onClose }: DemoFormPopupProps) {
     <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4">
       {/* Black background overlay */}
       <div 
-        className="absolute inset-0 bg-black/95 backdrop-blur-sm"
+        className="absolute inset-0 bg-black/65 backdrop-blur-sm"
         onClick={onClose}
       />
       
