@@ -399,7 +399,7 @@ export default function AboutSection({
         </section>
 
         {/* Services Section */}
-        <section className="w-full md:-mt-40 -mt-24 px-4 py-20 md:px-12 md:py-32 lg:px-16 bg-gradient-to-b from-transparent to-primary/5">
+        <section className="w-full md:-mt-52 -mt-24 px-4 py-20 md:px-12 md:py-32 lg:px-16 bg-gradient-to-b from-transparent to-primary/5">
           <div className="mx-auto max-w-7xl">
             <div className="mb-16">
               <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 mb-6">
@@ -455,7 +455,7 @@ export default function AboutSection({
         {/* Clients & Reviews Section */}
 
         {/* Process Model Section */}
-        <section className="w-full px-4 py-20 md:px-12 md:py-32 lg:px-16">
+        <section className="w-full md:-mt-20 px-4 py-20 md:px-12 md:py-32 lg:px-16">
           <div className="mx-auto max-w-7xl">
             <div className="mb-16">
               <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 mb-6">
