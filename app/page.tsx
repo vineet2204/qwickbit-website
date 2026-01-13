@@ -222,7 +222,15 @@ function KeypadComponent() {
   )
 }
 
-// Demo Form Popup Component - FIXED CENTERING
+// Character limit configuration (same as ContactSection)
+const CHAR_LIMITS = {
+  name: 50,
+  email: 100,
+  phone: 20,
+  message: 1000,
+}
+
+// Demo Form Popup Component - FIXED CENTERING with Contact Section Validation
 interface DemoFormPopupProps {
   isOpen: boolean
   onClose: () => void
@@ -240,6 +248,12 @@ function DemoFormPopup({ isOpen, onClose }: DemoFormPopupProps) {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitSuccess, setSubmitSuccess] = useState(false)
   const [submitError, setSubmitError] = useState(false)
+  const [charCounts, setCharCounts] = useState({
+    name: 0,
+    email: 0,
+    phone: 0,
+    message: 0,
+  })
 
   const modalRef = useRef<HTMLDivElement>(null)
 
@@ -267,17 +281,100 @@ function DemoFormPopup({ isOpen, onClose }: DemoFormPopupProps) {
     }
   }, [isOpen])
 
-  const validateForm = () => {
-    const newErrors: Record<string, string> = {}
-
-    if (!formData.name.trim()) {
-      newErrors.name = "Name is required"
+  // Validation functions (same as ContactSection)
+  const validateEmail = (email: string): { isValid: boolean; message?: string } => {
+    if (!email.trim()) {
+      return { isValid: false, message: "Email is required" }
     }
 
-    if (!formData.email.trim()) {
-      newErrors.email = "Email is required"
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = "Please enter a valid email"
+    // Check for basic email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(email)) {
+      return { isValid: false, message: "Please enter a valid email address (e.g., name@example.com)" }
+    }
+
+    // Check for consecutive dots
+    if (email.includes("..")) {
+      return { isValid: false, message: "Email cannot contain consecutive dots" }
+    }
+
+    // Check for valid characters in local part
+    const localPart = email.split("@")[0]
+    if (!/^[a-zA-Z0-9._+-]+$/.test(localPart)) {
+      return { isValid: false, message: "Email contains invalid characters" }
+    }
+
+    // Check domain has at least 2 characters after dot
+    const domain = email.split("@")[1]?.toLowerCase()
+    const domainParts = domain?.split(".")
+    if (domainParts && domainParts[domainParts.length - 1].length < 2) {
+      return { isValid: false, message: "Invalid email domain" }
+    }
+
+    return { isValid: true }
+  }
+
+  const validatePhone = (phone: string): { isValid: boolean; message?: string } => {
+    if (!phone.trim()) {
+      return { isValid: true } // Phone is optional
+    }
+
+    // Remove all non-digit characters for validation
+    const digitsOnly = phone.replace(/\D/g, "")
+
+    // Check if contains only valid characters
+    const validCharsRegex = /^[\d\s\-+()]+$/
+    if (!validCharsRegex.test(phone)) {
+      return { isValid: false, message: "Phone number can only contain digits, spaces, +, -, ( )" }
+    }
+
+    // Check minimum length (10 digits)
+    if (digitsOnly.length < 10) {
+      return { isValid: false, message: "Phone number must have at least 10 digits" }
+    }
+
+    // Check maximum length (15 digits for international numbers)
+    if (digitsOnly.length > 15) {
+      return { isValid: false, message: "Phone number cannot exceed 15 digits" }
+    }
+
+    // Check for invalid patterns
+    if (/^0+$/.test(digitsOnly) || /^1+$/.test(digitsOnly)) {
+      return { isValid: false, message: "Please enter a valid phone number" }
+    }
+
+    return { isValid: true }
+  }
+
+  const validateForm = (): boolean => {
+    const newErrors: Record<string, string> = {}
+
+    // Name validation (same as ContactSection)
+    if (!formData.name.trim()) {
+      newErrors.name = "Name is required"
+    } else if (formData.name.trim().length < 2) {
+      newErrors.name = "Name must be at least 2 characters"
+    } else if (!/^[a-zA-Z\s'-]+$/.test(formData.name)) {
+      newErrors.name = "Name can only contain letters, spaces, hyphens, and apostrophes"
+    }
+
+    // Email validation (same as ContactSection)
+    const emailValidation = validateEmail(formData.email)
+    if (!emailValidation.isValid) {
+      newErrors.email = emailValidation.message || "Invalid email"
+    }
+
+    // Phone validation (same as ContactSection)
+    const phoneValidation = validatePhone(formData.phone)
+    if (!phoneValidation.isValid) {
+      newErrors.phone = phoneValidation.message || "Invalid phone number"
+    }
+
+    // Message validation (same as ContactSection)
+    if (!formData.message.trim()) {
+      newErrors.message = "Message is required"
+    } else if (formData.message.trim().length < 10) {
+      newErrors.message = "Message must be at least 10 characters"
     }
 
     setErrors(newErrors)
@@ -314,6 +411,12 @@ function DemoFormPopup({ isOpen, onClose }: DemoFormPopupProps) {
           phone: "",
           message: "",
         })
+        setCharCounts({
+          name: 0,
+          email: 0,
+          phone: 0,
+          message: 0,
+        })
         setTimeout(() => {
           setSubmitSuccess(false)
           onClose()
@@ -330,10 +433,43 @@ function DemoFormPopup({ isOpen, onClose }: DemoFormPopupProps) {
   }
 
   const handleInputChange = (field: string, value: string) => {
+    const charLimit = CHAR_LIMITS[field as keyof typeof CHAR_LIMITS]
+
+    // Prevent exceeding character limit (same as ContactSection)
+    if (charLimit && value.length > charLimit) {
+      return
+    }
+
+    // Update character counts (same as ContactSection)
+    setCharCounts(prev => ({ ...prev, [field]: value.length }))
+
     setFormData(prev => ({ ...prev, [field]: value }))
-    if (errors[field]) {
+    
+    // Real-time validation for email and phone (same as ContactSection)
+    if (field === "email" && value.trim()) {
+      const emailValidation = validateEmail(value)
+      if (!emailValidation.isValid) {
+        setErrors(prev => ({ ...prev, email: emailValidation.message || "" }))
+      } else {
+        setErrors(prev => ({ ...prev, email: "" }))
+      }
+    } else if (field === "phone" && value.trim()) {
+      const phoneValidation = validatePhone(value)
+      if (!phoneValidation.isValid) {
+        setErrors(prev => ({ ...prev, phone: phoneValidation.message || "" }))
+      } else {
+        setErrors(prev => ({ ...prev, phone: "" }))
+      }
+    } else if (errors[field]) {
       setErrors(prev => ({ ...prev, [field]: "" }))
     }
+  }
+
+  const getCharCountColor = (current: number, limit: number): string => {
+    const percentage = (current / limit) * 100
+    if (percentage >= 100) return "text-red-500"
+    if (percentage >= 80) return "text-yellow-500"
+    return "text-gray-400"
   }
 
   if (!isOpen) return null
@@ -373,11 +509,16 @@ function DemoFormPopup({ isOpen, onClose }: DemoFormPopupProps) {
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Name */}
+            {/* Name with Character Count */}
             <div>
-              <label className="block font-mono text-xs uppercase tracking-wider text-white/80 mb-2">
-                Name <span className="text-red-500">*</span>
-              </label>
+              <div className="mb-2 flex items-center justify-between">
+                <label className="font-mono text-xs uppercase tracking-wider text-white">
+                  Name <span className="text-red-500">*</span>
+                </label>
+                <span className={`font-mono text-xs ${getCharCountColor(charCounts.name, CHAR_LIMITS.name)}`}>
+                  {charCounts.name}/{CHAR_LIMITS.name}
+                </span>
+              </div>
               <input
                 type="text"
                 value={formData.name}
@@ -388,11 +529,16 @@ function DemoFormPopup({ isOpen, onClose }: DemoFormPopupProps) {
               {errors.name && <p className="mt-1 text-xs text-red-500">{errors.name}</p>}
             </div>
 
-            {/* Email */}
+            {/* Email with Character Count */}
             <div>
-              <label className="block font-mono text-xs uppercase tracking-wider text-white/80 mb-2">
-                Email <span className="text-red-500">*</span>
-              </label>
+              <div className="mb-2 flex items-center justify-between">
+                <label className="font-mono text-xs uppercase tracking-wider text-white">
+                  Email <span className="text-red-500">*</span>
+                </label>
+                <span className={`font-mono text-xs ${getCharCountColor(charCounts.email, CHAR_LIMITS.email)}`}>
+                  {charCounts.email}/{CHAR_LIMITS.email}
+                </span>
+              </div>
               <input
                 type="email"
                 value={formData.email}
@@ -400,35 +546,47 @@ function DemoFormPopup({ isOpen, onClose }: DemoFormPopupProps) {
                 className={`w-full rounded-lg border ${errors.email ? "border-red-500" : "border-white/20"} bg-white/5 px-4 py-3 text-white placeholder:text-white/50 focus:border-white/50 focus:outline-none focus:ring-2 focus:ring-white/20`}
                 placeholder="your@email.com"
               />
-              {errors.email && <p className="mt-1 text-xs text-red-500">{errors.email}</p>}
+              {errors.email && <p className="mt-1 text-xs text-white">{errors.email}</p>}
             </div>
 
-            {/* Phone */}
+            {/* Phone with Character Count */}
             <div>
-              <label className="block font-mono text-xs uppercase tracking-wider text-white/80 mb-2">
-                Phone
-              </label>
+              <div className="mb-2 flex items-center justify-between">
+                <label className="font-mono text-xs uppercase tracking-wider text-white">
+                  Phone
+                </label>
+                <span className={`font-mono text-xs ${getCharCountColor(charCounts.phone, CHAR_LIMITS.phone)}`}>
+                  {charCounts.phone}/{CHAR_LIMITS.phone}
+                </span>
+              </div>
               <input
                 type="tel"
                 value={formData.phone}
                 onChange={(e) => handleInputChange("phone", e.target.value)}
-                className="w-full rounded-lg border border-white/20 bg-white/5 px-4 py-3 text-white placeholder:text-white/50 focus:border-white/50 focus:outline-none focus:ring-2 focus:ring-white/20"
+                className={`w-full rounded-lg border ${errors.phone ? "border-red-500" : "border-white/20"} bg-white/5 px-4 py-3 text-white placeholder:text-white/50 focus:border-white/50 focus:outline-none focus:ring-2 focus:ring-white/20`}
                 placeholder="+1 (555) 000-0000"
               />
+              {errors.phone && <p className="mt-1 text-xs text-red-500">{errors.phone}</p>}
             </div>
 
-            {/* Message */}
+            {/* Message with Character Count */}
             <div>
-              <label className="block font-mono text-xs uppercase tracking-wider text-white/80 mb-2">
-                Message
-              </label>
+              <div className="mb-2 flex items-center justify-between">
+                <label className="font-mono text-xs uppercase tracking-wider text-white">
+                  Message <span className="text-red-500">*</span>
+                </label>
+                <span className={`font-mono text-xs ${getCharCountColor(charCounts.message, CHAR_LIMITS.message)}`}>
+                  {charCounts.message}/{CHAR_LIMITS.message}
+                </span>
+              </div>
               <textarea
                 rows={4}
                 value={formData.message}
                 onChange={(e) => handleInputChange("message", e.target.value)}
-                className="w-full rounded-lg border border-white/20 bg-white/5 px-4 py-3 text-white placeholder:text-white/50 focus:border-white/50 focus:outline-none focus:ring-2 focus:ring-white/20 resize-none"
+                className={`w-full rounded-lg border ${errors.message ? "border-red-500" : "border-white/20"} bg-white/5 px-4 py-3 text-white placeholder:text-white/50 focus:border-white/50 focus:outline-none focus:ring-2 focus:ring-white/20 resize-none`}
                 placeholder="Tell us about your project or specific requirements..."
               />
+              {errors.message && <p className="mt-1 text-xs text-red-500">{errors.message}</p>}
             </div>
 
             {/* Submit Button */}
@@ -676,7 +834,7 @@ export default function Home() {
         />
       )}
 
-      {/* Demo Form Popup - NOW CENTERED */}
+      {/* Demo Form Popup - NOW WITH CONTACT SECTION VALIDATION */}
       <DemoFormPopup
         isOpen={showDemoForm}
         onClose={() => setShowDemoForm(false)}

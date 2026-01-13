@@ -59,6 +59,7 @@ export default function AboutSection({
 }) {
   const { ref, isVisible } = useReveal(0.3)
   const widgetRef = useRef(null)
+  
 
   const defaultReviews: Review[] = [
     {
