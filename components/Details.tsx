@@ -1,17 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
-import {
-  Close, ChevronLeft, ChevronRight, CheckCircle, Bolt, Security, Public, People,
-  // Tech icons
-  Code, Storage, Cloud, Terminal, DataObject, Api, Coffee, Adb, DesktopWindows,
-  Apps, Settings, Smartphone, Apple, Android, LocalFireDepartment, Brush,
-  Palette as PaletteIcon, Gesture, Visibility, PanTool, Store, Hub,
-  Business, Psychology, Link, CloudQueue, PsychologyAlt, MenuBook, Chat,
-  Android as Robot, ShowChart, Whatshot, AccountTree, CreditCard, PieChart,
-  // General icons
-  BusinessCenter, ShoppingCart, ChatBubble, Dashboard, Description, PhoneAndroid,
-  AutoAwesome, TrackChanges, FlashOn, VerifiedUser, Language, Group,
-  DeviceHub, Inventory, SmartToy, DataArray
-} from '@mui/icons-material'
+import { createPortal } from 'react-dom'
+import { X, CheckCircle, ArrowRight, Home } from 'lucide-react'
+import DynamicForm from './ContactForm'
 
 interface DetailPageProps {
   isOpen: boolean
@@ -24,21 +14,47 @@ interface DetailPageProps {
   type: 'service' | 'product'
 }
 
+
+interface Stat {
+  value: string
+  unit: string
+  label: string
+}
+
 const getDetailedContent = (name: string) => {
   const content: Record<string, {
     title: string
     subtitle: string
-    overview: string
+    category: string
+    description: string
+    image: string
+    background: string
+    problem: string
+    solution: string
+    approach: string[]
+    result: string
     features: string[]
     benefits: string[]
     technologies: string[]
     useCases: string[]
-    image: string
+    stats: Stat[]
   }> = {
     'Web Development': {
       title: 'Web Development',
       subtitle: 'Professional implementation with best practices',
-      overview: 'We create scalable, high-performance web applications that drive business growth. Our solutions combine cutting-edge technologies with best practices in UX design and security.',
+      category: 'Web Development Services',
+      description: 'Professional web development services that create scalable, high-performance applications',
+      image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1400&h=600&fit=crop',
+      background: 'Modern businesses need web applications that can scale, perform well, and provide exceptional user experiences across all devices.',
+      problem: 'Many businesses struggle with slow websites, poor mobile experiences, security vulnerabilities, and applications that can\'t scale with growth.',
+      solution: 'We create scalable, high-performance web applications using cutting-edge technologies and best practices in UX design, security, and performance optimization.',
+      approach: [
+        'Implement responsive & mobile-first design principles',
+        'Build progressive web apps with offline capabilities',
+        'Create cloud-native architecture for scalability',
+        'Optimize performance with advanced caching strategies'
+      ],
+      result: 'Faster time to market with 50% improvement in load times, scalable infrastructure that handles 10x traffic growth, and enhanced user experience leading to 45% increase in conversion rates.',
       features: [
         'Responsive & Mobile-First Design',
         'Progressive Web Apps (PWA)',
@@ -60,42 +76,34 @@ const getDetailedContent = (name: string) => {
         'Enterprise portals',
         'Customer dashboards'
       ],
-      image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80'
-    },
-    'Software Development': {
-      title: 'Software Development',
-      subtitle: 'End-to-end software solutions tailored to your business',
-      overview: 'Transform your business processes with custom software solutions. We deliver enterprise-grade applications that streamline operations and drive digital transformation.',
-      features: [
-        'Custom Software Architecture',
-        'Microservices Development',
-        'Database Design & Optimization',
-        'Third-party Integrations',
-        'Automated Testing & CI/CD',
-        'Technical Documentation'
-      ],
-      benefits: [
-        'Improved operational efficiency',
-        'Better data management',
-        'Seamless integrations',
-        'Future-proof technology stack'
-      ],
-      technologies: ['Java', 'Python', '.NET', 'Kubernetes', 'PostgreSQL', 'Redis'],
-      useCases: [
-        'Business process automation',
-        'Legacy system modernization',
-        'Data management systems',
-        'Workflow automation'
-      ],
-      image: 'https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=800&q=80'
+      stats: [
+        { value: '50', unit: '%', label: 'Improvement in load times' },
+        { value: '10x', unit: '', label: 'Traffic growth capacity' },
+        { value: '45', unit: '%', label: 'Increase in conversions' },
+        { value: '99.9', unit: '%', label: 'Uptime guarantee' },
+        { value: '60', unit: '%', label: 'Faster development' },
+        { value: '40', unit: '%', label: 'Cost reduction' }
+      ]
     },
     'Mobile App Development': {
       title: 'Mobile App Development',
       subtitle: 'Native and cross-platform mobile solutions',
-      overview: 'Build engaging mobile experiences that users love. Our mobile apps combine beautiful design with powerful functionality across iOS and Android platforms.',
+      category: 'Mobile Development Services',
+      description: 'Build engaging mobile experiences that users love across iOS and Android platforms',
+      image: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=1400&h=600&fit=crop',
+      background: 'Mobile-first consumers expect seamless, intuitive experiences. Businesses need apps that work flawlessly across all devices.',
+      problem: 'Developing for multiple platforms is expensive and time-consuming. Many apps suffer from poor performance, crashes, and low user retention.',
+      solution: 'We build engaging mobile experiences using React Native for cross-platform efficiency or native development for maximum performance, combined with beautiful design.',
+      approach: [
+        'Develop cross-platform solutions with React Native',
+        'Implement offline functionality for better UX',
+        'Integrate push notifications and analytics',
+        'Build secure in-app purchase systems'
+      ],
+      result: 'Reduced development costs by 40%, achieved 4.8+ star ratings, and increased user retention by 65% with smooth, engaging experiences.',
       features: [
         'Native iOS & Android Development',
-        'Cross-platform Solutions (React Native)',
+        'Cross-platform Solutions',
         'Offline Functionality',
         'Push Notifications',
         'In-app Purchases',
@@ -114,12 +122,31 @@ const getDetailedContent = (name: string) => {
         'On-demand services',
         'Fitness & health apps'
       ],
-      image: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=800&q=80'
+      stats: [
+        { value: '40', unit: '%', label: 'Development cost reduction' },
+        { value: '4.8', unit: '/5', label: 'Average app rating' },
+        { value: '65', unit: '%', label: 'Increase in user retention' },
+        { value: '2M', unit: '+', label: 'Active users' },
+        { value: '50', unit: '%', label: 'Cross-platform efficiency' },
+        { value: '99', unit: '%', label: 'Crash-free sessions' }
+      ]
     },
     'UI/UX Design': {
       title: 'UI/UX Design',
       subtitle: 'User-centered design that creates engaging experiences',
-      overview: 'Create memorable digital experiences with our user-centered design approach. We combine research, creativity, and best practices to deliver interfaces that users love.',
+      category: 'Design Services',
+      description: 'Create memorable digital experiences with research-driven, user-centered design',
+      image: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=1400&h=600&fit=crop',
+      background: 'Great products need great design. Users expect intuitive, beautiful interfaces that make complex tasks simple.',
+      problem: 'Poor design leads to confused users, low conversion rates, high support costs, and weak brand perception.',
+      solution: 'We create memorable digital experiences combining user research, creativity, and best practices to deliver interfaces that users love and businesses benefit from.',
+      approach: [
+        'Conduct comprehensive user research and testing',
+        'Create interactive wireframes and prototypes',
+        'Develop comprehensive visual design systems',
+        'Ensure WCAG accessibility compliance'
+      ],
+      result: 'Achieved 80% increase in user satisfaction, 55% improvement in conversion rates, and 45% reduction in support costs through intuitive design.',
       features: [
         'User Research & Testing',
         'Wireframing & Prototyping',
@@ -141,12 +168,31 @@ const getDetailedContent = (name: string) => {
         'Dashboard design',
         'Design system creation'
       ],
-      image: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800&q=80'
+      stats: [
+        { value: '80', unit: '%', label: 'Increase in user satisfaction' },
+        { value: '55', unit: '%', label: 'Improvement in conversions' },
+        { value: '45', unit: '%', label: 'Reduction in support costs' },
+        { value: '100', unit: '+', label: 'Projects completed' },
+        { value: '3x', unit: '', label: 'Faster design iteration' },
+        { value: '95', unit: '%', label: 'Client satisfaction rate' }
+      ]
     },
     'CRM': {
       title: 'CRM Solution',
       subtitle: 'Integrated CRM with efficient process management',
-      overview: 'Streamline your customer relationships with our comprehensive CRM solution. Manage leads, track interactions, and drive sales growth with powerful automation and analytics.',
+      category: 'CRM Platform',
+      description: 'Streamline customer relationships with comprehensive CRM featuring automation and analytics',
+      image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1400&h=600&fit=crop',
+      background: 'Businesses need centralized systems to manage customer relationships, track interactions, and drive sales growth efficiently.',
+      problem: 'Fragmented customer data, manual processes, poor visibility into sales pipeline, and difficulty tracking customer interactions.',
+      solution: 'Comprehensive CRM solution with lead management, sales automation, customer tracking, marketing integration, and advanced analytics.',
+      approach: [
+        'Implement intelligent lead scoring algorithms',
+        'Automate sales pipeline workflows',
+        'Integrate email marketing campaigns',
+        'Build customizable analytics dashboards'
+      ],
+      result: 'Increased sales productivity by 65%, improved customer retention by 40%, and achieved 360° customer visibility across all touchpoints.',
       features: [
         'Lead Management & Scoring',
         'Sales Pipeline Automation',
@@ -168,39 +214,31 @@ const getDetailedContent = (name: string) => {
         'Marketing automation',
         'Account management'
       ],
-      image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80'
-    },
-    'B2B OMS': {
-      title: 'B2B Order Management System',
-      subtitle: 'Simplified B2B order management & payments',
-      overview: 'Optimize your B2B operations with our intelligent order management system. Handle complex pricing, bulk orders, and multi-channel sales with ease.',
-      features: [
-        'Multi-channel Order Processing',
-        'Inventory Management',
-        'Custom Pricing & Discounts',
-        'Payment Gateway Integration',
-        'Order Tracking & Fulfillment',
-        'Automated Invoicing'
-      ],
-      benefits: [
-        'Reduced order processing time',
-        'Better inventory control',
-        'Improved customer satisfaction',
-        'Streamlined operations'
-      ],
-      technologies: ['ERP Integration', 'Payment APIs', 'Cloud', 'Microservices', 'Analytics', 'React'],
-      useCases: [
-        'Wholesale distributors',
-        'Manufacturing companies',
-        'B2B marketplaces',
-        'Supply chain management'
-      ],
-      image: 'https://images.unsplash.com/photo-1556155092-490a1ba16284?w=800&q=80'
+      stats: [
+        { value: '65', unit: '%', label: 'Sales productivity increase' },
+        { value: '40', unit: '%', label: 'Better customer retention' },
+        { value: '360', unit: '°', label: 'Customer view' },
+        { value: '50', unit: '%', label: 'Faster deal closure' },
+        { value: '80', unit: '%', label: 'Lead conversion improvement' },
+        { value: '5x', unit: '', label: 'ROI increase' }
+      ]
     },
     'Conversational AI': {
       title: 'Conversational AI',
       subtitle: 'Intelligent chatbots and virtual assistants',
-      overview: 'Transform customer engagement with AI-powered conversational interfaces. Our solutions understand natural language and provide intelligent, context-aware responses 24/7.',
+      category: 'AI Platform',
+      description: 'Transform customer engagement with AI-powered conversational interfaces available 24/7',
+      image: 'https://images.unsplash.com/photo-1531746790731-6c087fecd65a?w=1400&h=600&fit=crop',
+      background: 'Customers expect instant, intelligent support around the clock. Businesses need scalable solutions to handle growing support demands.',
+      problem: 'High customer support costs, long wait times, inconsistent responses, and inability to scale support operations efficiently.',
+      solution: 'AI-powered conversational interfaces that understand natural language, provide intelligent responses, and seamlessly hand off to humans when needed.',
+      approach: [
+        'Implement advanced NLP for intent recognition',
+        'Build multi-language support capabilities',
+        'Create intelligent context management',
+        'Develop seamless human handoff workflows'
+      ],
+      result: 'Reduced customer support costs by 70%, achieved 24/7 availability, improved response times by 90%, and increased customer satisfaction by 60%.',
       features: [
         'Natural Language Processing',
         'Multi-language Support',
@@ -222,14 +260,33 @@ const getDetailedContent = (name: string) => {
         'IT helpdesk',
         'Virtual shopping assistants'
       ],
-      image: 'https://images.unsplash.com/photo-1531746790731-6c087fecd65a?w=800&q=80'
+      stats: [
+        { value: '70', unit: '%', label: 'Support cost reduction' },
+        { value: '24/7', unit: '', label: 'Availability' },
+        { value: '90', unit: '%', label: 'Faster response times' },
+        { value: '60', unit: '%', label: 'Satisfaction improvement' },
+        { value: '85', unit: '%', label: 'Queries resolved automatically' },
+        { value: '50k', unit: '+', label: 'Conversations handled monthly' }
+      ]
     }
   }
 
   return content[name] || {
     title: name,
     subtitle: 'Innovative solutions for modern businesses',
-    overview: `Discover how our ${name} solution can transform your business operations and drive growth.`,
+    category: name,
+    description: `Discover how our ${name} solution can transform your business operations and drive growth.`,
+    image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1400&h=600&fit=crop',
+    background: `Modern businesses need ${name.toLowerCase()} solutions that drive growth and operational efficiency.`,
+    problem: 'Traditional approaches are slow, inefficient, and fail to meet modern business demands.',
+    solution: `Our ${name} solution provides comprehensive features that streamline operations and deliver measurable results.`,
+    approach: [
+      'Industry-leading technology implementation',
+      'Scalable architecture design',
+      'Expert consultation and support',
+      'Continuous innovation and updates'
+    ],
+    result: 'Significant improvements in efficiency, cost reduction, better insights, and competitive advantage.',
     features: [
       'Industry-leading technology',
       'Scalable architecture',
@@ -251,71 +308,33 @@ const getDetailedContent = (name: string) => {
       'Digital transformation',
       'Process automation'
     ],
-    image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&q=80'
+    stats: [
+      { value: '75', unit: '%', label: 'Efficiency improvement' },
+      { value: '60', unit: '%', label: 'Cost reduction' },
+      { value: '80', unit: '%', label: 'User satisfaction' },
+      { value: '3x', unit: '', label: 'ROI increase' },
+      { value: '99.9', unit: '%', label: 'Uptime' },
+      { value: '24/7', unit: '', label: 'Support availability' }
+    ]
   }
 }
 
-const techIcons: Record<string, React.ComponentType<{ className?: string }>> = {
-  'React': Code,
-  'Next.js': Storage,
-  'Node.js': Terminal,
-  'TypeScript': DataObject,
-  'AWS': Cloud,
-  'Docker': Api,
-  'Java': Coffee,
-  'Python': Adb,
-  '.NET': DesktopWindows,
-  'Kubernetes': Apps,
-  'PostgreSQL': Storage,
-  'Redis': Settings,
-  'React Native': Smartphone,
-  'Swift': Apple,
-  'Kotlin': Android,
-  'Flutter': PhoneAndroid,
-  'Firebase': LocalFireDepartment,
-  'Figma': Brush,
-  'Adobe XD': PaletteIcon,
-  'Sketch': Gesture,
-  'InVision': Visibility,
-  'Framer': FlashOn,
-  'Principle': AutoAwesome,
-  'Salesforce': Store,
-  'HubSpot': Hub,
-  'Custom CRM': BusinessCenter,
-  'AI/ML': Psychology,
-  'APIs': Link,
-  'Cloud': CloudQueue,
-  'GPT-4': PsychologyAlt,
-  'BERT': MenuBook,
-  'Dialogflow': Chat,
-  'Rasa': Robot,
-  'TensorFlow': ShowChart,
-  'PyTorch': Whatshot,
-  'ERP Integration': DeviceHub,
-  'Payment APIs': CreditCard,
-  'Microservices': AccountTree,
-  'Analytics': PieChart,
-  'Modern Stack': Code,
-  'Cloud Native': Cloud,
-  'App Store APIs': Smartphone
-}
-
-// Fallback icon for unknown technologies
-const FallbackIcon = DataArray
-
 export function DetailPage({ isOpen, onClose, item, type }: DetailPageProps) {
-  const [isVisible, setIsVisible] = useState(false)
-  const contentRef = useRef<HTMLDivElement>(null)
-  const techScrollRef = useRef<HTMLDivElement>(null)
-  const [showScrollButtons, setShowScrollButtons] = useState(false)
+  const [mounted, setMounted] = useState(false)
+  const [showDemoForm, setShowDemoForm] = useState(false)
+
+
+   const handleBookDemoClick = () => {
+    setShowDemoForm(true)
+  }
 
   useEffect(() => {
     if (isOpen && item) {
+      setMounted(true)
       document.body.style.overflow = 'hidden'
-      setIsVisible(true)
     } else {
-      setIsVisible(false)
       const timer = setTimeout(() => {
+        setMounted(false)
         document.body.style.overflow = 'unset'
       }, 300)
       return () => clearTimeout(timer)
@@ -325,236 +344,161 @@ export function DetailPage({ isOpen, onClose, item, type }: DetailPageProps) {
     }
   }, [isOpen, item])
 
-  useEffect(() => {
-    const checkScrollNeeded = () => {
-      if (techScrollRef.current) {
-        const { scrollWidth, clientWidth } = techScrollRef.current
-        setShowScrollButtons(scrollWidth > clientWidth)
-      }
-    }
-
-    checkScrollNeeded()
-    window.addEventListener('resize', checkScrollNeeded)
-    return () => window.removeEventListener('resize', checkScrollNeeded)
-  }, [item])
-
-  const handleClose = () => {
-    setIsVisible(false)
-    setTimeout(onClose, 300)
-  }
-
-  const scrollTech = (direction: 'left' | 'right') => {
-    if (techScrollRef.current) {
-      const scrollAmount = 200
-      techScrollRef.current.scrollBy({
-        left: direction === 'left' ? -scrollAmount : scrollAmount,
-        behavior: 'smooth'
-      })
-    }
-  }
-
-  if (!isOpen || !item) return null
+  if (!mounted || !item) return null
 
   const content = getDetailedContent(item.name)
   const Icon = item.icon
 
   return (
-    <div className={`fixed inset-0 z-[100] transition-opacity duration-300 ${isVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
-      {/* Dark overlay background */}
-      <div className="absolute inset-0 bg-black" />
-      
-      {/* Subtle gradient accents */}
-      <div className="absolute top-0 left-0 w-1/2 h-1/2 bg-black" />
-      <div className="absolute bottom-0 right-0 w-1/2 h-1/2 bg-black" />
-
-      {/* Main Container */}
-      <div className="absolute inset-0 flex items-center justify-center p-4 md:p-8">
+    <>
+      <div
+        className={`fixed inset-0 z-[9999] bg-black/50 backdrop-blur-sm overflow-y-auto transition-opacity duration-300 ${isOpen ? 'opacity-100' : 'opacity-0'}`}
+        onClick={onClose}
+      >
         <div 
-          ref={contentRef}
-          className="relative w-full max-w-6xl h-full max-h-[95vh] bg-black backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl overflow-hidden"
+          className="min-h-screen bg-[#0a0a0f]"
+          onClick={(e) => e.stopPropagation()}
         >
-          {/* Header Bar */}
-          <div className="sticky top-0 z-50 flex items-center justify-between px-6 py-4 border-b border-white/10 bg-black backdrop-blur-md">
-            <div className="flex items-center gap-3">
-              <span className="px-3 py-1 text-xs  text-white/80 bg-white/10 rounded-full uppercase tracking-wider">
-                {type === 'service' ? 'Service' : 'Product'}
-              </span>
-              <span className="text-white/60">•</span>
-              <span className="text-white ">{content.title}</span>
+          {/* Header */}
+          <div className="sticky top-0 z-10 bg-[#0a0a0f]/95 backdrop-blur-sm border-b border-white/5">
+            <div className="max-w-7xl mx-auto px-6 md:px-12 py-4 flex justify-between items-center">
+              <div className="flex items-center gap-4">
+                <Icon className="h-8 w-8 text-blue-400" />
+                <div>
+                  <h1 className="text-lg font-semibold text-white">{content.title}</h1>
+                  <p className="text-sm text-gray-400">{content.category}</p>
+                </div>
+              </div>
+              <button
+                onClick={onClose}
+                className="flex items-center gap-2 px-2 py-2 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 transition-colors text-white"
+              >
+                <X className="h-5 w-5" />
+              </button>
             </div>
-            <button
-              onClick={handleClose}
-              className="p-2 rounded-full border border-white/20 bg-white/5 hover:bg-white/10 transition-colors"
-            >
-              <Close className="w-5 h-5 text-white/80" />
-            </button>
           </div>
 
-          {/* Scrollable Content */}
-          <div className="h-[calc(100%-65px)] overflow-y-auto px-6 md:px-12 py-8 space-y-20">
-            {/* Hero Section - Centered */}
-            <div className="text-center max-w-3xl mx-auto">
-              <div className="inline-flex p-4 rounded-2xl bg-gradient-to-br from-blue-300/20 to-orange-300/20 border border-white/10 mb-6">
-                <Icon className="w-6 h-6 text-white" />
-              </div>
-              <h1 className="text-4xl md:text-5xl  text-white mb-4">
+          {/* Hero Section */}
+          <div className="relative h-[50vh] bg-gradient-to-br from-blue-600/20 via-blue-700/10 to-transparent overflow-hidden">
+            <div
+              className="absolute inset-0 bg-cover bg-center opacity-20"
+              style={{ backgroundImage: `url(${content.image})` }}
+            />
+            <div className="relative h-full max-w-7xl mx-auto px-6 md:px-12 flex flex-col justify-center">
+              <h1 className="text-5xl md:text-7xl font-bold text-white mb-4">
                 {content.title}
               </h1>
-              <p className="font-mono text-sm text-foreground/60 md:text-base mb-6">
-                 / {content.subtitle}
+              <p className="text-xl md:text-2xl text-blue-300 mb-2">
+                {content.category}
               </p>
-              <p className="text-white/60 leading-relaxed">
-                {content.overview}
+              <p className="text-lg text-gray-300 max-w-3xl">
+                {content.description}
               </p>
             </div>
+          </div>
 
-            {/* Featured Image */}
-            <div className="max-w-4xl md:-mt-8 mx-auto">
-              <div className="relative aspect-video rounded-2xl overflow-hidden border border-white/10">
+          {/* Content */}
+          <div className="max-w-7xl mx-auto px-6 md:px-12 py-16 space-y-20">
+            
+            {/* Overview */}
+            <section>
+              <h2 className="text-4xl font-bold text-white mb-6">Overview</h2>
+              <p className="text-lg text-gray-300 leading-relaxed">{content.background}</p>
+            </section>
+
+            {/* The Challenge */}
+            <section>
+              <h2 className="text-4xl font-bold text-white mb-6">The Challenge</h2>
+              <p className="text-lg text-gray-300 leading-relaxed mb-8">{content.problem}</p>
+              
+              <div className="relative h-96 rounded-2xl overflow-hidden bg-gradient-to-br from-gray-800 to-gray-900">
                 <img
                   src={content.image}
-                  alt={content.title}
-                  className="w-full h-full object-cover"
+                  alt="Challenge visualization"
+                  className="w-full h-full object-cover opacity-60"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent" />
               </div>
-            </div>
+            </section>
+
+            {/* The Solution */}
+            <section>
+              <h2 className="text-4xl font-bold text-white mb-6">The Solution</h2>
+              <p className="text-lg text-gray-300 leading-relaxed mb-8">{content.solution}</p>
+              
+              <div className="relative h-96 rounded-2xl overflow-hidden bg-gradient-to-br from-blue-900 to-blue-800">
+                <img
+                  src="https://images.unsplash.com/photo-1551434678-e076c223a692?w=1400&h=600&fit=crop"
+                  alt="Solution implementation"
+                  className="w-full h-full object-cover opacity-70"
+                />
+              </div>
+            </section>
 
             {/* Key Features */}
-            <section className=''>
-              <div className="flex items-center gap-3 mb-6">
-                <Bolt className="w-6 h-6 text-yellow-400" />
-                <h2 className="text-2xl  text-white">Key Features</h2>
-              </div>
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {content.features.map((feature, idx) => (
-                  <div
-                    key={idx}
-                    className="p-5 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition-colors"
-                  >
-                    <div className="flex items-start gap-3">
-                      <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-blue-500/20 flex items-center justify-center">
-                        <CheckCircle className="w-5 h-5 text-blue-400" />
+            <section>
+              <h2 className="text-4xl font-bold text-white mb-8">Key Features</h2>
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {content.features.map((feature, i) => (
+                  <div key={i} className="flex gap-4 p-6 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors">
+                    <div className="flex-shrink-0">
+                      <div className="w-10 h-10 rounded-lg bg-blue-500/20 flex items-center justify-center">
+                        <CheckCircle className="h-5 w-5 text-blue-400" />
                       </div>
-                      <div>
-                        <h3 className="text-white  mb-1">{feature}</h3>
-                        <p className="text-white/50 text-sm">Professional implementation with best practices.</p>
-                      </div>
+                    </div>
+                    <div>
+                      <h3 className="text-white mb-1">{feature}</h3>
+                      <p className="text-gray-400 text-sm">Professional implementation with best practices</p>
                     </div>
                   </div>
                 ))}
               </div>
             </section>
 
-            {/* Business Benefits */}
+            {/* Our Approach */}
             <section>
-              <div className="flex items-center gap-3 mb-6">
-                <Security className="w-6 h-6 text-green-400" />
-                <h2 className="text-2xl  text-white">Business Benefits</h2>
-              </div>
-              <div className="grid md:grid-cols-2 gap-4">
-                {content.benefits.map((benefit, idx) => (
-                  <div
-                    key={idx}
-                    className="p-6 rounded-xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent"
-                  >
-                    <div className="flex items-center gap-4">
-                      <div className={`p-3 rounded-lg ${
-                        idx === 0 ? 'bg-blue-500/20' : 
-                        idx === 1 ? 'bg-purple-500/20' : 
-                        idx === 2 ? 'bg-green-500/20' : 
-                        'bg-orange-500/20'
-                      }`}>
-                        <CheckCircle className={`w-6 h-6 ${
-                          idx === 0 ? 'text-blue-400' : 
-                          idx === 1 ? 'text-purple-400' : 
-                          idx === 2 ? 'text-green-400' : 
-                          'text-orange-400'
-                        }`} />
-                      </div>
-                      <div>
-                        <h3 className="text-white  text-lg">{benefit}</h3>
-                        <p className="text-white/50 text-sm mt-1">Achieve measurable results with our proven approach.</p>
+              <h2 className="text-4xl font-bold text-white mb-8">Our Approach</h2>
+              <div className="grid md:grid-cols-2 gap-6">
+                {content.approach.map((item, i) => (
+                  <div key={i} className="flex gap-4 p-6 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors">
+                    <div className="flex-shrink-0">
+                      <div className="w-10 h-10 rounded-lg bg-blue-500/20 flex items-center justify-center text-blue-400 font-bold">
+                        {i + 1}
                       </div>
                     </div>
+                    <p className="text-gray-300">{item}</p>
                   </div>
                 ))}
               </div>
             </section>
 
-            {/* Technology Stack - Horizontal Scroll */}
+
+            {/* Technologies */}
             <section>
-              <div className="flex items-center justify-between mb-6">
-                <div className="flex items-center gap-3">
-                  <Public className="w-6 h-6 text-blue-400" />
-                  <h2 className="text-2xl  text-white">Technology Stack</h2>
-                </div>
-                {showScrollButtons && (
-                  <div className="flex gap-2">
-                    <button 
-                      onClick={() => scrollTech('left')}
-                      className="p-2 rounded-full border border-white/20 bg-white/5 hover:bg-white/10 transition-colors"
-                    >
-                      <ChevronLeft className="w-5 h-5 text-white/80" />
-                    </button>
-                    <button 
-                      onClick={() => scrollTech('right')}
-                      className="p-2 rounded-full border border-white/20 bg-white/5 hover:bg-white/10 transition-colors"
-                    >
-                      <ChevronRight className="w-5 h-5 text-white/80" />
-                    </button>
-                  </div>
-                )}
-              </div>
-              <div 
-                ref={techScrollRef}
-                className="flex gap-6 overflow-x-auto pb-4 scrollbar-hide"
-                style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-              >
-                {content.technologies.map((tech, idx) => {
-                  const TechIcon = techIcons[tech] || FallbackIcon
-                  return (
-                    <div key={idx} className="flex-shrink-0 flex flex-col items-center gap-3">
-                      <div className={`w-16 h-16 rounded-full flex items-center justify-center border border-white/10 ${
-                        idx % 4 === 0 ? 'bg-blue-500/20' : 
-                        idx % 4 === 1 ? 'bg-purple-500/20' : 
-                        idx % 4 === 2 ? 'bg-green-500/20' : 
-                        'bg-orange-500/20'
-                      }`}>
-                        <TechIcon className="w-8 h-8 text-white" />
-                      </div>
-                      <span className="text-white/80 text-sm  whitespace-nowrap">{tech}</span>
-                    </div>
-                  )
-                })}
+              <h2 className="text-4xl font-bold text-white mb-8">Technologies Used</h2>
+              <div className="flex flex-wrap gap-4">
+                {content.technologies.map((tech, i) => (
+                  <span
+                    key={i}
+                    className="px-6 py-3 rounded-full bg-white/5 border border-white/10 text-white font-medium hover:bg-white/10 transition-colors"
+                  >
+                    {tech}
+                  </span>
+                ))}
               </div>
             </section>
 
-            {/* Industry Use Cases */}
+            {/* Use Cases */}
             <section>
-              <div className="flex items-center gap-3 mb-6">
-                <People className="w-6 h-6 text-purple-400" />
-                <h2 className="text-2xl  text-white">Industry Use Cases</h2>
-              </div>
-              <div className="grid md:grid-cols-2 gap-4">
-                {content.useCases.map((useCase, idx) => (
-                  <div
-                    key={idx}
-                    className="p-5 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition-colors"
-                  >
-                    <div className="flex items-start gap-4">
-                      <div className={`flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center  text-white ${
-                        idx === 0 ? 'bg-blue-500/30' : 
-                        idx === 1 ? 'bg-purple-500/30' : 
-                        idx === 2 ? 'bg-green-500/30' : 
-                        'bg-orange-500/30'
-                      }`}>
-                        {idx + 1}
-                      </div>
-                      <div>
-                        <h3 className="text-white  mb-1">{useCase}</h3>
-                        <p className="text-white/50 text-sm">Perfect solution for streamlined operations and growth.</p>
-                      </div>
+              <h2 className="text-4xl font-bold text-white mb-8">Industry Use Cases</h2>
+              <div className="grid md:grid-cols-2 gap-6">
+                {content.useCases.map((useCase, i) => (
+                  <div key={i} className="flex gap-4 p-6 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors">
+                    <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-blue-500/30 flex items-center justify-center text-white font-bold">
+                      {i + 1}
+                    </div>
+                    <div>
+                      <h3 className="text-white mb-1">{useCase}</h3>
+                      <p className="text-gray-400 text-sm">Perfect solution for streamlined operations and growth</p>
                     </div>
                   </div>
                 ))}
@@ -562,44 +506,78 @@ export function DetailPage({ isOpen, onClose, item, type }: DetailPageProps) {
             </section>
 
             {/* CTA Section */}
-            <section className="pb-4">
-              <div
-                className="p-6 md:p-10 rounded-2xl border border-white/10 relative overflow-hidden"
-                style={{
-                  background:
-                    "linear-gradient(232.81deg, #2C60AB 25.76%, #AD7A3D 92.62%)",
-                }}
-              >
-                <div className="text-center max-w-2xl mx-auto relative z-10">
-                  <h2 className="text-3xl md:text-4xl text-white mb-4 leading-tight">
-                    Ready To Transform<br />Your Business?
-                  </h2>
+          <section className="px-4 pb-10 sm:px-6 md:px-0">
+  <div
+    className="relative mx-auto max-w-5xl overflow-hidden rounded-2xl border border-white/10
+               px-6 py-10 sm:px-10 sm:py-14 md:px-16 md:py-10 lg:py-16"
+    style={{
+      background: "linear-gradient(232.81deg, #2C60AB 25.76%, #AD7A3D 92.62%)",
+    }}
+  >
+    <div className="relative z-10 mx-auto max-w-2xl text-center">
+      <h2 className="mb-4 text-2xl font-bold leading-snug text-white sm:text-3xl md:text-4xl">
+        Ready To Transform
+        <br className="hidden sm:block" />
+        Your Business?
+      </h2>
 
-                  <p className="text-lg text-white/80 mb-6 leading-relaxed">
-                    Schedule a personalized demo to see how our {content.title} <br /> solution can drive your success.
-                  </p>
+      <p className="mb-8 text-sm leading-relaxed text-white/90 sm:text-base md:text-lg">
+        Schedule a personalized demo to see how our {content.title} solution can drive your success.
+      </p>
 
-                  <button
-                    onClick={handleClose}
-                    className="px-8 py-3 rounded-full bg-white text-slate-900 text-base hover:bg-white/95 hover:scale-105 transition-all duration-300 shadow-lg"
-                  >
-                    Book A Demo
-                  </button>
-                </div>
-              </div>
+      <button
+        onClick={handleBookDemoClick}
+        className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-slate-900 shadow-xl
+                   transition-all duration-300 hover:scale-105 hover:bg-white/95
+                   sm:px-7 sm:py-3.5 sm:text-base md:px-8 md:py-4"
+      >
+        Book A Demo
+        <ArrowRight className="h-5 w-5" />
+      </button>
+    </div>
+  </div>
+</section>
+
+
+            {/* Back to Home Button */}
+            <section className="pb-20">
+             <div className="mt-6 md:mt-8 p-6 md:p-8 rounded-2xl border border-white/10 bg-white/5">
+                      <div className="flex flex-col md:flex-row items-center justify-between gap-4 md:gap-6">
+                        <div className="text-center md:text-left">
+                          <p className="text-gray-400 text-sm mb-1">
+                            Have questions about this policy?
+                          </p>
+                          <p className="text-white font-medium">
+                            Contact us at{' '}
+                            <a 
+                              href="mailto:contact@qwickbit.com" 
+                              className="text-blue-400 hover:text-blue-300 transition-colors"
+                            >
+                              contact@qwickbit.com
+                            </a>
+                          </p>
+                        </div>
+                        <button
+                          onClick={onClose}
+                          className="px-6 py-3 rounded-full bg-white text-black font-semibold hover:bg-gray-200 transition-all"
+                        >
+                          Back to Home
+                        </button>
+                      </div>
+                    </div>
             </section>
-
           </div>
         </div>
       </div>
-
-      <style>{`
-        .scrollbar-hide::-webkit-scrollbar {
-          display: none;
-        }
-      `}</style>
-    </div>
+      
+      {/* Render form outside using Portal */}
+      {showDemoForm && createPortal(
+        <DynamicForm
+          isOpen={showDemoForm}
+          onClose={() => setShowDemoForm(false)}
+        />,
+        document.body
+      )}
+    </>
   )
 }
-
-export default DetailPage

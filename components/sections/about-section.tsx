@@ -39,6 +39,8 @@ interface Service {
   title: string
   description: string
   features: string[]
+  iconColor: string
+  iconBg: string
 }
 
 // Extend Window interface for GoodFirms widget
@@ -109,6 +111,8 @@ export default function AboutSection({
       description:
         "Harness the power of artificial intelligence to transform your business operations and decision-making.",
       features: ["Predictive Analytics", "Natural Language Processing", "Computer Vision", "Deep Learning Models"],
+      iconColor: "text-yellow-400",
+      iconBg: "bg-gradient-to-br from-yellow-500/20 to-yellow-600/10",
     },
     {
       id: "2",
@@ -117,6 +121,8 @@ export default function AboutSection({
       description:
         "Connect and manage your devices with cutting-edge Internet of Things technology for real-time insights.",
       features: ["Device Management", "Real-time Monitoring", "Fleet Tracking", "Smart Automation"],
+      iconColor: "text-blue-400",
+      iconBg: "bg-gradient-to-br from-blue-500/20 to-blue-600/10",
     },
     {
       id: "3",
@@ -124,6 +130,8 @@ export default function AboutSection({
       title: "Custom Software Development",
       description: "Tailored software solutions built to address your unique business challenges and drive growth.",
       features: ["Web Applications", "Mobile Apps", "Enterprise Software", "API Integration"],
+      iconColor: "text-green-400",
+      iconBg: "bg-gradient-to-br from-green-500/20 to-green-600/10",
     },
     {
       id: "4",
@@ -131,6 +139,8 @@ export default function AboutSection({
       title: "Cloud & DevOps",
       description: "Scalable cloud infrastructure and streamlined deployment processes for maximum efficiency.",
       features: ["Cloud Migration", "CI/CD Pipelines", "Infrastructure as Code", "Performance Optimization"],
+      iconColor: "text-purple-400",
+      iconBg: "bg-gradient-to-br from-purple-500/20 to-purple-600/10",
     },
   ]
 
@@ -140,23 +150,28 @@ export default function AboutSection({
   const processSteps = [
     {
       name: "Requirement gathering",
-      icon: <Description sx={{ fontSize: 48, color: 'white' }} />,
+      icon: <Description sx={{ fontSize: 48, color: '#60A5FA' }} />,
+      bgGradient: "from-blue-500/20 to-blue-600/20",
     },
     {
       name: "Wire Framing & Prototyping",
-      icon: <GridOn sx={{ fontSize: 48, color: 'white' }} />,
+      icon: <GridOn sx={{ fontSize: 48, color: '#34D399' }} />,
+      bgGradient: "from-green-500/20 to-green-600/20",
     },
     {
       name: "UI/UX Designing",
-      icon: <Palette sx={{ fontSize: 48, color: 'white' }} />,
+      icon: <Palette sx={{ fontSize: 48, color: '#F472B6' }} />,
+      bgGradient: "from-pink-500/20 to-pink-600/20",
     },
     {
       name: "Development Process",
-      icon: <Terminal sx={{ fontSize: 48, color: 'white' }} />,
+      icon: <Terminal sx={{ fontSize: 48, color: '#F59E0B' }} />,
+      bgGradient: "from-yellow-500/20 to-yellow-600/20",
     },
     {
       name: "Launch & Improvise",
-      icon: <Rocket sx={{ fontSize: 48, color: 'white' }} />,
+      icon: <Rocket sx={{ fontSize: 48, color: '#8B5CF6' }} />,
+      bgGradient: "from-purple-500/20 to-purple-600/20",
     },
   ];
 
@@ -166,60 +181,80 @@ export default function AboutSection({
       icon: Cpu,
       technologies: ["React", "Next.js", "Vue.js", "Angular", "TypeScript"],
       color: "from-blue-500/20 to-blue-500/5",
+      iconColor: "text-blue-400",
+      iconBg: "bg-blue-500/20",
     },
     {
       category: "Backend",
       icon: Server,
       technologies: ["Node.js", "Python", "Java", "Go", "Ruby on Rails"],
       color: "from-green-500/20 to-green-500/5",
+      iconColor: "text-green-400",
+      iconBg: "bg-green-500/20",
     },
     {
       category: "Mobile",
       icon: Smartphone,
       technologies: ["React Native", "Flutter", "iOS (Swift)", "Android (Kotlin)"],
       color: "from-purple-500/20 to-purple-500/5",
+      iconColor: "text-purple-400",
+      iconBg: "bg-purple-500/20",
     },
     {
       category: "Cloud",
       icon: Cloud,
       technologies: ["AWS", "Azure", "Google Cloud", "Cloudflare"],
       color: "from-orange-500/20 to-orange-500/5",
+      iconColor: "text-orange-400",
+      iconBg: "bg-orange-500/20",
     },
     {
       category: "DevOps",
       icon: Shield,
       technologies: ["Docker", "Kubernetes", "Jenkins", "Terraform", "GitLab CI/CD"],
       color: "from-cyan-500/20 to-cyan-500/5",
+      iconColor: "text-cyan-400",
+      iconBg: "bg-cyan-500/20",
     },
     {
       category: "Databases",
       icon: Database,
       technologies: ["PostgreSQL", "MongoDB", "Redis", "MySQL", "Firebase"],
       color: "from-red-500/20 to-red-500/5",
+      iconColor: "text-red-400",
+      iconBg: "bg-red-500/20",
     },
     {
       category: "AI/ML",
       icon: Zap,
       technologies: ["TensorFlow", "PyTorch", "OpenAI", "LangChain", "Computer Vision"],
       color: "from-yellow-500/20 to-yellow-500/5",
+      iconColor: "text-yellow-400",
+      iconBg: "bg-yellow-500/20",
     },
     {
       category: "Cross-Platform",
       icon: Monitor,
       technologies: ["Electron", "React Native", "Flutter", "PWA"],
       color: "from-pink-500/20 to-pink-500/5",
+      iconColor: "text-pink-400",
+      iconBg: "bg-pink-500/20",
     },
     {
       category: "Testing",
       icon: Shield,
       technologies: ["Jest", "Cypress", "Selenium", "Playwright", "Postman"],
       color: "from-indigo-500/20 to-indigo-500/5",
+      iconColor: "text-indigo-400",
+      iconBg: "bg-indigo-500/20",
     },
     {
       category: "CMS & E-commerce",
       icon: Tablet,
       technologies: ["WordPress", "Shopify", "Magento", "Strapi", "Sanity"],
       color: "from-teal-500/20 to-teal-500/5",
+      iconColor: "text-teal-400",
+      iconBg: "bg-teal-500/20",
     },
   ]
 
@@ -280,7 +315,9 @@ export default function AboutSection({
                 style={{ transitionDelay: "200ms" }}
               >
                 <div className="flex gap-4 p-4 rounded-xl bg-primary/5 border border-primary/10">
-                  <TrendingUp className="w-6 h-6 text-white shrink-0 mt-1" />
+                  <div className="rounded-lg  p-2 shrink-0 mt-1">
+                    <TrendingUp className="w-6 h-6 text-blue-400" />
+                  </div>
                   <div>
                     <h3 className="font-semibold text-foreground mb-1">Deep Domain Expertise</h3>
                     <p className="text-sm leading-relaxed text-foreground/80">
@@ -290,7 +327,9 @@ export default function AboutSection({
                   </div>
                 </div>
                 <div className="flex gap-4 p-4 rounded-xl bg-primary/5 border border-primary/10">
-                  <Users className="w-6 h-6 text-white shrink-0 mt-1" />
+                  <div className="rounded-lg  p-2 shrink-0 mt-1">
+                    <Users className="w-6 h-6 text-green-400" />
+                  </div>
                   <div>
                     <h3 className="font-semibold text-foreground mb-1">Enterprise-Grade Solutions</h3>
                     <p className="text-sm leading-relaxed text-foreground/80">
@@ -306,7 +345,7 @@ export default function AboutSection({
               <div className="relative w-full max-w-2xl lg:max-w-3xl">
                 <div className="overflow-hidden rounded-3xl border border-white/20 shadow-2xl">
                   <img
-                    src="https://images.unsplash.com/photo-1553877522-43269d4ea984"
+                    src="/about.webp"
                     alt="Digital innovation team"
                     className="h-[360px] w-full object-cover sm:h-[420px] md:h-[480px] lg:h-[520px]"
                   />
@@ -334,14 +373,16 @@ export default function AboutSection({
             }`}
             style={{ transitionDelay: "750ms" }}
           >
-            <MagneticButton onClick={() => scrollToSection?.(4)}>
+           <MagneticButton onClick={() => scrollToSection?.(4)}>
               <span className="relative z-10 flex items-center">
                 Start a Project <ArrowForward className="w-4 h-4 ml-1" />
               </span>
             </MagneticButton>
 
             <MagneticButton onClick={() => scrollToSection?.(1)}>
-              <span className="relative z-10 flex items-center">View Our Work</span>
+              <span className="relative z-10 flex items-center">
+                View Our Work 
+              </span>
             </MagneticButton>
           </div>
         </div>
@@ -369,15 +410,19 @@ export default function AboutSection({
             </div>
 
             <div className="grid gap-8 md:grid-cols-2 mb-16">
-              <div className="rounded-2xl border border-primary/20 bg-gradient-to-br from-primary/5 to-transparent p-8">
-                <GpsFixed className="w-12 h-12 text-white mb-4" />
+              <div className="rounded-2xl border border-primary/20 bg-gradient-to-br from-blue-500/5 to-transparent p-8">
+                <div className="rounded-lg bg-gradient-to-br from-blue-500/20 to-blue-600/10 p-3 w-12 h-12 flex items-center justify-center mb-4">
+                  <GpsFixed className="w-6 h-6 text-blue-400" />
+                </div>
                 <h3 className="font-sans text-2xl font-bold text-foreground mb-4">Our Mission</h3>
                 <p className="text-foreground/80 leading-relaxed">
                   To help businesses grow through smart technology and reliable digital solutions.
                 </p>
               </div>
-              <div className="rounded-2xl border border-primary/20 bg-gradient-to-br from-primary/5 to-transparent p-8">
-                <Sparkles className="w-12 h-12 text-white mb-4" />
+              <div className="rounded-2xl border border-primary/20 bg-gradient-to-br from-purple-500/5 to-transparent p-8">
+                <div className="rounded-lg bg-gradient-to-br from-purple-500/20 to-purple-600/10 p-3 w-12 h-12 flex items-center justify-center mb-4">
+                  <Sparkles className="w-6 h-6 text-purple-400" />
+                </div>
                 <h3 className="font-sans text-2xl font-bold text-foreground mb-4">Our Vision</h3>
                 <p className="text-foreground/80 leading-relaxed">
                   To be the most trusted technology partner globally, recognized for excellence in AI, IoT, and custom
@@ -412,8 +457,8 @@ export default function AboutSection({
                       <div className={`absolute inset-0 bg-gradient-to-br ${tech.color} opacity-60 group-hover:opacity-80 transition-opacity`} />
                       <div className="relative z-10">
                         <div className="mb-4 flex items-center gap-3">
-                          <div className="rounded-lg bg-white/10 p-2 group-hover:bg-white/20 transition-colors">
-                            <Icon className="w-5 h-5 text-white" />
+                          <div className={`rounded-lg ${tech.iconBg} p-2 group-hover:opacity-90 transition-opacity`}>
+                            <Icon className={`w-5 h-5 ${tech.iconColor}`} />
                           </div>
                           <h4 className="font-sans text-lg font-semibold text-foreground group-hover:text-white transition-colors">
                             {tech.category}
@@ -425,7 +470,7 @@ export default function AboutSection({
                               key={techIdx}
                               className="flex items-center gap-2 rounded-lg bg-white/5 px-3 py-2 transition-all hover:bg-white/10 group-hover:translate-x-1"
                             >
-                              <div className="h-1.5 w-1.5 rounded-full bg-primary group-hover:scale-125 transition-transform" />
+                              <div className={`h-1.5 w-1.5 rounded-full ${tech.iconBg.replace('bg-', 'bg-').replace('/20', '/60')} group-hover:scale-125 transition-transform`} />
                               <span className="text-sm font-medium text-foreground/90 group-hover:text-white transition-colors">
                                 {technology}
                               </span>
@@ -447,7 +492,7 @@ export default function AboutSection({
               <div className="mt-16 p-8 rounded-2xl border border-primary/30 bg-gradient-to-r from-purple-500/10 to-blue-500/10">
                 <div className="flex flex-col md:flex-row items-center gap-6">
                   <div className="flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-purple-500/20 to-blue-500/20">
-                    <Smartphone className="w-10 h-10 text-white" />
+                    <Smartphone className="w-10 h-10 text-purple-400" />
                   </div>
                   <div className="flex-1">
                     <h4 className="font-sans text-2xl font-bold text-foreground mb-3">Mobile Development Excellence</h4>
@@ -457,12 +502,12 @@ export default function AboutSection({
                       and seamless user experiences across all devices.
                     </p>
                     <div className="flex flex-wrap gap-3">
-                      <span className="px-3 py-1 bg-white/10 rounded-full text-sm text-foreground/90">React Native</span>
-                      <span className="px-3 py-1 bg-white/10 rounded-full text-sm text-foreground/90">Flutter</span>
-                      <span className="px-3 py-1 bg-white/10 rounded-full text-sm text-foreground/90">iOS Development</span>
-                      <span className="px-3 py-1 bg-white/10 rounded-full text-sm text-foreground/90">Android Development</span>
-                      <span className="px-3 py-1 bg-white/10 rounded-full text-sm text-foreground/90">Mobile UI/UX</span>
-                      <span className="px-3 py-1 bg-white/10 rounded-full text-sm text-foreground/90">App Store Deployment</span>
+                      <span className="px-3 py-1 bg-purple-500/20 rounded-full text-sm text-foreground/90">React Native</span>
+                      <span className="px-3 py-1 bg-blue-500/20 rounded-full text-sm text-foreground/90">Flutter</span>
+                      <span className="px-3 py-1 bg-green-500/20 rounded-full text-sm text-foreground/90">iOS Development</span>
+                      <span className="px-3 py-1 bg-red-500/20 rounded-full text-sm text-foreground/90">Android Development</span>
+                      <span className="px-3 py-1 bg-pink-500/20 rounded-full text-sm text-foreground/90">Mobile UI/UX</span>
+                      <span className="px-3 py-1 bg-yellow-500/20 rounded-full text-sm text-foreground/90">App Store Deployment</span>
                     </div>
                   </div>
                 </div>
@@ -498,8 +543,8 @@ export default function AboutSection({
                     <CardHeader className="pb-4">
                       <div className="flex flex-col items-start gap-4">
                         <div className="flex flex-row justify-center items-center gap-5">
-                          <div className="rounded-xl bg-primary/10 p-3 group-hover:bg-primary/20 transition-colors">
-                            <Icon className="w-5 h-5 text-white" />
+                          <div className={`rounded-xl ${service.iconBg} p-3 group-hover:opacity-90 transition-opacity`}>
+                            <Icon className={`w-6 h-6 ${service.iconColor}`} />
                           </div>
                           <h3 className="font-sans text-2xl mt-2 font-bold text-foreground group-hover:text-white transition-colors mb-2">
                             {service.title}
@@ -512,7 +557,7 @@ export default function AboutSection({
                       <div className="space-y-2 -mt-8">
                         {service.features.map((feature, featureIdx) => (
                           <div key={featureIdx} className="flex items-center gap-2">
-                            <div className="w-1.5 h-1.5 rounded-full bg-white" />
+                            <div className={`w-1.5 h-1.5 rounded-full ${service.iconBg.replace('bg-gradient-to-br', 'bg').replace('/10', '/60')}`} />
                             <span className="text-sm text-foreground/70">{feature}</span>
                           </div>
                         ))}

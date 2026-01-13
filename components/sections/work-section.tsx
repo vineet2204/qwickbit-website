@@ -813,6 +813,33 @@ function CaseStudyModal({
               ))}
             </div>
           </section>
+
+           <section className="pb-20">
+           <div className="  p-6 md:p-8 rounded-2xl border border-white/10 bg-white/5">
+                    <div className="flex flex-col md:flex-row items-center justify-between gap-4 md:gap-6">
+                      <div className="text-center md:text-left">
+                        <p className="text-gray-400 text-sm mb-1">
+                          Have questions about this policy?
+                        </p>
+                        <p className="text-white font-medium">
+                          Contact us at{' '}
+                          <a 
+                            href="mailto:contact@qwickbit.com" 
+                            className="text-blue-400 hover:text-blue-300 transition-colors"
+                          >
+                            contact@qwickbit.com
+                          </a>
+                        </p>
+                      </div>
+                      <button
+                        onClick={onClose}
+                        className="px-6 py-3 rounded-full bg-white text-black font-semibold hover:bg-gray-200 transition-all"
+                      >
+                        Back to Home
+                      </button>
+                    </div>
+                  </div>
+          </section>
         </div>
       </div>
     </div>
