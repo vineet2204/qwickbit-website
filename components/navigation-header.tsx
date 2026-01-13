@@ -193,25 +193,177 @@ const servicesMenu: ServicesMenuItem[] = [
   {
     category: "Technologies",
     items: [
+      // Frontend Technologies
       {
         name: "React",
-        description: "Build interactive user interfaces with architecture.",
+        description: "Build interactive user interfaces with component-based architecture.",
         icon: Code,
       },
-      { name: "Next.js", description: "Production-ready React framework with SSR and static generation.", icon: Globe },
-      { name: "TypeScript", description: "Type-safe JavaScript for scalable application development.", icon: FileText },
-      { name: "Node.js", description: "Server-side JavaScript runtime for building scalable applications.", icon: Cpu },
-      { name: "Python", description: "Versatile programming language for web, AI, and data science.", icon: Brain },
-      { name: "PostgreSQL", description: "Advanced open-source relational database management system.", icon: Shield },
-      { name: "MongoDB", description: "NoSQL database for flexible, scalable data storage.", icon: Cloud },
-      { name: "GraphQL", description: "Modern API query language for efficient data fetching.", icon: Link },
-      { name: "Docker", description: "Containerization platform for consistent deployment.", icon: Cpu },
-      { name: "AWS", description: "Cloud computing services for scalable infrastructure.", icon: Cloud },
-      { name: "Firebase", description: "Backend-as-a-Service platform for rapid app development.", icon: Zap },
-      { name: "Tailwind CSS", description: "Utility-first CSS framework for rapid UI development.", icon: Eye },
-      { name: "Vue.js", description: "Progressive JavaScript framework for building user interfaces.", icon: Code },
-      { name: "Angular", description: "Enterprise-grade framework for building web applications.", icon: Globe },
-      { name: "Redis", description: "In-memory data structure store for caching.", icon: Zap },
+      { 
+        name: "Next.js", 
+        description: "Production-ready React framework with SSR and static generation.", 
+        icon: Globe 
+      },
+      { 
+        name: "TypeScript", 
+        description: "Type-safe JavaScript for scalable application development.", 
+        icon: FileText 
+      },
+      { 
+        name: "Vue.js", 
+        description: "Progressive JavaScript framework for building user interfaces.", 
+        icon: Code 
+      },
+      { 
+        name: "Angular", 
+        description: "Enterprise-grade framework for building web applications.", 
+        icon: Globe 
+      },
+      { 
+        name: "Tailwind CSS", 
+        description: "Utility-first CSS framework for rapid UI development.", 
+        icon: Eye 
+      },
+      
+      // Mobile Development Technologies
+      {
+        name: "React Native",
+        description: "Cross-platform mobile apps using React for iOS and Android.",
+        icon: Globe,
+      },
+      {
+        name: "Flutter",
+        description: "Google's UI toolkit for natively compiled apps across mobile, web, and desktop.",
+        icon: Zap,
+      },
+      {
+        name: "iOS (Swift)",
+        description: "Native iOS app development using Swift programming language.",
+        icon: Cpu,
+      },
+      {
+        name: "Android (Kotlin)",
+        description: "Native Android app development using Kotlin programming language.",
+        icon: Cpu,
+      },
+      {
+        name: "Ionic",
+        description: "Cross-platform mobile apps using web technologies.",
+        icon: Code,
+      },
+      {
+        name: "Expo",
+        description: "Framework and platform for universal React applications.",
+        icon: Globe,
+      },
+      
+      // Backend Technologies
+      { 
+        name: "Node.js", 
+        description: "Server-side JavaScript runtime for building scalable applications.", 
+        icon: Cpu 
+      },
+      { 
+        name: "Python", 
+        description: "Versatile programming language for web, AI, and data science.", 
+        icon: Brain 
+      },
+      { 
+        name: "Java", 
+        description: "Object-oriented programming language for enterprise applications.", 
+        icon: Cpu,
+      },
+      { 
+        name: "Go", 
+        description: "Statically typed, compiled programming language for modern backend.", 
+        icon: Zap,
+      },
+      
+      // Database Technologies
+      { 
+        name: "PostgreSQL", 
+        description: "Advanced open-source relational database management system.", 
+        icon: Shield 
+      },
+      { 
+        name: "MongoDB", 
+        description: "NoSQL database for flexible, scalable data storage.", 
+        icon: Cloud 
+      },
+      { 
+        name: "MySQL", 
+        description: "Popular open-source relational database management system.", 
+        icon: Shield,
+      },
+      { 
+        name: "Redis", 
+        description: "In-memory data structure store for caching and real-time apps.", 
+        icon: Zap 
+      },
+      { 
+        name: "Firestore", 
+        description: "NoSQL cloud database for mobile, web, and server development.", 
+        icon: Cloud,
+      },
+      
+      // API & Cloud Technologies
+      { 
+        name: "GraphQL", 
+        description: "Modern API query language for efficient data fetching.", 
+        icon: Link 
+      },
+      { 
+        name: "REST API", 
+        description: "Architectural style for building scalable web services.", 
+        icon: Link,
+      },
+      { 
+        name: "AWS", 
+        description: "Cloud computing services for scalable infrastructure.", 
+        icon: Cloud 
+      },
+      { 
+        name: "Firebase", 
+        description: "Backend-as-a-Service platform for rapid app development.", 
+        icon: Zap 
+      },
+      { 
+        name: "Google Cloud", 
+        description: "Suite of cloud computing services for modern applications.", 
+        icon: Cloud,
+      },
+      { 
+        name: "Azure", 
+        description: "Microsoft's cloud computing platform and services.", 
+        icon: Cloud,
+      },
+      
+      // DevOps & Tools
+      { 
+        name: "Docker", 
+        description: "Containerization platform for consistent deployment.", 
+        icon: Cpu 
+      },
+      { 
+        name: "Kubernetes", 
+        description: "Container orchestration platform for automating deployment.", 
+        icon: Cloud,
+      },
+      { 
+        name: "Git", 
+        description: "Distributed version control system for tracking code changes.", 
+        icon: Code,
+      },
+      { 
+        name: "Jenkins", 
+        description: "Automation server for building, testing, and deployment.", 
+        icon: Zap,
+      },
+      { 
+        name: "CI/CD", 
+        description: "Continuous integration and continuous delivery pipelines.", 
+        icon: Zap,
+      },
     ],
   },
 ]

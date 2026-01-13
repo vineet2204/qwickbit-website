@@ -125,7 +125,7 @@ function ProjectCard({ project, delay = 0 }: ProjectCardProps) {
   return (
     <Appear
       delay={delay}
-      className="flex flex-col bg-zinc-800 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 cursor-pointer"
+      className="flex flex-col  rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 cursor-pointer"
       onClick={() => {
         const link = project.link
         const pageLink = link || `/projects/${getSlugName(project)}`
@@ -135,11 +135,11 @@ function ProjectCard({ project, delay = 0 }: ProjectCardProps) {
       }}
     >
       {/* Image Container */}
-      <div className="w-full h-64 bg-zinc-700 overflow-hidden">
+      <div className="w-full h-64  overflow-hidden">
         <img
           src={project.photoURL || defaultImage}
           alt={project.name}
-          className="w-full h-full object-cover"
+          className="w-full rounded-3xl h-full object-cover"
         />
       </div>
 
@@ -294,8 +294,24 @@ export default function ProjectsPage() {
         {allTags.length > 0 && (
           <section className="mb-12 -mt-18">
             <div className="flex flex-col md:flex-row items-center justify-center md:justify-start space-y-4 md:space-y-0">
-              <p className="mr-4 font-medium text-center justify-center items-center mt-4 text-gray-700">Filter by platform:</p>
+              {/* <p className="mr-4 font-medium text-center justify-center items-center mt-4 text-gray-700">Filter by platform:</p> */}
               <div className="flex flex-wrap gap-2 justify-center md:justify-start">
+                {/* ALL Tag */}
+                <button
+                  onClick={() => setTags([])}
+                  className={`
+                    px-4 py-2 rounded-full text-sm font-medium uppercase
+                    transition-all hover:scale-105 active:scale-95
+                    ${tags.length === 0
+                      ? 'bg-white text-black' 
+                      : 'bg-transparent text-white border border-gray-400 hover:bg-gray-100 hover:text-black'
+                    }
+                  `}
+                >
+                  ALL
+                </button>
+                
+                {/* Other Tags */}
                 {allTags.map((tag, i) => {
                   const isActive = tags.includes(tag)
                   return (
@@ -312,8 +328,8 @@ export default function ProjectsPage() {
                         px-4 py-2 rounded-full text-sm font-medium uppercase
                         transition-all hover:scale-105 active:scale-95
                         ${isActive 
-                          ? 'bg-indigo-500 text-white' 
-                          : 'bg-black text-white border border-white hover:text-black hover:bg-gray-200'
+                          ? 'bg-white text-black' 
+                          : 'bg-transparent text-white border border-gray-400 hover:bg-gray-100 hover:text-black'
                         }
                       `}
                     >

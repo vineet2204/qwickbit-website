@@ -568,27 +568,29 @@ function FirestoreProjectCard({
         </div>
 
         <div className="px-1 py-6 flex flex-col flex-grow">
-          <h3 className="mb-2 text-2xl font-bold text-white line-clamp-2 min-h-[3.5rem]">
-            {project.name || project.title || ''}
-          </h3>
-          <p className="mb-4 text-base leading-relaxed text-white/80 line-clamp-2 min-h-[3rem] flex-grow">
-            {project.description}
-          </p>
+          <div className="flex-grow">
+            <h3 className="mb-3 text-2xl font-bold text-white line-clamp-2">
+              {project.name || project.title || ''}
+            </h3>
+            <p className="mb-3 text-base leading-relaxed text-white/80 line-clamp-2">
+              {project.description}
+            </p>
 
-          <div className="mt-auto">
             {tags.length > 0 && (
-              <div className="flex flex-wrap gap-2 mb-4 min-h-[2rem]">
+              <div className="flex flex-wrap gap-2">
                 {tags.slice(0, 3).map((tag, i) => (
                   <span
                     key={i}
-                    className="rounded-full bg-white/10 mt-3 px-3 py-1 text-xs font-medium uppercase text-white/90"
+                    className="rounded-full bg-white/10 px-3 py-1 text-xs font-medium uppercase text-white/90"
                   >
                     {tag.trim()}
                   </span>
                 ))}
               </div>
             )}
+          </div>
 
+          <div className="mt-2 pt-4 ">
             <div className="flex items-center gap-2 font-medium text-white underline underline-offset-4">
               View Project
               <span className="transition-transform group-hover:translate-x-1">

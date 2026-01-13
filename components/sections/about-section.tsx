@@ -3,7 +3,7 @@
 import type React from "react"
 
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
-import { Sparkles, TrendingUp, Users, Lightbulb, Zap, Shield, Globe, Cpu, Database, Cloud, Server, CodeIcon } from "lucide-react"
+import { Sparkles, TrendingUp, Users, Lightbulb, Zap, Shield, Globe, Cpu, Database, Cloud, Server, CodeIcon, Smartphone, Tablet, Monitor } from "lucide-react"
 import { useReveal } from "@/hooks/use-reveal"
 import { useEffect, useRef } from "react"
 import TrustedClients from "../TrustedClientsSection"
@@ -163,32 +163,62 @@ export default function AboutSection({
     {
       category: "Frontend",
       icon: Cpu,
-      technologies: ["React", "Next.js"],
+      technologies: ["React", "Next.js", "Vue.js", "Angular", "TypeScript"],
       color: "from-blue-500/20 to-blue-500/5",
     },
     {
       category: "Backend",
       icon: Server,
-      technologies: ["Node.js", "Python"],
+      technologies: ["Node.js", "Python", "Java", "Go", "Ruby on Rails"],
       color: "from-green-500/20 to-green-500/5",
+    },
+    {
+      category: "Mobile",
+      icon: Smartphone,
+      technologies: ["React Native", "Flutter", "iOS (Swift)", "Android (Kotlin)"],
+      color: "from-purple-500/20 to-purple-500/5",
     },
     {
       category: "Cloud",
       icon: Cloud,
-      technologies: ["AWS"],
+      technologies: ["AWS", "Azure", "Google Cloud", "Cloudflare"],
       color: "from-orange-500/20 to-orange-500/5",
     },
     {
       category: "DevOps",
       icon: Shield,
-      technologies: ["Docker"],
-      color: "from-purple-500/20 to-purple-500/5",
+      technologies: ["Docker", "Kubernetes", "Jenkins", "Terraform", "GitLab CI/CD"],
+      color: "from-cyan-500/20 to-cyan-500/5",
     },
     {
       category: "Databases",
       icon: Database,
-      technologies: ["PostgreSQL", "MongoDB"],
+      technologies: ["PostgreSQL", "MongoDB", "Redis", "MySQL", "Firebase"],
       color: "from-red-500/20 to-red-500/5",
+    },
+    {
+      category: "AI/ML",
+      icon: Zap,
+      technologies: ["TensorFlow", "PyTorch", "OpenAI", "LangChain", "Computer Vision"],
+      color: "from-yellow-500/20 to-yellow-500/5",
+    },
+    {
+      category: "Cross-Platform",
+      icon: Monitor,
+      technologies: ["Electron", "React Native", "Flutter", "PWA"],
+      color: "from-pink-500/20 to-pink-500/5",
+    },
+    {
+      category: "Testing",
+      icon: Shield,
+      technologies: ["Jest", "Cypress", "Selenium", "Playwright", "Postman"],
+      color: "from-indigo-500/20 to-indigo-500/5",
+    },
+    {
+      category: "CMS & E-commerce",
+      icon: Tablet,
+      technologies: ["WordPress", "Shopify", "Magento", "Strapi", "Sanity"],
+      color: "from-teal-500/20 to-teal-500/5",
     },
   ]
 
@@ -367,40 +397,74 @@ export default function AboutSection({
               </h3>
               <p className="text-lg text-foreground/70 mb-8 max-w-3xl">
                 We work with cutting-edge technologies to build robust, scalable, and efficient solutions that drive
-                business success.
+                business success across web, mobile, and cloud platforms.
               </p>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
                 {techStack.map((tech, idx) => {
                   const Icon = tech.icon
                   return (
                     <div
                       key={idx}
-                      className="group relative overflow-hidden rounded-2xl border border-primary/20 p-6 transition-all duration-300 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5"
+                      className="group relative overflow-hidden rounded-2xl border border-primary/20 p-6 transition-all duration-300 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5 hover:scale-[1.02]"
                     >
-                      <div className={`absolute inset-0 bg-gradient-to-br ${tech.color} opacity-50`} />
+                      <div className={`absolute inset-0 bg-gradient-to-br ${tech.color} opacity-60 group-hover:opacity-80 transition-opacity`} />
                       <div className="relative z-10">
                         <div className="mb-4 flex items-center gap-3">
-                          <div className="rounded-lg bg-white/10 p-2">
+                          <div className="rounded-lg bg-white/10 p-2 group-hover:bg-white/20 transition-colors">
                             <Icon className="w-5 h-5 text-white" />
                           </div>
-                          <h4 className="font-sans text-lg font-semibold text-foreground">{tech.category}</h4>
+                          <h4 className="font-sans text-lg font-semibold text-foreground group-hover:text-white transition-colors">
+                            {tech.category}
+                          </h4>
                         </div>
                         <div className="space-y-2">
                           {tech.technologies.map((technology, techIdx) => (
                             <div
                               key={techIdx}
-                              className="flex items-center gap-2 rounded-lg bg-white/5 px-3 py-2 transition-all hover:bg-white/10"
+                              className="flex items-center gap-2 rounded-lg bg-white/5 px-3 py-2 transition-all hover:bg-white/10 group-hover:translate-x-1"
                             >
-                              <div className="h-1.5 w-1.5 rounded-full bg-primary" />
-                              <span className="text-sm font-medium text-foreground/90">{technology}</span>
+                              <div className="h-1.5 w-1.5 rounded-full bg-primary group-hover:scale-125 transition-transform" />
+                              <span className="text-sm font-medium text-foreground/90 group-hover:text-white transition-colors">
+                                {technology}
+                              </span>
                             </div>
                           ))}
                         </div>
                       </div>
+                      
+                      {/* Hover effect glow */}
+                      <div className="absolute inset-0 opacity-0 group-hover:opacity-30 transition-opacity">
+                        <div className={`absolute -inset-1 bg-gradient-to-r ${tech.color} blur-xl`} />
+                      </div>
                     </div>
                   )
                 })}
+              </div>
+              
+              {/* Mobile Development Highlights */}
+              <div className="mt-16 p-8 rounded-2xl border border-primary/30 bg-gradient-to-r from-purple-500/10 to-blue-500/10">
+                <div className="flex flex-col md:flex-row items-center gap-6">
+                  <div className="flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-purple-500/20 to-blue-500/20">
+                    <Smartphone className="w-10 h-10 text-white" />
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="font-sans text-2xl font-bold text-foreground mb-3">Mobile Development Excellence</h4>
+                    <p className="text-foreground/80 mb-4">
+                      We specialize in building native and cross-platform mobile applications using React Native, Flutter, 
+                      Swift (iOS), and Kotlin (Android). Our mobile solutions are optimized for performance, security, 
+                      and seamless user experiences across all devices.
+                    </p>
+                    <div className="flex flex-wrap gap-3">
+                      <span className="px-3 py-1 bg-white/10 rounded-full text-sm text-foreground/90">React Native</span>
+                      <span className="px-3 py-1 bg-white/10 rounded-full text-sm text-foreground/90">Flutter</span>
+                      <span className="px-3 py-1 bg-white/10 rounded-full text-sm text-foreground/90">iOS Development</span>
+                      <span className="px-3 py-1 bg-white/10 rounded-full text-sm text-foreground/90">Android Development</span>
+                      <span className="px-3 py-1 bg-white/10 rounded-full text-sm text-foreground/90">Mobile UI/UX</span>
+                      <span className="px-3 py-1 bg-white/10 rounded-full text-sm text-foreground/90">App Store Deployment</span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

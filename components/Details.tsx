@@ -307,6 +307,7 @@ export function DetailPage({ isOpen, onClose, item, type }: DetailPageProps) {
   const [isVisible, setIsVisible] = useState(false)
   const contentRef = useRef<HTMLDivElement>(null)
   const techScrollRef = useRef<HTMLDivElement>(null)
+  const [showScrollButtons, setShowScrollButtons] = useState(false)
 
   useEffect(() => {
     if (isOpen && item) {
@@ -323,6 +324,19 @@ export function DetailPage({ isOpen, onClose, item, type }: DetailPageProps) {
       document.body.style.overflow = 'unset'
     }
   }, [isOpen, item])
+
+  useEffect(() => {
+    const checkScrollNeeded = () => {
+      if (techScrollRef.current) {
+        const { scrollWidth, clientWidth } = techScrollRef.current
+        setShowScrollButtons(scrollWidth > clientWidth)
+      }
+    }
+
+    checkScrollNeeded()
+    window.addEventListener('resize', checkScrollNeeded)
+    return () => window.removeEventListener('resize', checkScrollNeeded)
+  }, [item])
 
   const handleClose = () => {
     setIsVisible(false)
@@ -475,20 +489,22 @@ export function DetailPage({ isOpen, onClose, item, type }: DetailPageProps) {
                   <Public className="w-6 h-6 text-blue-400" />
                   <h2 className="text-2xl  text-white">Technology Stack</h2>
                 </div>
-                <div className="flex gap-2">
-                  <button 
-                    onClick={() => scrollTech('left')}
-                    className="p-2 rounded-full border border-white/20 bg-white/5 hover:bg-white/10 transition-colors"
-                  >
-                    <ChevronLeft className="w-5 h-5 text-white/80" />
-                  </button>
-                  <button 
-                    onClick={() => scrollTech('right')}
-                    className="p-2 rounded-full border border-white/20 bg-white/5 hover:bg-white/10 transition-colors"
-                  >
-                    <ChevronRight className="w-5 h-5 text-white/80" />
-                  </button>
-                </div>
+                {showScrollButtons && (
+                  <div className="flex gap-2">
+                    <button 
+                      onClick={() => scrollTech('left')}
+                      className="p-2 rounded-full border border-white/20 bg-white/5 hover:bg-white/10 transition-colors"
+                    >
+                      <ChevronLeft className="w-5 h-5 text-white/80" />
+                    </button>
+                    <button 
+                      onClick={() => scrollTech('right')}
+                      className="p-2 rounded-full border border-white/20 bg-white/5 hover:bg-white/10 transition-colors"
+                    >
+                      <ChevronRight className="w-5 h-5 text-white/80" />
+                    </button>
+                  </div>
+                )}
               </div>
               <div 
                 ref={techScrollRef}
@@ -546,32 +562,32 @@ export function DetailPage({ isOpen, onClose, item, type }: DetailPageProps) {
             </section>
 
             {/* CTA Section */}
-         <section className="pb-4">
-  <div
-    className="p-6 md:p-10 rounded-2xl border border-white/10 relative overflow-hidden"
-    style={{
-      background:
-        "linear-gradient(232.81deg, #2C60AB 25.76%, #AD7A3D 92.62%)",
-    }}
-  >
-    <div className="text-center max-w-2xl mx-auto relative z-10">
-      <h2 className="text-3xl md:text-4xl text-white mb-4 leading-tight">
-        Ready To Transform<br />Your Business?
-      </h2>
+            <section className="pb-4">
+              <div
+                className="p-6 md:p-10 rounded-2xl border border-white/10 relative overflow-hidden"
+                style={{
+                  background:
+                    "linear-gradient(232.81deg, #2C60AB 25.76%, #AD7A3D 92.62%)",
+                }}
+              >
+                <div className="text-center max-w-2xl mx-auto relative z-10">
+                  <h2 className="text-3xl md:text-4xl text-white mb-4 leading-tight">
+                    Ready To Transform<br />Your Business?
+                  </h2>
 
-      <p className="text-lg text-white/80 mb-6 leading-relaxed">
-        Schedule a personalized demo to see how our {content.title} <br /> solution can drive your success.
-      </p>
+                  <p className="text-lg text-white/80 mb-6 leading-relaxed">
+                    Schedule a personalized demo to see how our {content.title} <br /> solution can drive your success.
+                  </p>
 
-      <button
-        onClick={handleClose}
-        className="px-8 py-3 rounded-full bg-white text-slate-900 text-base hover:bg-white/95 hover:scale-105 transition-all duration-300 shadow-lg"
-      >
-        Book A Demo
-      </button>
-    </div>
-  </div>
-</section>
+                  <button
+                    onClick={handleClose}
+                    className="px-8 py-3 rounded-full bg-white text-slate-900 text-base hover:bg-white/95 hover:scale-105 transition-all duration-300 shadow-lg"
+                  >
+                    Book A Demo
+                  </button>
+                </div>
+              </div>
+            </section>
 
           </div>
         </div>
