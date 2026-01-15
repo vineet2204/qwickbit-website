@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react'
-import { createPortal } from 'react-dom'
-import { X, CheckCircle, ArrowRight, Home } from 'lucide-react'
+import React, { useState, useEffect } from 'react'
+import { X, CheckCircle, ArrowRight } from 'lucide-react'
 import DynamicForm from './ContactForm'
+import { createPortal } from 'react-dom'
 
 interface DetailPageProps {
   isOpen: boolean
@@ -13,7 +13,6 @@ interface DetailPageProps {
   } | null
   type: 'service' | 'product'
 }
-
 
 interface Stat {
   value: string
@@ -90,7 +89,7 @@ const getDetailedContent = (name: string) => {
       subtitle: 'Native and cross-platform mobile solutions',
       category: 'Mobile Development Services',
       description: 'Build engaging mobile experiences that users love across iOS and Android platforms',
-      image: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=1400&h=600&fit=crop',
+      image: '/details/mob.jpg',
       background: 'Mobile-first consumers expect seamless, intuitive experiences. Businesses need apps that work flawlessly across all devices.',
       problem: 'Developing for multiple platforms is expensive and time-consuming. Many apps suffer from poor performance, crashes, and low user retention.',
       solution: 'We build engaging mobile experiences using React Native for cross-platform efficiency or native development for maximum performance, combined with beautiful design.',
@@ -182,7 +181,7 @@ const getDetailedContent = (name: string) => {
       subtitle: 'Integrated CRM with efficient process management',
       category: 'CRM Platform',
       description: 'Streamline customer relationships with comprehensive CRM featuring automation and analytics',
-      image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1400&h=600&fit=crop',
+      image: '/details/crm.jpg',
       background: 'Businesses need centralized systems to manage customer relationships, track interactions, and drive sales growth efficiently.',
       problem: 'Fragmented customer data, manual processes, poor visibility into sales pipeline, and difficulty tracking customer interactions.',
       solution: 'Comprehensive CRM solution with lead management, sales automation, customer tracking, marketing integration, and advanced analytics.',
@@ -221,6 +220,144 @@ const getDetailedContent = (name: string) => {
         { value: '50', unit: '%', label: 'Faster deal closure' },
         { value: '80', unit: '%', label: 'Lead conversion improvement' },
         { value: '5x', unit: '', label: 'ROI increase' }
+      ]
+    },
+    ' ECommerce': {
+      title: 'ECommerce Solutions',
+      subtitle: 'Complete online store with advanced features',
+      category: 'ECommerce Platform',
+      description: 'Build conversion-friendly online stores that drive sales and customer satisfaction',
+      image: '/details/ecom.jpg',
+      background: 'Modern consumers expect seamless online shopping experiences with fast checkout, personalized recommendations, and mobile-first design.',
+      problem: 'Low conversion rates, cart abandonment, poor mobile experience, and difficulty managing inventory across multiple channels.',
+      solution: 'Comprehensive eCommerce platform with advanced features including personalized recommendations, seamless checkout, inventory management, and omnichannel selling.',
+      approach: [
+        'Build mobile-first responsive design',
+        'Implement AI-powered product recommendations',
+        'Create streamlined checkout process',
+        'Integrate payment gateways and shipping APIs'
+      ],
+      result: 'Increased conversion rates by 55%, reduced cart abandonment by 40%, improved mobile sales by 75%, and enhanced customer lifetime value by 60%.',
+      features: [
+        'Product Catalog Management',
+        'Shopping Cart & Checkout',
+        'Payment Gateway Integration',
+        'Inventory Management',
+        'Order Tracking System',
+        'Multi-channel Selling'
+      ],
+      benefits: [
+        'Higher conversion rates',
+        'Reduced cart abandonment',
+        'Better customer experience',
+        'Increased revenue'
+      ],
+      technologies: ['Shopify', 'WooCommerce', 'Magento', 'Stripe', 'PayPal', 'Custom Solutions'],
+      useCases: [
+        'Retail online stores',
+        'B2B marketplaces',
+        'Subscription services',
+        'Digital product sales'
+      ],
+      stats: [
+        { value: '55', unit: '%', label: 'Conversion rate increase' },
+        { value: '40', unit: '%', label: 'Reduced cart abandonment' },
+        { value: '75', unit: '%', label: 'Mobile sales growth' },
+        { value: '60', unit: '%', label: 'Customer lifetime value' },
+        { value: '3x', unit: '', label: 'Revenue growth' },
+        { value: '99.9', unit: '%', label: 'Payment success rate' }
+      ]
+    },
+    'Food Ordering': {
+      title: 'Food Ordering System',
+      subtitle: 'Kitchen to customer management',
+      category: 'Restaurant Management Platform',
+      description: 'Manage orders from kitchen to customer in a simple, efficient manner',
+      image: '/details/food.jpg',
+      background: 'Restaurants need efficient systems to handle online orders, manage kitchen operations, and ensure timely delivery while maintaining quality.',
+      problem: 'Order errors, long wait times, poor coordination between kitchen and delivery, and inability to handle peak hours efficiently.',
+      solution: 'Integrated food ordering platform with real-time order tracking, kitchen display system, delivery management, and customer notifications.',
+      approach: [
+        'Build intuitive ordering interface with menu customization',
+        'Implement real-time kitchen display system',
+        'Create delivery route optimization',
+        'Integrate with popular delivery platforms'
+      ],
+      result: 'Reduced order errors by 80%, improved delivery times by 45%, increased order capacity by 3x, and enhanced customer satisfaction by 70%.',
+      features: [
+        'Online Menu Management',
+        'Real-time Order Tracking',
+        'Kitchen Display System',
+        'Delivery Management',
+        'Customer Notifications',
+        'Analytics Dashboard'
+      ],
+      benefits: [
+        'Reduced order errors',
+        'Faster delivery times',
+        'Better kitchen efficiency',
+        'Higher customer satisfaction'
+      ],
+      technologies: ['React', 'Node.js', 'MongoDB', 'Socket.io', 'Google Maps API', 'Stripe'],
+      useCases: [
+        'Quick service restaurants',
+        'Fine dining establishments',
+        'Cloud kitchens',
+        'Food delivery chains'
+      ],
+      stats: [
+        { value: '80', unit: '%', label: 'Reduction in order errors' },
+        { value: '45', unit: '%', label: 'Faster delivery times' },
+        { value: '3x', unit: '', label: 'Order capacity increase' },
+        { value: '70', unit: '%', label: 'Customer satisfaction boost' },
+        { value: '90', unit: '%', label: 'On-time delivery rate' },
+        { value: '50', unit: '%', label: 'Revenue increase' }
+      ]
+    },
+    'Insurance': {
+      title: 'Insurance Management',
+      subtitle: 'Comprehensive insurance solutions',
+      category: 'Insurance Platform',
+      description: 'Comprehensive insurance management solutions for modern insurance providers',
+      image: '/details/insure.jpg',
+      background: 'Insurance companies need robust systems to manage policies, claims, underwriting, and customer relationships efficiently.',
+      problem: 'Manual processes, slow claim processing, poor customer communication, and difficulty managing complex policy structures.',
+      solution: 'End-to-end insurance management platform with policy administration, claims processing, underwriting automation, and customer portal.',
+      approach: [
+        'Automate policy lifecycle management',
+        'Implement intelligent claims processing',
+        'Build customer self-service portals',
+        'Create risk assessment algorithms'
+      ],
+      result: 'Reduced claims processing time by 60%, improved policy issuance speed by 70%, decreased operational costs by 45%, and enhanced customer satisfaction by 55%.',
+      features: [
+        'Policy Administration',
+        'Claims Management',
+        'Underwriting Automation',
+        'Customer Portal',
+        'Risk Assessment',
+        'Compliance Management'
+      ],
+      benefits: [
+        'Faster claim processing',
+        'Reduced operational costs',
+        'Better risk management',
+        'Improved compliance'
+      ],
+      technologies: ['Java', 'Spring Boot', 'PostgreSQL', 'AI/ML', 'Blockchain', 'Cloud'],
+      useCases: [
+        'Health insurance',
+        'Life insurance',
+        'Property & casualty',
+        'Vehicle insurance'
+      ],
+      stats: [
+        { value: '60', unit: '%', label: 'Faster claims processing' },
+        { value: '70', unit: '%', label: 'Quicker policy issuance' },
+        { value: '45', unit: '%', label: 'Cost reduction' },
+        { value: '55', unit: '%', label: 'Customer satisfaction' },
+        { value: '85', unit: '%', label: 'Automation rate' },
+        { value: '99', unit: '%', label: 'Compliance accuracy' }
       ]
     },
     'Conversational AI': {
@@ -267,6 +404,52 @@ const getDetailedContent = (name: string) => {
         { value: '60', unit: '%', label: 'Satisfaction improvement' },
         { value: '85', unit: '%', label: 'Queries resolved automatically' },
         { value: '50k', unit: '+', label: 'Conversations handled monthly' }
+      ]
+    },
+    'Retail': {
+      title: 'Retail Management',
+      subtitle: 'Modern retail and POS systems',
+      category: 'Retail Platform',
+      description: 'Modern retail management and POS systems for efficient store operations',
+      image: '/details/retail.jpg',
+      background: 'Retail businesses need integrated systems to manage inventory, sales, customer data, and multi-location operations seamlessly.',
+      problem: 'Inventory discrepancies, slow checkout, poor visibility across locations, and inability to provide personalized customer experiences.',
+      solution: 'Comprehensive retail management platform with POS, inventory tracking, customer loyalty programs, and omnichannel capabilities.',
+      approach: [
+        'Implement cloud-based POS system',
+        'Build real-time inventory synchronization',
+        'Create customer loyalty programs',
+        'Integrate omnichannel sales tracking'
+      ],
+      result: 'Reduced checkout time by 50%, improved inventory accuracy to 99%, increased customer retention by 45%, and boosted sales by 35%.',
+      features: [
+        'Cloud-based POS',
+        'Inventory Management',
+        'Customer Loyalty Programs',
+        'Multi-location Support',
+        'Sales Analytics',
+        'Employee Management'
+      ],
+      benefits: [
+        'Faster checkout process',
+        'Better inventory control',
+        'Improved customer loyalty',
+        'Increased sales'
+      ],
+      technologies: ['React', 'Node.js', 'PostgreSQL', 'Stripe', 'Square', 'Cloud'],
+      useCases: [
+        'Retail stores',
+        'Fashion boutiques',
+        'Electronics shops',
+        'Multi-brand outlets'
+      ],
+      stats: [
+        { value: '50', unit: '%', label: 'Faster checkout' },
+        { value: '99', unit: '%', label: 'Inventory accuracy' },
+        { value: '45', unit: '%', label: 'Customer retention' },
+        { value: '35', unit: '%', label: 'Sales increase' },
+        { value: '80', unit: '%', label: 'Staff efficiency' },
+        { value: '24/7', unit: '', label: 'System availability' }
       ]
     }
   }

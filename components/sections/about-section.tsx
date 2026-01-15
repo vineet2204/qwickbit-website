@@ -345,7 +345,7 @@ export default function AboutSection({
               <div className="relative w-full max-w-2xl lg:max-w-3xl">
                 <div className="overflow-hidden rounded-3xl border border-white/20 shadow-2xl">
                   <img
-                    src="/about.webp"
+                    src="/about.jpg"
                     alt="Digital innovation team"
                     className="h-[360px] w-full object-cover sm:h-[420px] md:h-[480px] lg:h-[520px]"
                   />
