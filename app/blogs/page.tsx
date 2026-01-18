@@ -146,7 +146,7 @@ function BlogCard({ blog, delay = 0 }: BlogCardProps) {
   return (
     <Appear
       delay={delay}
-      className="flex flex-col bg-zinc-800 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 cursor-pointer"
+      className="flex flex-col  rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 cursor-pointer"
       onClick={() => {
         const link = blog.link
         const pageLink = (blog.content && `blogs/${getSlugName(blog)}`) || link || '/blogs'
@@ -156,11 +156,11 @@ function BlogCard({ blog, delay = 0 }: BlogCardProps) {
       }}
     >
       {/* Image Container */}
-      <div className="w-full h-64 bg-zinc-700 overflow-hidden">
+      <div className="w-full rounded-3xl h-64 bg-zinc-700 overflow-hidden">
         <img
           src={blog.photoURL || defaultImage}
           alt={blog.title}
-          className="w-full h-full object-cover"
+          className="w-full rounded-3xl h-full object-cover"
         />
       </div>
 
