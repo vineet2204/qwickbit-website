@@ -167,7 +167,7 @@ function BlogCard({ blog, delay = 0 }: BlogCardProps) {
       {/* Content Container */}
       <div className="pr-6 pb-10 flex bg-black flex-col flex-grow">
         {/* Date */}
-        <p className="text-xs text-zinc-500  mt-3">
+        <p className="text-sm text-zinc-900/50  mt-3">
           {prettyDate(blog.date)}
         </p>
 
@@ -183,11 +183,11 @@ function BlogCard({ blog, delay = 0 }: BlogCardProps) {
 
         {/* Tags */}
         {blog.tags && (
-          <div className="flex flex-wrap gap-2 mb-4">
+          <div className="flex flex-wrap gap-2 mb-8">
             {blog.tags.split(',').filter(Boolean).slice(0, 3).map((tag, i) => (
               <span
                 key={i}
-                className="px-3 py-1 text-xs font-medium uppercase bg-zinc-700 text-zinc-300 rounded-full"
+                className="px-5 py-2 text-xs font-medium uppercase bg-zinc-700 text-zinc-300 rounded-full"
               >
                 {tag.trim()}
               </span>
@@ -297,13 +297,13 @@ export default function BlogsPage() {
             <h1 className="text-5xl md:text-6xl font-bold mb-6">
               Our Blog
             </h1>
-            <p className="text-lg text-gray-400 mb-10 max-w-3xl mx-auto">
-              Insights, tutorials, and updates from our team. Stay informed about the latest in web development, 
+            <p className="text-lg text-gray-900  max-w-3xl mx-auto">
+             / Insights, tutorials, and updates from our team. Stay informed about the latest in web development, 
               mobile apps, and technology trends.
             </p>
             
             {/* Search Bar */}
-            <div className="flex items-center gap-3 mt-14 max-w-2xl mx-auto">
+            <div className="flex items-center gap-3 mt-2 mb-6 max-w-2xl mx-auto">
               <div className="relative flex-1">
                 <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
                 <input
@@ -349,8 +349,8 @@ export default function BlogsPage() {
                         px-4 py-2 rounded-full text-sm font-medium uppercase
                         transition-all hover:scale-105 active:scale-95
                         ${isActive 
-                          ? 'bg-indigo-500 text-white' 
-                          : 'bg-black text-white border border-white hover:text-black hover:bg-gray-200'
+                          ? 'bg-indigo-500 text-white border border-gray-900' 
+                          : 'bg-black text-white border border-gray-200 hover:text-black hover:bg-gray-200'
                         }
                       `}
                     >

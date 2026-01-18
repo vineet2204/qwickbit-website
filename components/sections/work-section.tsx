@@ -734,7 +734,7 @@ function CaseStudyModal({
             <h2 className="text-4xl font-bold text-white mb-8">Our Approach</h2>
             <div className="grid md:grid-cols-2 gap-6">
               {project.caseStudy.approach.map((item, i) => (
-                <div key={i} className="flex gap-4 p-6 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors">
+                <div key={i} className="flex gap-4 p-6 items-center rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors">
                   <div className="flex-shrink-0">
                     <div className="w-10 h-10 rounded-lg bg-teal-500/20 flex items-center justify-center">
                       <Activity className="h-5 w-5 text-teal-400" />
@@ -800,7 +800,7 @@ function CaseStudyModal({
           </section>
 
           {/* Technologies Used */}
-          <section className="pb-20">
+          <section className="">
             <h2 className="text-4xl font-bold text-white mb-8">Technologies Used</h2>
             <div className="flex flex-wrap gap-4">
               {project.caseStudy.technologies.map((tech, i) => (

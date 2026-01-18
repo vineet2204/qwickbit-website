@@ -642,7 +642,7 @@ export function DetailPage({ isOpen, onClose, item, type }: DetailPageProps) {
               <h2 className="text-4xl font-bold text-white mb-8">Our Approach</h2>
               <div className="grid md:grid-cols-2 gap-6">
                 {content.approach.map((item, i) => (
-                  <div key={i} className="flex gap-4 p-6 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors">
+                  <div key={i} className="flex gap-4 text-center items-center p-6 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors">
                     <div className="flex-shrink-0">
                       <div className="w-10 h-10 rounded-lg bg-blue-500/20 flex items-center justify-center text-blue-400 font-bold">
                         {i + 1}
@@ -688,34 +688,33 @@ export function DetailPage({ isOpen, onClose, item, type }: DetailPageProps) {
               </div>
             </section>
 
-            {/* CTA Section */}
-          <section className="px-4 pb-10 sm:px-6 md:px-0">
+    {/* CTA Section */}
+          <section className="px-4  sm:px-6 md:px-0">
   <div
-    className="relative mx-auto max-w-5xl overflow-hidden rounded-2xl border border-white/10
-               px-6 py-10 sm:px-10 sm:py-14 md:px-16 md:py-10 lg:py-16"
+    className="relative mx-auto max-w-7xl overflow-hidden rounded-3xl border border-white/10
+               px-8 py-6 sm:px-12 md:px-16 lg:px-20"
     style={{
-      background: "linear-gradient(232.81deg, #2C60AB 25.76%, #AD7A3D 92.62%)",
+      background: "linear-gradient(90deg, #8B7355 0%, #4A7BA7 50%, #7BA3C5 100%)",
     }}
   >
-    <div className="relative z-10 mx-auto max-w-2xl text-center">
-      <h2 className="mb-4 text-2xl font-bold leading-snug text-white sm:text-3xl md:text-4xl">
-        Ready To Transform
-        <br className="hidden sm:block" />
-        Your Business?
-      </h2>
+    <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
+      <div className="text-left flex-1">
+        <h2 className="mb-2 text-2xl font-bold text-white sm:text-3xl lg:text-4xl">
+          Ready To Transform Your Business?
+        </h2>
 
-      <p className="mb-8 text-sm leading-relaxed text-white/90 sm:text-base md:text-lg">
-        Schedule a personalized demo to see how our {content.title} solution can drive your success.
-      </p>
+        <p className="text-sm leading-relaxed text-white/90 sm:text-base">
+          Schedule a personalized demo to see how our {content.title} solution can drive your success.
+        </p>
+      </div>
 
       <button
         onClick={handleBookDemoClick}
-        className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-slate-900 shadow-xl
-                   transition-all duration-300 hover:scale-105 hover:bg-white/95
-                   sm:px-7 sm:py-3.5 sm:text-base md:px-8 md:py-4"
+        className="flex-shrink-0 rounded-full bg-white px-8 py-3 text-sm font-bold text-black shadow-xl
+                   transition-all duration-300 hover:scale-105 hover:bg-gray-100
+                   sm:px-10 sm:py-3.5 whitespace-nowrap"
       >
         Book A Demo
-        <ArrowRight className="h-5 w-5" />
       </button>
     </div>
   </div>
@@ -724,7 +723,7 @@ export function DetailPage({ isOpen, onClose, item, type }: DetailPageProps) {
 
             {/* Back to Home Button */}
             <section className="pb-20">
-             <div className="mt-6 md:mt-8 p-6 md:p-8 rounded-2xl border border-white/10 bg-white/5">
+             <div className=" p-6 rounded-2xl border border-white/10 bg-white/5">
                       <div className="flex flex-col md:flex-row items-center justify-between gap-4 md:gap-6">
                         <div className="text-center md:text-left">
                           <p className="text-gray-400 text-sm mb-1">
