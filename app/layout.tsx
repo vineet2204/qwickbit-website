@@ -7,6 +7,7 @@ import { GoodFirmsScript } from "@/components/ui/GoodFirmsWidget"
 import { CustomCursor } from "@/components/custom-cursor"
 import Script from "next/script"
 import GoogleAnalytics from "@/components/Analytics"
+import { SpeedInsights } from "@vercel/speed-insights/next"
 import FirebaseAnalyticsTracker from "@/components/FirebaseAnalyticsTracker"
 
 const _geist = Geist({ subsets: ["latin"] })
@@ -39,6 +40,7 @@ export default function RootLayout({
       <body className="font-sans antialiased">
 <GoodFirmsScript />
 <CustomCursor />
+<SpeedInsights/>
 {/* <GoogleAnalytics /> */}
         {children}
 
