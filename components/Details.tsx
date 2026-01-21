@@ -655,20 +655,7 @@ export function DetailPage({ isOpen, onClose, item, type }: DetailPageProps) {
             </section>
 
 
-            {/* Technologies */}
-            <section>
-              <h2 className="text-4xl font-bold text-white mb-8">Technologies Used</h2>
-              <div className="flex flex-wrap gap-4">
-                {content.technologies.map((tech, i) => (
-                  <span
-                    key={i}
-                    className="px-6 py-3 rounded-full bg-white/5 border border-white/10 text-white font-medium hover:bg-white/10 transition-colors"
-                  >
-                    {tech}
-                  </span>
-                ))}
-              </div>
-            </section>
+         
 
             {/* Use Cases */}
             <section>
@@ -727,7 +714,7 @@ export function DetailPage({ isOpen, onClose, item, type }: DetailPageProps) {
                       <div className="flex flex-col md:flex-row items-center justify-between gap-4 md:gap-6">
                         <div className="text-center md:text-left">
                           <p className="text-gray-400 text-sm mb-1">
-                            Have questions about this policy?
+                            Have questions about  {content.category}?
                           </p>
                           <p className="text-white font-medium">
                             Contact us at{' '}

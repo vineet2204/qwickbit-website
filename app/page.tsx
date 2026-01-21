@@ -13,6 +13,7 @@ import GlassmorphismNavigationHeader from "@/components/navigation-header"
 import { ServicesSection } from "@/components/sections/services-section"
 import { X, Mail, MapPin, Phone } from "lucide-react"
 import DynamicForm from "@/components/ContactForm"
+import AnimatedAvatarChat from "@/components/AnimatedAvatarChat"
 
 // Define the item type
 interface ProductSolutionItem {
@@ -396,8 +397,8 @@ export default function Home() {
             </div>
 
             {/* Right Side - Keypad */}
-            <div className="hidden lg:flex flex-1 items-center justify-center animate-in fade-in duration-1000 delay-400">
-              <KeypadComponent />
+            <div className="hidden lg:flex mt-28  flex-1 items-center justify-center animate-in fade-in duration-1000 delay-400">
+             <AnimatedAvatarChat />
             </div>
           </div>
 
