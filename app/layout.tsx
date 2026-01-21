@@ -38,6 +38,11 @@ export default function RootLayout({
 
       </head>
       <body className="font-sans antialiased">
+         {/* Tawk.to Live Chat */}
+        <Script
+          strategy="afterInteractive"
+          src="https://embed.tawk.to/60f19010649e0a0a5ccc8ab2/1fanplgi9"
+        />
 <GoodFirmsScript />
 <CustomCursor />
 <SpeedInsights/>
