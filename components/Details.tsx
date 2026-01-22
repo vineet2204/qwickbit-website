@@ -594,13 +594,13 @@ export function DetailPage({ isOpen, onClose, item, type }: DetailPageProps) {
               <h2 className="text-4xl font-bold text-white mb-6">The Challenge</h2>
               <p className="text-lg text-gray-300 leading-relaxed mb-8">{content.problem}</p>
               
-              <div className="relative h-96 rounded-2xl overflow-hidden bg-gradient-to-br from-gray-800 to-gray-900">
+              {/* <div className="relative h-96 rounded-2xl overflow-hidden bg-gradient-to-br from-gray-800 to-gray-900">
                 <img
                   src={content.image}
                   alt="Challenge visualization"
                   className="w-full h-full object-cover opacity-60"
                 />
-              </div>
+              </div> */}
             </section>
 
             {/* The Solution */}
@@ -608,13 +608,13 @@ export function DetailPage({ isOpen, onClose, item, type }: DetailPageProps) {
               <h2 className="text-4xl font-bold text-white mb-6">The Solution</h2>
               <p className="text-lg text-gray-300 leading-relaxed mb-8">{content.solution}</p>
               
-              <div className="relative h-96 rounded-2xl overflow-hidden bg-gradient-to-br from-blue-900 to-blue-800">
+              {/* <div className="relative h-96 rounded-2xl overflow-hidden bg-gradient-to-br from-blue-900 to-blue-800">
                 <img
                   src="https://images.unsplash.com/photo-1551434678-e076c223a692?w=1400&h=600&fit=crop"
                   alt="Solution implementation"
                   className="w-full h-full object-cover opacity-70"
                 />
-              </div>
+              </div> */}
             </section>
 
             {/* Key Features */}
@@ -685,7 +685,7 @@ export function DetailPage({ isOpen, onClose, item, type }: DetailPageProps) {
     }}
   >
     <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
-      <div className="text-left flex-1">
+      <div className="-ml-13 text-left flex-1">
         <h2 className="mb-2 text-2xl font-bold text-white sm:text-3xl lg:text-4xl">
           Ready To Transform Your Business?
         </h2>
@@ -697,7 +697,7 @@ export function DetailPage({ isOpen, onClose, item, type }: DetailPageProps) {
 
       <button
         onClick={handleBookDemoClick}
-        className="flex-shrink-0 rounded-full bg-white px-8 py-3 text-sm font-bold text-black shadow-xl
+        className="flex-shrink-0 -mr-15 rounded-full bg-white px-8 py-3 text-sm font-bold text-black shadow-xl
                    transition-all duration-300 hover:scale-105 hover:bg-gray-100
                    sm:px-10 sm:py-3.5 whitespace-nowrap"
       >

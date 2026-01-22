@@ -720,13 +720,13 @@ function CaseStudyModal({
             <h2 className="text-4xl font-bold text-white mb-6">The Solution</h2>
             <p className="text-lg text-gray-300 leading-relaxed mb-8">{project.caseStudy.solution}</p>
             
-            <div className="relative h-96 rounded-2xl overflow-hidden bg-gradient-to-br from-teal-900 to-blue-900">
+            {/* <div className="relative h-96 rounded-2xl overflow-hidden bg-gradient-to-br from-teal-900 to-blue-900">
               <img
                 src="https://images.unsplash.com/photo-1551434678-e076c223a692?w=1400&h=600&fit=crop"
                 alt="Solution implementation"
                 className="w-full h-full object-cover opacity-70"
               />
-            </div>
+            </div> */}
           </section>
 
           {/* Our Approach */}

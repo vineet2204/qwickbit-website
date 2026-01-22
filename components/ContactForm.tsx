@@ -322,7 +322,7 @@ export default function DynamicForm({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-[99999] flex items-center justify-center p-4">
+    <div className="fixed inset-0 z-[99999] flex items-center justify-center p-1">
       <div 
         className="absolute inset-0 bg-black/65 backdrop-blur-sm"
         onClick={onClose}
@@ -341,7 +341,7 @@ export default function DynamicForm({
           <X className="w-5 h-5 text-white" />
         </button>
 
-        <div className="p-8 md:p-12">
+        <div className="p-8 md:p-8">
           <div className="mb-8">
             <h2 className="text-3xl md:text-4xl font-light text-white mb-3">
               {title}

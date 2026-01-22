@@ -14,8 +14,8 @@ const AnimatedAvatarChat: React.FC = () => {
   const svgRef = useRef<SVGSVGElement>(null);
   const animationInitialized = useRef(false);
   const [voiceEnabled, setVoiceEnabled] = useState(true);
-  const [isMuted, setIsMuted] = useState(false);
-  const isMutedRef = useRef(false);
+  const [isMuted, setIsMuted] = useState(true); // Speech stopped by default
+  const isMutedRef = useRef(true); // Speech stopped by default
   const lipTimeline = useRef<gsap.core.Timeline | null>(null);
   const speechQueue = useRef<string[]>([]);
   const isSpeaking = useRef(false);
@@ -116,6 +116,29 @@ const AnimatedAvatarChat: React.FC = () => {
       }
       window.removeEventListener('scroll', handleScroll);
     };
+  }, []);
+
+  // Detect popup/modal openings
+  useEffect(() => {
+    const observer = new MutationObserver(() => {
+      // Check for any dialog, modal, or popup elements
+      const hasDialog = document.querySelector('dialog[open]');
+      const hasModal = document.querySelector('[role="dialog"]');
+      const hasPopup = document.querySelector('[role="alertdialog"]');
+      
+      if (hasDialog || hasModal || hasPopup) {
+        if (isSpeaking.current || window.speechSynthesis.speaking) {
+          stopAllSpeech();
+        }
+      }
+    });
+
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+    });
+
+    return () => observer.disconnect();
   }, []);
 
 
@@ -242,6 +265,9 @@ const AnimatedAvatarChat: React.FC = () => {
     if (newMutedState) {
       // Muting - stop all current and queued speech
       stopAllSpeech();
+    } else {
+      // Unmuting - start speaking queued messages
+      processQueue();
     }
   };
 
@@ -422,16 +448,16 @@ const AnimatedAvatarChat: React.FC = () => {
       className="flex items-center justify-center overflow-hidden p-32"
     >
       <div className="relative flex flex-col items-center gap-8">
-        {/* Mute Button */}
+        {/* Mute/Unmute Button - Controls all speech */}
         <button
           onClick={handleMuteToggle}
           className={`fixed top-6 right-6 z-50 p-3 rounded-full shadow-lg transition-all duration-200 ${
             isMuted 
-              ? 'bg-red-500 hover:bg-red-600' 
-              : 'bg-blue-600 hover:bg-blue-700'
+              ? 'bg-gray-500 hover:bg-gray-600' 
+              : 'bg-green-500 hover:bg-green-600'
           }`}
-          title={isMuted ? 'Unmute' : 'Mute'}
-          aria-label={isMuted ? 'Unmute speech' : 'Mute speech'}
+          title={isMuted ? 'Click to start speech' : 'Click to stop speech'}
+          aria-label={isMuted ? 'Click to start speech' : 'Click to stop speech'}
         >
           {isMuted ? (
             <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
@@ -444,15 +470,6 @@ const AnimatedAvatarChat: React.FC = () => {
           )}
         </button>
 
-        {/* Enable Voice Button (shown only if voice not enabled) */}
-        {!voiceEnabled && (
-          <button
-            onClick={enableVoice}
-            className="fixed top-6 right-20 z-50 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg shadow-lg transition-colors"
-          >
-            Enable Voice
-          </button>
-        )}
         <div className="absolute top-[-120px] left-1/2 transform -translate-x-1/2 w-96 max-w-[90vw]">  
           {currentMessage && (
             <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl shadow-2xl px-6 py-4 border-2 border-blue-300">
