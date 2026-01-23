@@ -369,9 +369,9 @@ export default function Home() {
             {/* Left Side - Hero Content */}
             <div className="flex-1 flex flex-col md:ml-20 justify-end mt-2">
               <div className="max-w-3xl">
-                <div className="mb-4 inline-block animate-in fade-in slide-in-from-bottom-4 rounded-full border border-foreground/20 bg-foreground/15 px-4 py-1.5 backdrop-blur-md duration-700">
+                {/* <div className="mb-4 inline-block animate-in fade-in slide-in-from-bottom-4 rounded-full border border-foreground/20 bg-foreground/15 px-4 py-1.5 backdrop-blur-md duration-700">
                   <p className="font-mono text-xs text-foreground/90">Empowering Businesses with Intelligent Software & AI-Driven Solutions</p>
-                </div>
+                </div> */}
                 <h1 className="mb-6 animate-in fade-in slide-in-from-bottom-8 font-sans text-5xl font-light leading-[1.1] tracking-tight text-foreground duration-1000 md:text-6xl lg:text-7xl">
                   <span className="text-balance">
                     QWICKBIT Intelligent products

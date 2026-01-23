@@ -1017,7 +1017,7 @@ export default function GlassmorphismNavigationHeader({
               }}
               className="flex items-center gap-2 flex-shrink-0"
             >
-              <div className="w-14 h-14  rounded-lg flex items-center justify-center">
+              <div className="w-14 h-14   rounded-full p-2 flex items-center justify-center">
                 <Image
                   src="/logo.svg"
                   alt="Logo"

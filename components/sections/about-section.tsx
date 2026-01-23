@@ -154,7 +154,7 @@ export default function AboutSection({
       bgGradient: "from-blue-500/20 to-blue-600/20",
     },
     {
-      name: "Wire Framing & Prototyping",
+      name: "Prototyping & modelling",
       icon: <GridOn sx={{ fontSize: 48, color: '#34D399' }} />,
       bgGradient: "from-green-500/20 to-green-600/20",
     },
@@ -390,7 +390,7 @@ export default function AboutSection({
 
       <div className="w-full bg-transparent">
         {/* About Qwickbit Section */}
-        <section className="w-full mt-56 md:-mt-20 px-4 py-20 md:px-12 md:py-32 lg:px-16">
+        <section className="w-full mt-26 md:-mt-20 px-4 py-20 md:px-12 md:py-32 lg:px-16">
           <div className="mx-auto max-w-7xl">
             <div className="mb-16">
               <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 mb-6">
@@ -433,7 +433,7 @@ export default function AboutSection({
             </div>
 
             {/* Technology Stack Section */}
-            <div className="mt-32 mb-20">
+            <div className="md:mt-32 mt-8 mb-10">
               <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 mb-6">
                 <Cpu className="w-4 h-4 text-white" />
                 <span className="text-sm font-medium text-white">Technology Stack</span>
@@ -517,7 +517,7 @@ export default function AboutSection({
         </section>
 
         {/* Services Section */}
-        <section className="w-full md:-mt-52 -mt-24 px-4 py-20 md:px-12 md:py-32 lg:px-16 bg-gradient-to-b from-transparent to-primary/5">
+        <section className="w-full md:-mt-52 -mt-36 px-4 py-20 md:px-12 md:py-32 lg:px-16 bg-gradient-to-b from-transparent to-primary/5">
           <div className="mx-auto max-w-7xl">
             <div className="mb-16">
               <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 mb-6">
@@ -571,7 +571,7 @@ export default function AboutSection({
         </section>
 
         {/* Process Model Section */}
-        <section className="w-full md:-mt-28 px-4 py-20 md:px-12 md:py-32 lg:px-16">
+        <section className="w-full md:-mt-28 -mt-24 px-4 py-20 md:px-12 md:py-32 lg:px-16">
           <div className="mx-auto max-w-7xl">
             <div className="mb-16">
               <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 mb-6">
@@ -589,74 +589,74 @@ export default function AboutSection({
             </div>
 
             {/* Process Steps */}
-            <div className="grid md:grid-cols-5 grid-cols-1 gap-8 md:gap-4 my-12 md:my-20">
-              {processSteps.map((step, i) => {
-                const isLast = i === processSteps.length - 1
+           <div className="grid grid-cols-5 gap-3 md:gap-4 my-10 md:my-20">
+  {processSteps.map((step, i) => {
+    const isLast = i === processSteps.length - 1
 
-                return (
-                  <div key={i} className="flex flex-col items-center relative">
-                    {/* Step Number and Name */}
-                    <div className="flex flex-col items-center mb-6">
-                      <p className="text-4xl font-bold text-white mb-2">{i + 1}</p>
-                      <p className="text-sm text-center text-foreground/70 font-medium">{step.name}</p>
-                    </div>
+    return (
+      <div key={i} className="flex flex-col items-center relative">
+        {/* Step Number & Name */}
+        <div className="flex flex-col items-center mb-3 md:mb-6">
+          <p className="text-2xl md:text-4xl font-bold text-white mb-1 md:mb-2">
+            {i + 1}
+          </p>
+          <p className="text-[10px] md:text-sm text-center text-foreground/70 font-medium leading-tight">
+            {step.name}
+          </p>
+        </div>
 
-                    {/* Progress Line */}
-                    <div className="hidden md:flex w-full items-center justify-center mb-6">
-                      <div className={`flex-1 h-1 bg-primary/20 ${i === 0 ? "rounded-l-full" : ""}`} />
-                      <div className="w-4 h-4 rounded-full bg-primary z-10 flex-shrink-0" />
-                      <div className={`flex-1 h-1 bg-primary/20 relative ${isLast ? "rounded-r-full" : ""}`}>
-                        {!isLast && (
-                          <div className="absolute right-0 top-1/2 -translate-y-1/2 text-primary">
-                            <svg
-                              width="20"
-                              height="20"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            >
-                              <line x1="5" y1="12" x2="19" y2="12"></line>
-                              <polyline points="12 5 19 12 12 19"></polyline>
-                            </svg>
-                          </div>
-                        )}
-                      </div>
-                    </div>
+        {/* Progress Line */}
+        <div className="flex w-full items-center justify-center mb-3 md:mb-6">
+          <div
+            className={`flex-1 h-[2px] md:h-1 bg-primary/20 ${
+              i === 0 ? "rounded-l-full" : ""
+            }`}
+          />
 
-                    {/* Icon Circle */}
-                    <div className="bg-gradient-to-br from-primary/20 to-primary/5 w-28 h-28 rounded-full flex items-center justify-center border border-primary/30 hover:border-primary/50 transition-all hover:scale-110 group">
-                      <div className="group-hover:scale-110 transition-transform">{step.icon}</div>
-                    </div>
+          <div className="w-2.5 h-2.5 md:w-4 md:h-4 rounded-full bg-primary z-10 flex-shrink-0" />
 
-                    {/* Mobile Progress Line */}
-                    {!isLast && (
-                      <div className="md:hidden flex flex-col items-center my-6">
-                        <div className="w-1 h-16 bg-primary/20" />
-                        <div className="text-primary">
-                          <svg
-                            width="20"
-                            height="20"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            className="rotate-90"
-                          >
-                            <line x1="5" y1="12" x2="19" y2="12"></line>
-                            <polyline points="12 5 19 12 12 19"></polyline>
-                          </svg>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                )
-              })}
-            </div>
+          <div
+            className={`flex-1 h-[2px] md:h-1 bg-primary/20 relative ${
+              isLast ? "rounded-r-full" : ""
+            }`}
+          >
+            {!isLast && (
+              <div className="absolute right-0 top-1/2 -translate-y-1/2 text-primary">
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="md:w-5 md:h-5"
+                >
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                  <polyline points="12 5 19 12 12 19" />
+                </svg>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Icon Circle */}
+        <div className="bg-gradient-to-br from-primary/20 to-primary/5 
+          w-14 h-14 md:w-28 md:h-28 
+          rounded-full flex items-center justify-center 
+          border border-primary/30 hover:border-primary/50 
+          transition-all hover:scale-105 group"
+        >
+          <div className="scale-75 md:scale-100 group-hover:scale-110 transition-transform">
+            {step.icon}
+          </div>
+        </div>
+      </div>
+    )
+  })}
+</div>
+
             <TrustedClients />
 
             {/* CTA Button */}
