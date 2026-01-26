@@ -14,6 +14,7 @@ import { ServicesSection } from "@/components/sections/services-section"
 import { X, Mail, MapPin, Phone } from "lucide-react"
 import DynamicForm from "@/components/ContactForm"
 import AnimatedAvatarChat from "@/components/AnimatedAvatarChat"
+import { RotatingText } from "@/components/RotatingText"
 
 // Define the item type
 interface ProductSolutionItem {
@@ -369,16 +370,26 @@ export default function Home() {
             {/* Left Side - Hero Content */}
             <div className="flex-1 flex flex-col md:ml-20 justify-end mt-2">
               <div className="max-w-3xl">
-                {/* <div className="mb-4 inline-block animate-in fade-in slide-in-from-bottom-4 rounded-full border border-foreground/20 bg-foreground/15 px-4 py-1.5 backdrop-blur-md duration-700">
-                  <p className="font-mono text-xs text-foreground/90">Empowering Businesses with Intelligent Software & AI-Driven Solutions</p>
-                </div> */}
-                <h1 className="mb-6 animate-in fade-in slide-in-from-bottom-8 font-sans text-5xl font-light leading-[1.1] tracking-tight text-foreground duration-1000 md:text-6xl lg:text-7xl">
-                  <span className="text-balance">
-                    QWICKBIT Intelligent products
-                    <br />
-                    for real impact
-                  </span>
-                </h1>
+              
+               <h1 className="mb-6 animate-in fade-in slide-in-from-bottom-8 font-sans text-4xl font-light leading-[1.1] tracking-tight text-foreground duration-1000 md:text-6xl lg:text-6xl">
+  <span className="text-balance block mb-4">QWICKBIT</span>
+  <span className="inline-flex items-center justify-start flex-wrap gap-3 sm:gap-4">
+    <span>Intelligent</span>
+    <RotatingText
+      texts={["Products", "Solutions", "Systems", "Platforms", "Tech"]}
+      mainClassName="px-3 md:-ml-6 -ml-3 sm:px-4 md:px-6 text-white overflow-hidden py-2 sm:py-2 md:py-3 rounded-xl "
+      staggerFrom="last"
+      initial={{ y: "100%" }}
+      animate={{ y: 0 }}
+      exit={{ y: "-120%" }}
+      staggerDuration={0.025}
+      splitLevelClassName="overflow-hidden"
+      transition={{ type: "spring", damping: 30, stiffness: 400 }}
+      rotationInterval={2500}
+    />
+  </span>
+  <span className="block mt-4">for Real Impact</span>
+</h1>
                 <p className="mb-8 max-w-xl animate-in fade-in slide-in-from-bottom-4 text-base leading-relaxed text-foreground/90 duration-1000 delay-200 md:text-lg">
                   <span className="text-pretty">
                     Build Smarter Digital Products with AI, Cloud, Web & Mobile Solutions

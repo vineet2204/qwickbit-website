@@ -178,173 +178,173 @@ const getDetailedContent = (name: string) => {
     },
     'CRM': {
       title: 'CRM Solution',
-      subtitle: 'Integrated CRM with efficient process management',
+      subtitle: 'Centralized system for customer relationship optimization',
       category: 'CRM Platform',
-      description: 'Streamline customer relationships with comprehensive CRM featuring automation and analytics',
+      description: 'A centralized system designed to manage and optimize interactions with customers across sales, marketing, and support',
       image: '/details/crm.jpg',
-      background: 'Businesses need centralized systems to manage customer relationships, track interactions, and drive sales growth efficiently.',
-      problem: 'Fragmented customer data, manual processes, poor visibility into sales pipeline, and difficulty tracking customer interactions.',
-      solution: 'Comprehensive CRM solution with lead management, sales automation, customer tracking, marketing integration, and advanced analytics.',
+      background: 'A CRM (Customer Relationship Management) platform is a centralized system designed to manage and optimize interactions with customers across sales, marketing, and support. It helps businesses store customer data, track communication, automate workflows, and gain actionable insights to improve customer relationships and retention.',
+      problem: 'CRM platforms face challenges such as fragmented and poor-quality member data, legacy systems with limited integration, and low digital adoption among staff and members. Strong requirements for data privacy, transparency, and member trust complicate CRM usage, while budget constraints and lack of technical expertise limit customization and effective implementation.',
+      solution: 'Start with data standardization and centralization by integrating all member records into a single, secure CRM system. Co-operatives should adopt a modular, cost-effective CRM that works with legacy systems and supports gradual digitization. Implement clear data governance and consent policies to build member trust, and provide staff training and change management to improve adoption.',
       approach: [
-        'Implement intelligent lead scoring algorithms',
-        'Automate sales pipeline workflows',
-        'Integrate email marketing campaigns',
-        'Build customizable analytics dashboards'
+        'Integrate all member records into a single, secure CRM system',
+        'Adopt modular, cost-effective CRM compatible with legacy systems',
+        'Implement clear data governance and consent policies',
+        'Provide staff training and change management programs'
       ],
-      result: 'Increased sales productivity by 65%, improved customer retention by 40%, and achieved 360° customer visibility across all touchpoints.',
+      result: 'Using phased implementation with measurable outcomes helps control costs while demonstrating value early, improving customer relationships and retention.',
       features: [
-        'Lead Management & Scoring',
-        'Sales Pipeline Automation',
-        'Customer Interaction Tracking',
-        'Email Marketing Integration',
-        'Advanced Analytics & Reports',
-        'Mobile CRM Access'
+        'Data Standardization & Centralization',
+        'Legacy System Integration',
+        'Modular Architecture',
+        'Data Governance & Compliance',
+        'Staff Training & Change Management',
+        'Phased Implementation Support'
       ],
       benefits: [
-        '360° customer view',
-        'Improved sales productivity',
-        'Better customer retention',
-        'Data-driven decisions'
+        'Improved data quality',
+        'Better digital adoption',
+        'Enhanced member trust',
+        'Cost-effective implementation'
       ],
-      technologies: ['Salesforce', 'HubSpot', 'Custom CRM', 'AI/ML', 'APIs', 'Cloud'],
+      technologies: ['Salesforce', 'HubSpot', 'Custom CRM', 'API Integration', 'Cloud', 'Data Governance Tools'],
       useCases: [
+        'Co-operatives',
+        'Member-based organizations',
         'B2B sales teams',
-        'Customer support',
-        'Marketing automation',
-        'Account management'
+        'Customer support operations'
       ],
       stats: [
-        { value: '65', unit: '%', label: 'Sales productivity increase' },
-        { value: '40', unit: '%', label: 'Better customer retention' },
-        { value: '360', unit: '°', label: 'Customer view' },
-        { value: '50', unit: '%', label: 'Faster deal closure' },
-        { value: '80', unit: '%', label: 'Lead conversion improvement' },
-        { value: '5x', unit: '', label: 'ROI increase' }
+        { value: '100', unit: '%', label: 'Data centralization' },
+        { value: '60', unit: '%', label: 'Improved adoption' },
+        { value: '50', unit: '%', label: 'Cost control' },
+        { value: '75', unit: '%', label: 'Better member trust' },
+        { value: '80', unit: '%', label: 'Data quality improvement' },
+        { value: '3x', unit: '', label: 'Faster implementation' }
       ]
     },
     ' ECommerce': {
       title: 'ECommerce Solutions',
-      subtitle: 'Complete online store with advanced features',
+      subtitle: 'Digital solution for seamless online selling',
       category: 'ECommerce Platform',
-      description: 'Build conversion-friendly online stores that drive sales and customer satisfaction',
+      description: 'A digital solution that enables businesses to sell products or services online through web and mobile channels',
       image: '/details/ecom.jpg',
-      background: 'Modern consumers expect seamless online shopping experiences with fast checkout, personalized recommendations, and mobile-first design.',
-      problem: 'Low conversion rates, cart abandonment, poor mobile experience, and difficulty managing inventory across multiple channels.',
-      solution: 'Comprehensive eCommerce platform with advanced features including personalized recommendations, seamless checkout, inventory management, and omnichannel selling.',
+      background: 'An E-commerce platform is a digital solution that enables businesses to sell products or services online through web and mobile channels. It supports product catalog management, payments, orders, inventory, and logistics, while providing a secure and seamless shopping experience for customers.',
+      problem: 'E-commerce platforms face challenges such as scalability under high traffic, seamless integration with payment gateways, logistics, and ERP systems, and maintaining data security and user trust. Additionally, managing real-time inventory, ensuring consistent user experience across devices, and handling rapid feature updates are critical challenges for businesses operating in competitive digital markets.',
+      solution: 'Develop a scalable, cloud-ready e-commerce architecture with robust system integrations for payments, logistics, and enterprise platforms. Implementing strong security standards, performance optimization, and real-time inventory management ensures reliability and trust. A user-centric design approach combined with continuous monitoring and iterative enhancements helps deliver consistent experiences while enabling rapid, future-ready growth.',
       approach: [
-        'Build mobile-first responsive design',
-        'Implement AI-powered product recommendations',
-        'Create streamlined checkout process',
-        'Integrate payment gateways and shipping APIs'
+        'Build scalable, cloud-ready e-commerce architecture',
+        'Integrate payment gateways, logistics, and ERP systems',
+        'Implement strong security and performance optimization',
+        'Deploy real-time inventory management and monitoring'
       ],
-      result: 'Increased conversion rates by 55%, reduced cart abandonment by 40%, improved mobile sales by 75%, and enhanced customer lifetime value by 60%.',
+      result: 'Consistent user experiences across devices with rapid feature deployment, ensuring reliability, trust, and future-ready growth for competitive digital markets.',
       features: [
         'Product Catalog Management',
-        'Shopping Cart & Checkout',
         'Payment Gateway Integration',
-        'Inventory Management',
-        'Order Tracking System',
-        'Multi-channel Selling'
+        'Real-time Inventory Management',
+        'Logistics Integration',
+        'ERP System Integration',
+        'Performance Optimization'
       ],
       benefits: [
-        'Higher conversion rates',
-        'Reduced cart abandonment',
-        'Better customer experience',
-        'Increased revenue'
+        'Scalable architecture',
+        'Enhanced data security',
+        'Consistent user experience',
+        'Future-ready growth'
       ],
-      technologies: ['Shopify', 'WooCommerce', 'Magento', 'Stripe', 'PayPal', 'Custom Solutions'],
+      technologies: ['Cloud Infrastructure', 'Payment APIs', 'ERP Integration', 'Security Standards', 'Real-time Systems', 'Monitoring Tools'],
       useCases: [
         'Retail online stores',
         'B2B marketplaces',
-        'Subscription services',
-        'Digital product sales'
+        'Digital product sales',
+        'Multi-channel commerce'
       ],
       stats: [
-        { value: '55', unit: '%', label: 'Conversion rate increase' },
-        { value: '40', unit: '%', label: 'Reduced cart abandonment' },
-        { value: '75', unit: '%', label: 'Mobile sales growth' },
-        { value: '60', unit: '%', label: 'Customer lifetime value' },
-        { value: '3x', unit: '', label: 'Revenue growth' },
-        { value: '99.9', unit: '%', label: 'Payment success rate' }
+        { value: '99.9', unit: '%', label: 'Platform uptime' },
+        { value: '100', unit: '%', label: 'Real-time inventory' },
+        { value: '85', unit: '%', label: 'Faster checkout' },
+        { value: '70', unit: '%', label: 'Traffic scalability' },
+        { value: '95', unit: '%', label: 'Security compliance' },
+        { value: '3x', unit: '', label: 'Feature deployment speed' }
       ]
     },
     'Food Ordering': {
-      title: 'Food Ordering System',
-      subtitle: 'Kitchen to customer management',
+      title: 'Food Ordering Platform',
+      subtitle: 'Seamless order processing and delivery management',
       category: 'Restaurant Management Platform',
-      description: 'Manage orders from kitchen to customer in a simple, efficient manner',
+      description: 'A platform that allows customers to explore menus and place orders online with seamless order processing, payments, and delivery tracking',
       image: '/details/food.jpg',
-      background: 'Restaurants need efficient systems to handle online orders, manage kitchen operations, and ensure timely delivery while maintaining quality.',
-      problem: 'Order errors, long wait times, poor coordination between kitchen and delivery, and inability to handle peak hours efficiently.',
-      solution: 'Integrated food ordering platform with real-time order tracking, kitchen display system, delivery management, and customer notifications.',
+      background: 'A Food Ordering Platform allows customers to explore menus and place orders online. It manages order processing, payments, and delivery tracking seamlessly. The platform connects customers, restaurants, and delivery partners in real time and helps food businesses improve efficiency and customer satisfaction.',
+      problem: 'Food ordering platforms face challenges such as handling peak-time traffic, real-time menu and availability management, and seamless coordination between customers, restaurants, and delivery partners. Ensuring fast order processing, accurate delivery tracking, secure payments, and consistent user experience, while managing high competition and customer retention, remains a key operational challenge.',
+      solution: 'Build a scalable, high-performance platform that supports peak loads and real-time menu updates. Integrating smart order routing, reliable delivery tracking, and secure payment systems ensures smooth coordination across all stakeholders. Continuous UX optimization, data-driven insights, and proactive partner support help improve customer satisfaction and long-term retention.',
       approach: [
-        'Build intuitive ordering interface with menu customization',
-        'Implement real-time kitchen display system',
-        'Create delivery route optimization',
-        'Integrate with popular delivery platforms'
+        'Build scalable, high-performance platform for peak loads',
+        'Implement real-time menu updates and availability management',
+        'Integrate smart order routing and delivery tracking',
+        'Deploy secure payment systems and UX optimization'
       ],
-      result: 'Reduced order errors by 80%, improved delivery times by 45%, increased order capacity by 3x, and enhanced customer satisfaction by 70%.',
+      result: 'Smooth coordination across customers, restaurants, and delivery partners with improved customer satisfaction and long-term retention through data-driven insights.',
       features: [
-        'Online Menu Management',
-        'Real-time Order Tracking',
-        'Kitchen Display System',
-        'Delivery Management',
-        'Customer Notifications',
-        'Analytics Dashboard'
+        'Real-time Menu Management',
+        'Smart Order Routing',
+        'Delivery Tracking System',
+        'Secure Payment Integration',
+        'Peak Load Management',
+        'Partner Coordination Tools'
       ],
       benefits: [
-        'Reduced order errors',
-        'Faster delivery times',
-        'Better kitchen efficiency',
-        'Higher customer satisfaction'
+        'Scalable performance',
+        'Seamless coordination',
+        'Enhanced customer satisfaction',
+        'Improved retention'
       ],
-      technologies: ['React', 'Node.js', 'MongoDB', 'Socket.io', 'Google Maps API', 'Stripe'],
+      technologies: ['Real-time Systems', 'Payment APIs', 'Routing Algorithms', 'Cloud Infrastructure', 'Analytics', 'Mobile Apps'],
       useCases: [
         'Quick service restaurants',
-        'Fine dining establishments',
         'Cloud kitchens',
-        'Food delivery chains'
+        'Food delivery chains',
+        'Multi-restaurant platforms'
       ],
       stats: [
-        { value: '80', unit: '%', label: 'Reduction in order errors' },
-        { value: '45', unit: '%', label: 'Faster delivery times' },
-        { value: '3x', unit: '', label: 'Order capacity increase' },
-        { value: '70', unit: '%', label: 'Customer satisfaction boost' },
-        { value: '90', unit: '%', label: 'On-time delivery rate' },
-        { value: '50', unit: '%', label: 'Revenue increase' }
+        { value: '100', unit: '%', label: 'Real-time updates' },
+        { value: '95', unit: '%', label: 'Order accuracy' },
+        { value: '80', unit: '%', label: 'Customer satisfaction' },
+        { value: '3x', unit: '', label: 'Peak capacity' },
+        { value: '90', unit: '%', label: 'On-time delivery' },
+        { value: '99.9', unit: '%', label: 'Payment success rate' }
       ]
     },
     'Insurance': {
       title: 'Insurance Management',
-      subtitle: 'Comprehensive insurance solutions',
+      subtitle: 'End-to-end insurance operations administration',
       category: 'Insurance Platform',
-      description: 'Comprehensive insurance management solutions for modern insurance providers',
+      description: 'End-to-end administration of insurance operations, including policy management, underwriting, claims processing, renewals, and compliance',
       image: '/details/insure.jpg',
-      background: 'Insurance companies need robust systems to manage policies, claims, underwriting, and customer relationships efficiently.',
-      problem: 'Manual processes, slow claim processing, poor customer communication, and difficulty managing complex policy structures.',
-      solution: 'End-to-end insurance management platform with policy administration, claims processing, underwriting automation, and customer portal.',
+      background: 'Insurance Management is the end-to-end administration of insurance operations, including policy management, underwriting, claims processing, renewals, and compliance. It focuses on risk evaluation, customer data management, and premium handling.',
+      problem: 'Insurance platforms face challenges such as complex policy management, integration with legacy core systems, and accurate risk assessment using diverse data sources. Ensuring regulatory compliance, data security, seamless claims processing, and a smooth digital customer experience, while adapting to frequent policy and market changes, remains a key challenge.',
+      solution: 'Implement a modular, API-driven insurance platform that integrates smoothly with legacy systems and supports flexible policy management. Strong data governance, security, and compliance frameworks ensure trust and regulatory adherence. Automating underwriting and claims workflows, combined with a customer-centric digital experience and continuous system updates, enables efficiency, scalability, and faster time-to-market.',
       approach: [
-        'Automate policy lifecycle management',
-        'Implement intelligent claims processing',
-        'Build customer self-service portals',
-        'Create risk assessment algorithms'
+        'Deploy modular, API-driven platform with legacy integration',
+        'Implement strong data governance and compliance frameworks',
+        'Automate underwriting and claims workflows',
+        'Build customer-centric digital experience with updates'
       ],
-      result: 'Reduced claims processing time by 60%, improved policy issuance speed by 70%, decreased operational costs by 45%, and enhanced customer satisfaction by 55%.',
+      result: 'Enhanced efficiency, scalability, and faster time-to-market with automated workflows, ensuring trust through compliance and delivering seamless digital customer experiences.',
       features: [
-        'Policy Administration',
-        'Claims Management',
-        'Underwriting Automation',
-        'Customer Portal',
-        'Risk Assessment',
+        'Modular Policy Management',
+        'Legacy System Integration',
+        'Automated Underwriting',
+        'Claims Processing Automation',
+        'Data Governance & Security',
         'Compliance Management'
       ],
       benefits: [
-        'Faster claim processing',
-        'Reduced operational costs',
-        'Better risk management',
-        'Improved compliance'
+        'Flexible policy management',
+        'Enhanced compliance',
+        'Faster processing',
+        'Improved customer experience'
       ],
-      technologies: ['Java', 'Spring Boot', 'PostgreSQL', 'AI/ML', 'Blockchain', 'Cloud'],
+      technologies: ['API Architecture', 'Legacy Integration', 'Automation Tools', 'Compliance Systems', 'Security Frameworks', 'Cloud'],
       useCases: [
         'Health insurance',
         'Life insurance',
@@ -352,12 +352,12 @@ const getDetailedContent = (name: string) => {
         'Vehicle insurance'
       ],
       stats: [
-        { value: '60', unit: '%', label: 'Faster claims processing' },
-        { value: '70', unit: '%', label: 'Quicker policy issuance' },
-        { value: '45', unit: '%', label: 'Cost reduction' },
-        { value: '55', unit: '%', label: 'Customer satisfaction' },
-        { value: '85', unit: '%', label: 'Automation rate' },
-        { value: '99', unit: '%', label: 'Compliance accuracy' }
+        { value: '70', unit: '%', label: 'Faster underwriting' },
+        { value: '60', unit: '%', label: 'Claims automation' },
+        { value: '100', unit: '%', label: 'Compliance adherence' },
+        { value: '50', unit: '%', label: 'Time-to-market reduction' },
+        { value: '80', unit: '%', label: 'Process efficiency' },
+        { value: '99.9', unit: '%', label: 'Data security' }
       ]
     },
     'Conversational AI': {
@@ -408,48 +408,48 @@ const getDetailedContent = (name: string) => {
     },
     'Retail': {
       title: 'Retail Management',
-      subtitle: 'Modern retail and POS systems',
+      subtitle: 'Omnichannel retail operations platform',
       category: 'Retail Platform',
-      description: 'Modern retail management and POS systems for efficient store operations',
+      description: 'Business of selling goods or services directly to consumers through physical stores, online channels, or both with modern technology and data',
       image: '/details/retail.jpg',
-      background: 'Retail businesses need integrated systems to manage inventory, sales, customer data, and multi-location operations seamlessly.',
-      problem: 'Inventory discrepancies, slow checkout, poor visibility across locations, and inability to provide personalized customer experiences.',
-      solution: 'Comprehensive retail management platform with POS, inventory tracking, customer loyalty programs, and omnichannel capabilities.',
+      background: 'Retail refers to the business of selling goods or services directly to consumers through physical stores, online channels, or both. It involves product sourcing, inventory management, pricing, sales, and customer engagement. Modern retail leverages technology, data, and omnichannel strategies to personalize experiences.',
+      problem: 'Retail platforms face challenges such as managing omnichannel operations, real-time inventory visibility, and integrating POS, supply chain, and customer data systems. Delivering personalized customer experiences, handling peak-season demand, ensuring data security, and adapting quickly to changing consumer behavior are ongoing challenges in a highly competitive market.',
+      solution: 'Build a unified omnichannel retail platform that centralizes inventory, customer, and sales data across all touchpoints. Leveraging real-time analytics, automation, and AI-driven personalization improves demand forecasting and customer engagement. Integrating scalable cloud infrastructure, secure data practices, and flexible system architecture enables retailers to adapt quickly, scale efficiently, and deliver consistent shopping experiences.',
       approach: [
-        'Implement cloud-based POS system',
-        'Build real-time inventory synchronization',
-        'Create customer loyalty programs',
-        'Integrate omnichannel sales tracking'
+        'Build unified omnichannel platform with centralized data',
+        'Leverage real-time analytics and AI-driven personalization',
+        'Integrate POS, supply chain, and customer data systems',
+        'Deploy scalable cloud infrastructure with security'
       ],
-      result: 'Reduced checkout time by 50%, improved inventory accuracy to 99%, increased customer retention by 45%, and boosted sales by 35%.',
+      result: 'Quick adaptation to consumer behavior with efficient scaling, delivering consistent shopping experiences and improved demand forecasting through real-time analytics and personalization.',
       features: [
-        'Cloud-based POS',
-        'Inventory Management',
-        'Customer Loyalty Programs',
-        'Multi-location Support',
-        'Sales Analytics',
-        'Employee Management'
+        'Omnichannel Operations',
+        'Real-time Inventory Management',
+        'POS Integration',
+        'AI-driven Personalization',
+        'Supply Chain Integration',
+        'Customer Data Management'
       ],
       benefits: [
-        'Faster checkout process',
-        'Better inventory control',
-        'Improved customer loyalty',
-        'Increased sales'
+        'Centralized operations',
+        'Better demand forecasting',
+        'Enhanced personalization',
+        'Scalable infrastructure'
       ],
-      technologies: ['React', 'Node.js', 'PostgreSQL', 'Stripe', 'Square', 'Cloud'],
+      technologies: ['Cloud Infrastructure', 'AI/ML', 'POS Systems', 'Analytics', 'Omnichannel Tools', 'Security Systems'],
       useCases: [
-        'Retail stores',
+        'Retail chains',
         'Fashion boutiques',
-        'Electronics shops',
+        'Electronics stores',
         'Multi-brand outlets'
       ],
       stats: [
-        { value: '50', unit: '%', label: 'Faster checkout' },
-        { value: '99', unit: '%', label: 'Inventory accuracy' },
-        { value: '45', unit: '%', label: 'Customer retention' },
-        { value: '35', unit: '%', label: 'Sales increase' },
-        { value: '80', unit: '%', label: 'Staff efficiency' },
-        { value: '24/7', unit: '', label: 'System availability' }
+        { value: '100', unit: '%', label: 'Inventory visibility' },
+        { value: '80', unit: '%', label: 'Better forecasting' },
+        { value: '65', unit: '%', label: 'Customer engagement' },
+        { value: '3x', unit: '', label: 'Faster adaptation' },
+        { value: '99.9', unit: '%', label: 'System uptime' },
+        { value: '70', unit: '%', label: 'Operational efficiency' }
       ]
     }
   }
@@ -593,28 +593,12 @@ export function DetailPage({ isOpen, onClose, item, type }: DetailPageProps) {
             <section>
               <h2 className="text-4xl font-bold text-white mb-6">The Challenge</h2>
               <p className="text-lg text-gray-300 leading-relaxed mb-8">{content.problem}</p>
-              
-              {/* <div className="relative h-96 rounded-2xl overflow-hidden bg-gradient-to-br from-gray-800 to-gray-900">
-                <img
-                  src={content.image}
-                  alt="Challenge visualization"
-                  className="w-full h-full object-cover opacity-60"
-                />
-              </div> */}
             </section>
 
             {/* The Solution */}
             <section>
               <h2 className="text-4xl font-bold text-white mb-6">The Solution</h2>
               <p className="text-lg text-gray-300 leading-relaxed mb-8">{content.solution}</p>
-              
-              {/* <div className="relative h-96 rounded-2xl overflow-hidden bg-gradient-to-br from-blue-900 to-blue-800">
-                <img
-                  src="https://images.unsplash.com/photo-1551434678-e076c223a692?w=1400&h=600&fit=crop"
-                  alt="Solution implementation"
-                  className="w-full h-full object-cover opacity-70"
-                />
-              </div> */}
             </section>
 
             {/* Key Features */}
@@ -654,9 +638,6 @@ export function DetailPage({ isOpen, onClose, item, type }: DetailPageProps) {
               </div>
             </section>
 
-
-         
-
             {/* Use Cases */}
             <section>
               <h2 className="text-4xl font-bold text-white mb-8">Industry Use Cases</h2>
@@ -675,65 +656,62 @@ export function DetailPage({ isOpen, onClose, item, type }: DetailPageProps) {
               </div>
             </section>
 
-    {/* CTA Section */}
-          <section className="px-4  sm:px-6 md:px-0">
-  <div
-    className="relative mx-auto max-w-7xl overflow-hidden rounded-3xl border border-white/10
-               px-8 py-6 sm:px-12 md:px-16 lg:px-20"
-    style={{
-      background: "linear-gradient(90deg, #8B7355 0%, #4A7BA7 50%, #7BA3C5 100%)",
-    }}
-  >
-    <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
-      <div className="-ml-13 text-left flex-1">
-        <h2 className="mb-2 text-2xl font-bold text-white sm:text-3xl lg:text-4xl">
-          Ready To Transform Your Business?
-        </h2>
-
-        <p className="text-sm leading-relaxed text-white/90 sm:text-base">
-          Schedule a personalized demo to see how our {content.title} solution can drive your success.
-        </p>
-      </div>
-
-      <button
-        onClick={handleBookDemoClick}
-        className="flex-shrink-0 -mr-15 rounded-full bg-white px-8 py-3 text-sm font-bold text-black shadow-xl
-                   transition-all duration-300 hover:scale-105 hover:bg-gray-100
-                   sm:px-10 sm:py-3.5 whitespace-nowrap"
-      >
-        Book A Demo
-      </button>
-    </div>
-  </div>
-</section>
-
+            {/* CTA Section */}
+            <section className="px-4 sm:px-6 md:px-0">
+              <div
+                className="relative mx-auto max-w-7xl overflow-hidden rounded-3xl border border-white/10
+                           px-8 py-6 sm:px-12 md:px-16 lg:px-20"
+                style={{
+                  background: "linear-gradient(90deg, #8B7355 0%, #4A7BA7 50%, #7BA3C5 100%)",
+                }}
+              >
+                <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
+                  <div className="-ml-13 text-left flex-1">
+                    <h2 className="mb-2 text-2xl font-bold text-white sm:text-3xl lg:text-4xl">
+                      Ready To Transform Your Business?
+                    </h2>
+                    <p className="text-sm leading-relaxed text-white/90 sm:text-base">
+                      Schedule a personalized demo to see how our {content.title} solution can drive your success.
+                    </p>
+                  </div>
+                  <button
+                    onClick={handleBookDemoClick}
+                    className="flex-shrink-0 -mr-15 rounded-full bg-white px-8 py-3 text-sm font-bold text-black shadow-xl
+                               transition-all duration-300 hover:scale-105 hover:bg-gray-100
+                               sm:px-10 sm:py-3.5 whitespace-nowrap"
+                  >
+                    Book A Demo
+                  </button>
+                </div>
+              </div>
+            </section>
 
             {/* Back to Home Button */}
             <section className="pb-20">
-             <div className=" p-6 rounded-2xl border border-white/10 bg-white/5">
-                      <div className="flex flex-col md:flex-row items-center justify-between gap-4 md:gap-6">
-                        <div className="text-center md:text-left">
-                          <p className="text-gray-400 text-sm mb-1">
-                            Have questions about  {content.category}?
-                          </p>
-                          <p className="text-white font-medium">
-                            Contact us at{' '}
-                            <a 
-                              href="mailto:contact@qwickbit.com" 
-                              className="text-blue-400 hover:text-blue-300 transition-colors"
-                            >
-                              contact@qwickbit.com
-                            </a>
-                          </p>
-                        </div>
-                        <button
-                          onClick={onClose}
-                          className="px-6 py-3 rounded-full bg-white text-black font-semibold hover:bg-gray-200 transition-all"
-                        >
-                          Back to Home
-                        </button>
-                      </div>
-                    </div>
+              <div className="p-6 rounded-2xl border border-white/10 bg-white/5">
+                <div className="flex flex-col md:flex-row items-center justify-between gap-4 md:gap-6">
+                  <div className="text-center md:text-left">
+                    <p className="text-gray-400 text-sm mb-1">
+                      Have questions about {content.category}?
+                    </p>
+                    <p className="text-white font-medium">
+                      Contact us at{' '}
+                      <a 
+                        href="mailto:contact@qwickbit.com" 
+                        className="text-blue-400 hover:text-blue-300 transition-colors"
+                      >
+                        contact@qwickbit.com
+                      </a>
+                    </p>
+                  </div>
+                  <button
+                    onClick={onClose}
+                    className="px-6 py-3 rounded-full bg-white text-black font-semibold hover:bg-gray-200 transition-all"
+                  >
+                    Back to Home
+                  </button>
+                </div>
+              </div>
             </section>
           </div>
         </div>

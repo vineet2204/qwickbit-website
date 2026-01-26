@@ -996,19 +996,38 @@ export default function GlassmorphismNavigationHeader({
 
         {/* Mobile Navigation */}
         <nav className="block md:hidden mx-3 mt-3">
-          <div
-            className="
-              relative
-              flex items-center justify-between
-              px-4 py-3
-              rounded-2xl
-              bg-gradient-to-r from-blue-950/30 via-purple-950/30 to-orange-950/30
-              border border-white/20
-              shadow-[0_8px_32px_rgba(0,0,0,0.3),inset_0_1px_2px_rgba(255,255,255,0.2)]
-              backdrop-blur-xl
-              z-50
-            "
-          >
+        <div
+  className="
+    relative
+    flex items-center justify-between
+    px-4 py-3
+    rounded-2xl
+
+    bg-[linear-gradient(135deg,
+      rgba(255,255,255,0.95),
+      rgba(245,246,248,0.92) 40%,
+      rgba(255,255,255,0.9)
+    )]
+
+    border border-black/5
+
+    backdrop-blur-xl backdrop-saturate-150
+
+    shadow-[0_12px_32px_rgba(0,0,0,0.18),
+            inset_0_1px_2px_rgba(255,255,255,0.8)]
+
+    before:absolute before:inset-0
+    before:rounded-2xl
+    before:bg-gradient-to-br
+    before:from-white/70
+    before:via-white/20
+    before:to-transparent
+    before:pointer-events-none
+   border border-white
+    z-50
+  "
+>
+
             {/* Mobile Logo - Made bigger */}
             <button
               onClick={() => {
