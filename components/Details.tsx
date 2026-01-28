@@ -657,35 +657,34 @@ export function DetailPage({ isOpen, onClose, item, type }: DetailPageProps) {
             </section>
 
             {/* CTA Section */}
-            <section className="px-4 sm:px-6 md:px-0">
-              <div
-                className="relative mx-auto max-w-7xl overflow-hidden rounded-3xl border border-white/10
-                           px-8 py-6 sm:px-12 md:px-16 lg:px-20"
-                style={{
-                  background: "linear-gradient(90deg, #8B7355 0%, #4A7BA7 50%, #7BA3C5 100%)",
-                }}
-              >
-                <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
-                  <div className="-ml-13 text-left flex-1">
-                    <h2 className="mb-2 text-2xl font-bold text-white sm:text-3xl lg:text-4xl">
-                      Ready To Transform Your Business?
-                    </h2>
-                    <p className="text-sm leading-relaxed text-white/90 sm:text-base">
-                      Schedule a personalized demo to see how our {content.title} solution can drive your success.
-                    </p>
-                  </div>
-                  <button
-                    onClick={handleBookDemoClick}
-                    className="flex-shrink-0 -mr-15 rounded-full bg-white px-8 py-3 text-sm font-bold text-black shadow-xl
-                               transition-all duration-300 hover:scale-105 hover:bg-gray-100
-                               sm:px-10 sm:py-3.5 whitespace-nowrap"
-                  >
-                    Book A Demo
-                  </button>
-                </div>
-              </div>
-            </section>
-
+          <section className="px-4 sm:px-6 md:px-0">
+  <div
+    className="relative mx-auto max-w-7xl overflow-hidden rounded-2xl sm:rounded-3xl border border-white/10
+               px-4 py-5 sm:px-12 md:px-16 lg:px-20"
+    style={{
+      background: "linear-gradient(90deg, #8B7355 0%, #4A7BA7 50%, #7BA3C5 100%)",
+    }}
+  >
+    <div className="relative z-10 flex flex-col items-center text-center sm:flex-row sm:items-center sm:justify-between sm:text-left gap-4 sm:gap-6">
+      <div className="sm:-ml-13 flex-1">
+        <h2 className="mb-2 text-xl font-bold text-white sm:text-2xl md:text-3xl lg:text-4xl">
+          Ready To Transform Your Business?
+        </h2>
+        <p className="text-sm leading-relaxed text-white/90 sm:text-base">
+          Schedule a personalized demo to see how our {content.title} solution can drive your success.
+        </p>
+      </div>
+      <button
+        onClick={handleBookDemoClick}
+        className="flex-shrink-0 w-full sm:w-auto sm:-mr-15 rounded-full bg-white px-6 py-2.5 sm:px-8 sm:py-3 md:px-10 md:py-3.5 text-sm font-bold text-black shadow-xl
+                   transition-all duration-300 hover:scale-105 hover:bg-gray-100
+                   whitespace-nowrap"
+      >
+        Book A Demo
+      </button>
+    </div>
+  </div>
+</section>
             {/* Back to Home Button */}
             <section className="pb-20">
               <div className="p-6 rounded-2xl border border-white/10 bg-white/5">
