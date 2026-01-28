@@ -1000,7 +1000,7 @@ export default function GlassmorphismNavigationHeader({
   className="
     relative
     flex items-center justify-between
-    px-4 py-3
+    pr-4 pl-1 py-1
     rounded-2xl
 
     bg-[linear-gradient(135deg,

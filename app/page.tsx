@@ -15,6 +15,7 @@ import { X, Mail, MapPin, Phone } from "lucide-react"
 import DynamicForm from "@/components/ContactForm"
 import AnimatedAvatarChat from "@/components/AnimatedAvatarChat"
 import { RotatingText } from "@/components/RotatingText"
+import AnimatedAvatar404 from "@/components/AnimatedAvatarChat"
 
 // Define the item type
 interface ProductSolutionItem {
@@ -409,7 +410,7 @@ export default function Home() {
 
             {/* Right Side - Keypad */}
             <div className="hidden lg:flex mt-28  flex-1 items-center justify-center animate-in fade-in duration-1000 delay-400">
-             <AnimatedAvatarChat />
+             <AnimatedAvatar404 />
             </div>
           </div>
 
