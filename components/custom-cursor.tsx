@@ -33,15 +33,16 @@ export function CustomCursor() {
       start + (end - start) * factor
 
     const updateCursor = () => {
+      // 🚀 Increased from 0.15 to 0.35 for faster response
       positionRef.current.x = lerp(
         positionRef.current.x,
         targetPositionRef.current.x,
-        0.15
+        0.95
       )
       positionRef.current.y = lerp(
         positionRef.current.y,
         targetPositionRef.current.y,
-        0.15
+        0.95
       )
 
       if (outerRef.current && innerRef.current) {
@@ -108,4 +109,3 @@ export function CustomCursor() {
 
   return createPortal(cursorElements, document.body)
 }
-
